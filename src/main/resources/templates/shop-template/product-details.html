@@ -81,6 +81,19 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="product__details__pic" th:if="${images.isEmpty()}">
+                        <div class="product__details__pic__left product__thumb nice-scroll">
+                            <a class="pt active" th:href="'#'+${product.image}">
+                                <img  th:src="${product.image}" alt="">
+                            </a>
+                        </div>
+                        <div class="product__details__slider__content">
+                            <div class="product__details__pic__slider owl-carousel">
+                                <img  th:data-hash="${product.image}" class="product__big__img" th:src="${product.image}" alt="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 				<div class="col-lg-6">
 					<div class="product__details__text">

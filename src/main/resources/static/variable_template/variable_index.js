@@ -1,8 +1,8 @@
-var host = `https://eccomer-shop-hungphi.herokuapp.com/`;
-var api_graduation = `https://eccomer-shop-hungphi.herokuapp.com/api/graduation/`;
-var api_admin = `https://eccomer-shop-hungphi.herokuapp.com/api/admin/`;
-var api_images = `https://eccomer-shop-hungphi.herokuapp.com/api/v1/FileUpload/files/`;
-var api_upload = `https://eccomer-shop-hungphi.herokuapp.com/api/v1/FileUpload`;
+var host = `https://doantotnghiepbanmaytinh.herokuapp.com/`;
+var api_graduation = `https://doantotnghiepbanmaytinh.herokuapp.com/api/graduation/`;
+var api_admin = `https://doantotnghiepbanmaytinh.herokuapp.com/api/admin/`;
+var api_images = `https://doantotnghiepbanmaytinh.herokuapp.com/api/v1/FileUpload/files/`;
+var api_upload = `https://doantotnghiepbanmaytinh.herokuapp.com/api/v1/FileUpload`;
 
 var errorNumber = 'Bạn phải nhập vào kiểu dữ liệu số';
 var errorRequired = 'Trường này không được để trống';
