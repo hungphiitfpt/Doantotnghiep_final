@@ -1,8 +1,8 @@
-var host = `https://banmaytinhcom.herokuapp.com/`;
-var api_graduation = `https://banmaytinhcom.herokuapp.com/api/graduation/`;
-var api_admin = `https://banmaytinhcom.herokuapp.com/api/admin/`;
-var api_images = `https://banmaytinhcom.herokuapp.com/api/v1/FileUpload/files/`;
-var api_upload = `https://banmaytinhcom.herokuapp.com/api/v1/FileUpload`;
+var host = `https://muamaytinhcom.herokuapp.com/`;
+var api_graduation = `https://muamaytinhcom.herokuapp.com/api/graduation/`;
+var api_admin = `https://muamaytinhcom.herokuapp.com/api/admin/`;
+var api_images = `https://muamaytinhcom.herokuapp.com/api/v1/FileUpload/files/`;
+var api_upload = `https://muamaytinhcom.herokuapp.com/api/v1/FileUpload`;
 
 var errorNumber = 'Bạn phải nhập vào kiểu dữ liệu số';
 var errorRequired = 'Trường này không được để trống';
