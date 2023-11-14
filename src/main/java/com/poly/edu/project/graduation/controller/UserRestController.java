@@ -1,6 +1,10 @@
 package com.poly.edu.project.graduation.controller;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.poly.edu.project.graduation.dao.FavouriteRepository;
 import com.poly.edu.project.graduation.dao.UserRepository;
 import com.poly.edu.project.graduation.model.AppUserEntity;
 import com.poly.edu.project.graduation.model.ResponseObject;
+import com.poly.edu.project.graduation.model.ShopFavoutiteEntity;
 import com.poly.edu.project.graduation.services.UserService;
 
 @RestController
@@ -28,6 +34,9 @@ public class UserRestController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	FavouriteRepository favouriteRepository;
 	
 	
 	// api lấy tất cả sản phẩm search theo keyword nhập vào
@@ -76,6 +85,12 @@ public class UserRestController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	void updateInstock(@Param("id") long id) {
 		userService.changeStatusInstock(id);
+	}
+	@RequestMapping(value = "/hearth")
+	void dropHearth(HttpSession session,Principal principal,
+			@RequestParam(name = "idProduct", required = false, defaultValue = "0") String idProduct) {
+		String userName = principal.getName();
+		String id = userService.findIdUserByPrincipal(userName);
 	}
 	
 }

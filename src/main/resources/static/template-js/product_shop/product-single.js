@@ -81,7 +81,7 @@ async function loadALLReviewProduct() {
 												<p class="reviewdate">${dateReview}</p>
 											</div>
 
-											<p class="review">${res.data[i].comment}
+											<p class="review" style="color: black;">${res.data[i].comment}
 											</p>
 										</div>`;
 	}

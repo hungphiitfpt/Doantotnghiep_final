@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
 			ordersEntity.setShippingFee(ordersEntity.getShippingFee());
 			ordersEntity.setPaymentTypeId(ordersEntity.getPaymentTypeId());
 			ordersEntity.setOrderStatus(0);
-			Map<String, String> stats = Utils.cartStarts(cart);
+			Map<String, String> stats = Utils.cartStarts(cart,session);
 			ordersEntity.setTotalPrice(Integer.parseInt(stats.get("amount")));
 			
 			orderRepository.save(ordersEntity);

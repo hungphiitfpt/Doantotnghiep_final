@@ -18,6 +18,7 @@ import com.poly.edu.project.graduation.model.ShopProductsEntity;
 import com.poly.edu.project.graduation.services.ProductServices;
 
 @Repository
+// Lớp chứa Phương thức xử lý logic code, gọi lớp dao để xử lý
 public class ProductServicesImpl implements ProductServices {
 
 	@Autowired
@@ -77,8 +78,14 @@ public class ProductServicesImpl implements ProductServices {
 	@Override
 	public Page<ShopProductsEntity> findByKeyWord(String keyword, Pageable pageable){
 		
-		// TODO Auto-generated method stub
+		// Gọi lớp dao để xử lý
 		return productsRepository.findByKeyWord(keyword, pageable);
+	}
+	
+	@Override
+	public Page<ShopProductsEntity> findAllProductEnable(Long idCategory,String keyword,Pageable page) {
+		// Gọi lớp dao để xử lý
+		return productsRepository.findAllProductEnable(idCategory,keyword,page);
 	}
 
 	@Override
@@ -133,11 +140,7 @@ public class ProductServicesImpl implements ProductServices {
 		return productsRepository.filterShop(priceStart,priceEnd,pageable);
 	}
 
-	@Override
-	public Page<ShopProductsEntity> findAllProductEnable(Long idCategory, String priceStart, String priceEnd,Pageable page) {
-		// TODO Auto-generated method stub
-		return productsRepository.findAllProductEnable(idCategory,page);
-	}
+	
 
 	@Override
 	public void uploadImageById(Long id, String image) {
@@ -151,6 +154,18 @@ public class ProductServicesImpl implements ProductServices {
 		// TODO Auto-generated method stub
 		return productsRepository.filterShopPriceAndCategory(priceStart, priceEnd, cagegory_id, page);
 	}
+
+	@Override
+	public ShopProductsEntity findById(Long productId) {
+		// TODO Auto-generated method stub
+		return productsRepository.findById_c(productId);
+	}
+
+//	@Override
+//	public Page<ShopProductsEntity> findByKeyWordHomePage(long idCategory, String keyword, Pageable pageable) {
+//		// TODO Auto-generated method stub
+//		return productsRepository.findByKeyWordHomePage(idCategory, keyword,pageable);
+//	}
 
 
 

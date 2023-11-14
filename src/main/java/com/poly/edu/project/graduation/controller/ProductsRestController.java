@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.edu.project.graduation.dao.ProductsRepository;
 import com.poly.edu.project.graduation.model.ResponseObject;
+import com.poly.edu.project.graduation.model.ShopFavoutiteEntity;
 import com.poly.edu.project.graduation.model.ShopProductImageEntity;
 import com.poly.edu.project.graduation.model.ShopProductReviewsEntity;
 import com.poly.edu.project.graduation.model.ShopProductsEntity;
@@ -33,6 +35,7 @@ public class ProductsRestController {
 	ProductsRepository productsRepository;
 	@Autowired
 	ReviewProductService reviewProductService;
+	
 
 	// api lấy tất cả sản phẩm search theo keyword nhập vào
 	@RequestMapping(value = "/getProducts", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -40,11 +43,18 @@ public class ProductsRestController {
 			@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
 			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
 			@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort) throws Exception {
+			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
+			@RequestParam(name = "idCategory", required = false, defaultValue = "") Long idCategory) throws Exception {
 		try {
-			Page<ShopProductsEntity> dataProduct = productServices.findByKeyWord(keyword, PageRequest.of(page, size));
-
-			return dataProduct;
+			if(idCategory == null) {
+				Page<ShopProductsEntity> dataProduct = productServices.findByKeyWord(keyword, PageRequest.of(page, size));
+				return dataProduct;
+			}
+			else {
+				Page<ShopProductsEntity> dataProduct = productServices.findAllProductEnable(idCategory,keyword, PageRequest.of(page, size));
+				return dataProduct;
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,25 +62,34 @@ public class ProductsRestController {
 		return null;
 	}
 
-	// api lấy tất cả sản phẩm search theo keyword nhập vào
+	//	@Anh Bin
+	//  Api lấy hiển thị sản phẩm (tích hợp 3 chức năng: load sản phẩm, lọc sản phẩm theo danh mục, tìm kiếm sản phẩm), có sử dụng phân trang
 	@RequestMapping(value = "/findListProductExist", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public Page<ShopProductsEntity> findListProductExist(
-			@RequestParam(name = "priceStart", required = false, defaultValue = "0") String priceStart,
-			@RequestParam(name = "priceEnd", required = false, defaultValue = "999999999") String priceEnd,
+			//	là biến id của loại sản phẩm
 			@RequestParam(name = "idCategory", required = false, defaultValue = "") Long idCategory,
+			//	là biến số lượng sản phẩm được trả về sau khi gọi api, defaultValue = 9 sản phẩm
 			@RequestParam(name = "size", required = false, defaultValue = "9") int size,
+			//	là biến số trang sẽ hiển thị khi gọi api, nếu không truyền gì mặc định sẽ là trang đầu tiên (trang 0)
 			@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-			@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
-			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort) throws Exception {
+			//	là biến từ khoá để người dụng search sản phẩm , nếu không truyền gì sẽ là "", lấy tất cả sản phẩm
+			@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword) throws Exception {
 		try {
+			/* Khi gọi api này, sẽ kiểm tra xem người dùng có truyền vào id loại sản phẩm không, nếu không truyền thì sẽ 
+			 * tìm kiếm sản phẩm theo từ khoá truyền vào trên thanh search
+			 * 
+			 */
 			if (idCategory == null) {
 				Page<ShopProductsEntity> dataProduct = productServices.findByKeyWord(keyword,
 						PageRequest.of(page, size));
 				return dataProduct;
 			}
-			Page<ShopProductsEntity> dataProduct = productServices.findAllProductEnable(idCategory, priceStart,
-					priceEnd, PageRequest.of(page, size));
+			/*
+			 * Nếu id loại sản phẩm có truyền vào sẽ chạy phương thức dưới đây: vừa search theo keyword, 
+			 * vừa search theo id danh mục, có phân trang
+			 */
+			Page<ShopProductsEntity> dataProduct = productServices.findAllProductEnable(idCategory,keyword, PageRequest.of(page, size));
 			return dataProduct;
 
 		} catch (Exception e) {
@@ -158,5 +177,8 @@ public class ProductsRestController {
 	public List<ShopProductsEntity> getRandomProduct(@RequestParam("id") String id) {
 		return productServices.findProductRandomById(id);
 	}
+	
+
+	
 
 }

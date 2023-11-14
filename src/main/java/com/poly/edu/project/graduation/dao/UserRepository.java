@@ -55,5 +55,10 @@ public interface UserRepository extends JpaRepository<AppUserEntity, Long> {
 
     @Query("SELECT c FROM AppUserEntity c WHERE c.email = ?1")
     AppUserEntity existsByEmail(String email);
+    
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE app_user SET  encryted_password = ?1 WHERE user_id = ?2", nativeQuery = true)
+    void changePass(String password,String id);
 
 }

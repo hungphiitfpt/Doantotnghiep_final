@@ -37,6 +37,7 @@ public interface ProductServices {
 
 	Page<ShopProductsEntity> findByKeyWord(String keyword, Pageable pageable);
 
+
 	Optional<ShopCategoriesEntity> findAllCategory();
 
 	List<ShopProductsEntity> findAllProductByCategoryId(Long idCategory);
@@ -54,11 +55,14 @@ public interface ProductServices {
 
 	Page<ShopProductsEntity> filterShop( String priceStart, String priceEnd, Pageable pageable);
 
-	Page<ShopProductsEntity> findAllProductEnable(Long idCategory, String priceStart, String priceEnd,Pageable page);
+	
+	Page<ShopProductsEntity> findAllProductEnable(Long idCategory, String keyword,Pageable page);
 
 	void uploadImageById(Long id, String image);
 
 	Page<ShopProductsEntity> filterShopPriceAndCategory(String priceStart, String priceEnd, String cagegory_id,Pageable page);
+
+	ShopProductsEntity findById(Long id);
 
 	
 

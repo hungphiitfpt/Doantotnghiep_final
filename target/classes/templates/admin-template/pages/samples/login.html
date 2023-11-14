@@ -57,15 +57,14 @@
 											Keep me signed in
 										</label>
 									</div> -->
-									<a th:href="@{/forgot_password}" class="auth-link text-black">Forgot password?</a>
+									<a th:href="@{/forgot_password}" class="auth-link text-black">Quên Mật Khẩu?</a>
 								</div>
 							</form>
 							<div class="mb-2">
 								<a th:href="@{/oauth2/authorization/facebook}">
 									<button type="button" id="btnFacebook"
 										class="btn btn-block btn-facebook auth-form-btn">
-										<i class="typcn typcn-social-facebook mr-2"></i>Connect using
-										facebook
+										<i class="typcn typcn-social-facebook mr-2"></i>Đăng nhập bằng Facebook
 									</button>
 								</a>
 							</div>
@@ -73,20 +72,19 @@
 								<a th:href="@{/oauth2/authorization/google}">
 									<button type="button" id="btnGoogle"
 										class="btn btn-block btn-google auth-form-btn">
-										<i class="typcn typcn-social-google-plus mr-2"></i>Connect
-										using google
+										<i class="typcn typcn-social-google-plus mr-2"></i>Đăng nhập bằng Google
 									</button>
 								</a>
 							</div>
-
+<!-- 
 							<div class="text-center mt-4 font-weight-light">
 								Tài Khoản DEMO :
 								<p>USER: dbadmin1</p>
 								<p>PASS: 123</p>
-							</div>
+							</div> -->
 							<div class="text-center mt-4 font-weight-light">
-								Don't have an account? <a th:href="@{/register}"
-									class="text-primary">Create</a>
+								Bạn chưa có tài khoản? <a th:href="@{/register}"
+									class="text-primary">Tạo</a>
 							</div>
 						</div>
 					</div>

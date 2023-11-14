@@ -20,4 +20,11 @@ public class MyAccountController {
 		return "shop-template/setting-account";
 		
 	}
+	
+	@RequestMapping("change_pass")
+	public String change_pass(Model model, Principal principal) {
+	  
+		return "shop-template/change-password";
+		
+	}
 }

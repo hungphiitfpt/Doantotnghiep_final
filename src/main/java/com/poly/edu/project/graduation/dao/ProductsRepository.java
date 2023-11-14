@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +24,6 @@ public interface ProductsRepository extends JpaRepository<ShopProductsEntity, Lo
 	List<ShopProductsEntity> findByName(String name);
 	
 	// Câu lệnh tìm kiếm sản phẩm theo nhiều điều kiện
-
 	@Query(value ="SELECT  * from shop_products where shop_products.is_deleted = false "
 			+ "AND shop_products.id 				LIKE CONCAT('%',:keyword,'%') "
 			+ "OR shop_products.product_code 		LIKE CONCAT('%',:keyword,'%') "
@@ -36,6 +36,10 @@ public interface ProductsRepository extends JpaRepository<ShopProductsEntity, Lo
 			+ "OR shop_products.updated_at 			LIKE CONCAT('%',:keyword,'%') "
 			 ,nativeQuery = true)
 	Page<ShopProductsEntity> findByKeyWord(String keyword, Pageable pageable);
+	
+	// Câu lệnh query xuống database theo id loại sản phẩm và tên sản phẩm
+	@Query(value ="SELECT * FROM shop_products where category_id = :idCategory and product_name LIKE CONCAT('%',:keyword,'%')",nativeQuery = true)
+	Page<ShopProductsEntity> findAllProductEnable(Long idCategory,String keyword, Pageable page);
 	
 //	@Query(value= "SELECT p.id, p.product_code, p.product_name, "
 //			+ "	   p.short_decription,p.decription,p.list_price, "
@@ -71,8 +75,7 @@ public interface ProductsRepository extends JpaRepository<ShopProductsEntity, Lo
 	@Query(value ="SELECT * FROM shop_products where list_price BETWEEN :priceStart AND :priceEnd AND category_id = :category_id",nativeQuery = true)
 	Page<ShopProductsEntity> filterShopPriceAndCategory( String priceStart, String priceEnd,String category_id, Pageable pageable);
 
-	@Query(value ="SELECT * FROM shop_products where category_id LIKE CONCAT('%',:idCategory,'%')",nativeQuery = true)
-	Page<ShopProductsEntity> findAllProductEnable(Long idCategory, Pageable page);
+
 	
 	@Query(value ="SELECT * FROM shop_products where is_deleted = false",nativeQuery = true)
 	Page<ShopProductsEntity> findProductEnable(Pageable page);
@@ -81,5 +84,15 @@ public interface ProductsRepository extends JpaRepository<ShopProductsEntity, Lo
 	@Query(value ="INSERT INTO shop_product_image (product_id,image) VALUES (:id,:image)",nativeQuery = true)
 	@Transactional
 	void uploadListImageById(Long id, String image);
+	
+	@Query(value =" SELECT quantity_per_unit FROM shop_products WHERE id = :product_id",nativeQuery = true)
+	long checkTonKho(Long product_id);
+
+	@Query(value =" SELECT * FROM shop_products WHERE id = :productId",nativeQuery = true)
+	ShopProductsEntity findById_c(Long productId);
+	
+//	@Query(value ="SELECT * FROM shop_products where category_id = :idCategory and product_name LIKE CONCAT('%',:keyword,'%')",nativeQuery = true)
+//	Page<ShopProductsEntity> findAllProductEnable(Long idCategory,String keyword, Pageable page);
+
 
 }

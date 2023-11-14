@@ -6,6 +6,7 @@ cart = JSON.parse(localStorage.getItem("cart"));
 if (cart == null) {
 	cart = [];
 }
+
 /**
  * api thêm sản phẩm vào giỏ hàng
  * @param {*} productId id của sản phẩm
@@ -78,6 +79,7 @@ $(this).parents('.product').find('.cart__total').text(formatVND(money));
 })
 
 $(document).on('click','.dec.qtybtn',async function () {
+    
 	let quantity = $(this).parents('.product').find('.input-quantity-buy-cart').val();
 	let productId = $(this).parents('.product').find('.infoAddCart').data('id');
 	let productName = $(this).parents('.product').find('.infoAddCart').data('name');
@@ -107,6 +109,7 @@ $(this).parents('.product').find('.cart__total').text(formatVND(money));
 })
 
 $(document).on('input change','.input-quantity-buy-cart',async function () {
+	
 	let quantity = $(this).parents('.product').find('.input-quantity-buy-cart').val();
 	let productId = $(this).parents('.product').find('.infoAddCart').data('id');
 	let productName = $(this).parents('.product').find('.infoAddCart').data('name');
@@ -217,3 +220,14 @@ if(res.status == 200) {
 	
 }
 }
+async function deleteHearth(e) {
+   let method = 'post',
+	url = `${api_graduation}deleteHearth`,
+	params = {IdProduct: e.getAttribute("data-idproduct")}
+	data = {}
+	let res = await axiosTemplate(method, url, params, data);
+	sweatAlert(`Bạn đã xoá sản phẩm trong danh sách yêu thích`, "success")
+	var trProduct = e.parentNode.closest('.product');
+	trProduct.remove();
+}
+

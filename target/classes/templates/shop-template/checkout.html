@@ -53,8 +53,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
-						<a href="./index.html"><i class="fa fa-home"></i> Home</a> <span>Shopping
-							cart</span>
+						<a href="./index.html"><i class="fa fa-home"></i> Trang Chủ</a> <span>Giỏ hàng</span>
 					</div>
 				</div>
 			</div>
@@ -70,7 +69,7 @@
 			<form  class="checkout__form"  action="#" th:action="@{/addInfoUser}" modelAttribute="employee"  method="post">
 				<div class="row">
 					<div class="col-lg-8">
-						<h5>Billing detail</h5>
+						<h5>Chi tiết hoá đơn</h5>
 						<div class="row">
 
 							<div class="col-lg-12 col-md-12 col-sm-12">
@@ -132,11 +131,11 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="checkout__order">
-							<h5>Your order</h5>
+							<h5>Đơn đặt hàng của bạn</h5>
 							<div class="checkout__order__product">
 								<ul>
-									<li><span class="top__text">Product</span> <span
-										class="top__text__right">Total</span></li>
+									<li><span class="top__text">Sản phẩm</span> <span
+										class="top__text__right">Tổng tiền</span></li>
 									<li th:each="cart : ${cart}" class="product row" style="justify-content: space-between">
 										<h1 class="cut-short-text" th:text="${cart.productName}">01. Chain buck bag</h1> 
 										<span th:text="${#numbers.formatDecimal(cart.price, 0, 'COMMA', 0, 'POINT')} + ' ₫'">$ 300.0</span>
@@ -160,11 +159,11 @@
 								<!-- <p>Create am acount by entering the information below. If
 									you are a returing customer login at the top of the page.</p> -->
 								<label for="check-payment"> Thanh toán bằng tiền mặt <input
-									type="radio" id="check-payment" name="paymentTypeId" value="0"> <span class="checkmark"></span>
+									type="radio" id="check-payment" name="paymentTypeId" value="1"> <span class="checkmark"></span>
 								</label> 
-								<label for="momo"> Thanh toán Momo <input type="radio" id="momo" name="paymentTypeId" value="1"> <span class="checkmark"></span>
+								<label for="momo"> Thanh toán Momo <input type="radio" id="momo" name="paymentTypeId" value="2"> <span class="checkmark"></span>
 								</label>
-								<label for="paypal"> Thanh toán PAYPAL <input type="radio" id="paypal" name="paymentTypeId" value="2"> <span class="checkmark"></span>
+								<label for="paypal"> Thanh toán PAYPAL <input type="radio" id="paypal" name="paymentTypeId" value="3"> <span class="checkmark"></span>
 								</label>
 							</div>
 							<button type="submit" class="site-btn">

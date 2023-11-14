@@ -31,8 +31,8 @@
 /* Template default CSS
 /*----------------------------------------*/
 :root {
-  --color-background: #b33636;
-  --text-white : #fff;
+  --color-background: #ffff;
+  --text-white : #3d3d3d;
   --background-btn-gray: #3d3d3d;
 }
 

@@ -70,8 +70,6 @@ public class ShopProductsEntity {
     @OneToMany(mappedBy = "shopProductsByProductId")
     private List<ShopOrderDetailEntity> shopOrderDetailsById;
     @OneToMany(mappedBy = "shopProductsByProductId")
-    private List<ShopProductDiscountEntity> shopProductDiscountsById;
-    @OneToMany(mappedBy = "shopProductsByProductId")
     private List<ShopProductImageEntity> shopProductImagesById;
     @OneToMany(mappedBy = "shopProductsByProductId")
     private List<ShopProductReviewsEntity> shopProductReviewsById;
@@ -267,14 +265,6 @@ public class ShopProductsEntity {
 
     public void setShopOrderDetailsById(List<ShopOrderDetailEntity> shopOrderDetailsById) {
         this.shopOrderDetailsById = shopOrderDetailsById;
-    }
-
-    public List<ShopProductDiscountEntity> getShopProductDiscountsById() {
-        return shopProductDiscountsById;
-    }
-
-    public void setShopProductDiscountsById(List<ShopProductDiscountEntity> shopProductDiscountsById) {
-        this.shopProductDiscountsById = shopProductDiscountsById;
     }
 
     public List<ShopProductImageEntity> getShopProductImagesById() {

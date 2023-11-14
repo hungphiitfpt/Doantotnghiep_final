@@ -42,7 +42,6 @@ public class ProductController {
 	@RequestMapping("/index")
 	public String index() {
 		return "shop-template/index";
-
 	}
 
 	/*
@@ -55,34 +54,41 @@ public class ProductController {
 			@RequestParam(name = "page", required = false, defaultValue = "0") int page,
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort) {
 		try {
-			Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
-			Page<ShopProductsEntity> listProduct;
-			listProduct = productServices.findAllProducts(idCategory, PageRequest.of(page, size));
+			// Lấy danh sách sản phẩm từ service dựa trên các tham số như idCategory, size, page, sort
+			Page<ShopProductsEntity> listProduct = productServices.findAllProducts(idCategory, PageRequest.of(page, size));
+			
+			// Lấy danh sách các danh mục sản phẩm từ service
 			List<ShopCategoriesEntity> listCategory = categoryServices.findAll();
+			
+			// Thêm các thuộc tính vào model để truyền đến view
 			model.addAttribute("category", listCategory);
 			model.addAttribute("product", listProduct);
-			model.addAttribute("cartStarts", Utils.cartStarts(cartItems));
+			
+			// Tính toán và thêm thông tin giỏ hàng vào model
+			Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
+			model.addAttribute("cartStarts", Utils.cartStarts(cartItems, session));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// Xử lý nếu có lỗi
 			e.printStackTrace();
 		}
 		return "shop-template/shop";
-
 	}
 
+	/*
+	 * Trả về view chi tiết sản phẩm dựa trên id sản phẩm
+	 */
 	@RequestMapping("/getProductByid/{id}")
 	public String getProductById(Model model, @PathVariable Long id) {
-
+		// Lấy thông tin sản phẩm từ service dựa trên id
 		ShopProductsEntity product = productServices.findProductById(id);
 
+		// Thêm thông tin sản phẩm và các thuộc tính khác vào model để truyền đến view
 		model.addAttribute("product", product);
-
 		model.addAttribute("images", product.getShopProductImagesById());
 		System.out.println(product.getShopProductImagesById());
-
 		model.addAttribute("review", product.getShopProductReviewsById());
 
+		// Trả về view chi tiết sản phẩm
 		return "shop-template/product-details";
-
 	}
 }

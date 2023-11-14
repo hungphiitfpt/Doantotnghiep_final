@@ -1,9 +1,6 @@
 package com.poly.edu.project.graduation.springSecurity;
 
-
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,76 +12,64 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-
 import com.poly.edu.project.graduation.services.UserService;
 import com.poly.edu.project.graduation.services.impl.UserDetailsServiceImpl;
 
-
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
-	
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 
-
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
 	}
 	
+	// Cấu hình xác thực người dùng
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
 		http.csrf().disable().cors().disable();
-
-		// Các trang không yêu cầu login
+		
+		// Cấu hình các URL không yêu cầu xác thực (authentication)
 		http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
-
-		// Trang /userInfo yêu cầu phải login với vai trò ROLE_USER hoặc ROLE_ADMIN.
-		// Nếu chưa login, nó sẽ redirect tới trang /login.
+		
+		// Cấu hình các URL yêu cầu vai trò ROLE_USER hoặc ROLE_ADMIN để truy cập
 		http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-
-		// Trang chỉ dành cho ADMIN
+		
+		// Cấu hình các URL chỉ dành cho ROLE_ADMIN
 		http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
-		// Khi người dùng đã login, với vai trò XX.
-		// Nhưng truy cập vào trang yêu cầu vai trò YY,
-		// Ngoại lệ AccessDeniedException sẽ ném ra.
+		
+		// Cấu hình trang 403 khi truy cập bị từ chối
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
-		http.oauth2Login()
-		.loginPage("/login")
-		.defaultSuccessUrl("/oauth2/login/success", true)
-		.failureUrl("/auth/login/error")
-		.authorizationEndpoint()
-		.baseUri("/oauth2/authorization");// sử dụng để khai báo vào link đăng nhập 
-		// Cấu hình cho Login Form.
-		http.authorizeRequests().and().formLogin()//
-				// Submit URL của trang login
-				.loginProcessingUrl("/j_spring_security_check") // Submit URL
-				.loginPage("/login")//
-				.defaultSuccessUrl("/admin/manager_order_product")//
-				.failureUrl("/login?error=true")//
-				.usernameParameter("username")//
-				.passwordParameter("password")
-				// Cấu hình cho Logout Page.
-				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
-
-		// Cấu hình Remember Me.
-		http.authorizeRequests().and() //
-				.rememberMe().tokenRepository(this.persistentTokenRepository()) //
-				.tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
-
+		// Cấu hình trang đăng nhập và xử lý đăng nhập
+		http.authorizeRequests().and().formLogin()
+			.loginProcessingUrl("/j_spring_security_check")
+			.loginPage("/login")
+			.defaultSuccessUrl("/admin/manager_order_product")
+			.failureUrl("/login?error=true")
+			.usernameParameter("username")
+			.passwordParameter("password");
+		
+		// Cấu hình trang đăng xuất
+		http.authorizeRequests().and().logout()
+			.logoutUrl("/logout")
+			.logoutSuccessUrl("/login");
+		
+		// Cấu hình Remember Me để giữ phiên đăng nhập
+		http.authorizeRequests().and().rememberMe()
+			.tokenRepository(this.persistentTokenRepository())
+			.tokenValiditySeconds(1 * 24 * 60 * 60); // 24 giờ
 	}
 
 	@Bean
@@ -92,5 +77,4 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
 	    InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
 	    return memory;
 	}
-
 }

@@ -692,3 +692,38 @@ ul.list-category {
 .product__details__price__old {
 	text-decoration: line-through;
 }
+	.search-container {
+  position: relative;
+  width: 600px;
+  transition: width 0.3s ease-in-out;
+}
+
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  font-size: 16px;
+}
+
+.search-container button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  padding: 10px;
+  background-color: #ccc;
+  border: none;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.search-container button:hover {
+  background-color: #555;
+}
+
+.search-container.expanded {
+  width: 400px;
+}
