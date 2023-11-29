@@ -4,11 +4,39 @@ async function changePass() {
 	}else if($('#pass-2').val() != $('#pass-1').val()){
 		alert('Xác nhận mật khẩu phải trùng với mật khẩu mới')
 	}else{
-		 let method = 'post',
+	let method = 'post',
 	url = `${api_graduation}changePass`,
 	params = {passWord: $('#pass-1').val()}
 	data = {}
 	let res = await axiosTemplate(method, url, params, data);
 	sweatAlert(`Bạn đổi pass thành công`, "success")
 	}
+}
+
+async function updateUser() {
+	 let selectedGender = $("input[name='inlineRadioOptions']:checked").val();
+	 let username_form = $('#username_form').val();
+	 let firstname_form = $('#firstname_form').val();
+	 let lastname_form = $('#lastname_form').val();
+	 let email_form = $('#email_form').val();
+	 let date_form = $('#date_form').val();
+	 let city_form = $('#city_form').val();
+	 let address_form = $('#address_form').text();	 
+	 console.log(selectedGender);
+	let method = 'post',
+	url = `${api_admin}update/${username_form}`,
+	params = {	
+	}
+	data = {
+	firstName : firstname_form,	
+	lastName : lastname_form,
+	gender : selectedGender,
+	email : email_form,
+	birthday : date_form,
+	address : address_form,
+	city :city_form
+	}
+	let res = await axiosTemplate(method, url, params, data);
+	sweatAlert(`Bạn đổi pass thành công`, "success")
+	
 }

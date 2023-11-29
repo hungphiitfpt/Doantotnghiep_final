@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.poly.edu.project.graduation.model.AppUserEntity;
 
@@ -61,4 +62,7 @@ public interface UserRepository extends JpaRepository<AppUserEntity, Long> {
     @Query(value = "UPDATE app_user SET  encryted_password = ?1 WHERE user_id = ?2", nativeQuery = true)
     void changePass(String password,String id);
 
+    // Câu lệnh tìm kiếm Người Dùng theo tên đăng nhập
+    @Query("SELECT c FROM AppUserEntity c WHERE c.userName = :userName")
+    AppUserEntity findByUsername(@Param("userName") String userName);
 }

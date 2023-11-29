@@ -73,14 +73,8 @@ $(document).on('click', '.page-link', async function() {
 $(document).on('click', '.filter-product-by-categoryId', async function() {
 	var idCategoryOld = localStorage.getItem("idCategoryOld");
 	let idCategory = $(this).data('id');
-	if(idCategoryOld == idCategory){
-		
-	}
 	let page = localStorage.getItem("currentPage");
-	
 	localStorage.setItem('idCategoryOld', idCategory);
-	
-	console.log(idCategoryOld);console.log(idCategory);
 	let priceStart = $('#minamount').val();
 	let priceEnd = $('#maxamount').val();
 	$('.filter-product-by-categoryId').removeClass('active-btn-filter-category')
@@ -89,15 +83,29 @@ $(document).on('click', '.filter-product-by-categoryId', async function() {
 	$('.overlapTwo').removeClass('bg-active')
 	$(this).find('.overlapTwo').addClass('bg-active');
 	localStorage.setItem('currentPage', page);
+	let parameter = {};
+	if(idCategoryOld == idCategory){
+		localStorage.removeItem('idCategoryOld');
+		  $('.filter-product-by-categoryId').removeClass('active-btn-filter-category')
+		parameter = { 
+			page: 0, 
+			size: 9,
+			keyword : $('#input-search-list-product').val(),
+			priceStart: priceStart,
+			priceEnd: priceEnd}
+		}
+	else {
+			parameter = { 
+			page: 0, 
+			size: 9,
+			keyword : $('#input-search-list-product').val(),
+			idCategory: idCategory, 
+			priceStart: priceStart,
+			priceEnd: priceEnd}
+	}
 	let method = 'get',
 	url = `${api_graduation}findListProductExist`,
-	params = { 
-	page: 0, 
-	size: 9,
-	keyword : $('#input-search-list-product').val(),
-	idCategory: idCategory, 
-	priceStart: priceStart,
-	priceEnd: priceEnd},
+	params = parameter,
 	data = {};
 	let res = await axiosTemplate(method, url, params, data);
 	drawDataProductShop(res);
@@ -151,14 +159,9 @@ async function drawDataProductShop(res) {
 			buttonAddCart = ``;
 		}
 		// số lượng sản phẩm thì mới hiển thị giá đang giảm, và nút cho mua hàng
-		else if(res.data.content[i].discountinued > 0) {
+		else {
 			labelDiscount = `<div class="label sale">${res.data.content[i].discountinued}%</div>`;
 			buttonAddCart= `<li onclick="addItemToCart(${res.data.content[i].id},'${res.data.content[i].productName}',1,${formatmoney},'${res.data.content[i].image}')"><a href="#"><span class="icon_bag_alt"></span></a></li>`;
-		}
-		// trường hợp còn lại hết hàng
-		else {
-			labelDiscount = `<div class="label stockout">Hết hàng</div>`;
-			buttonAddCart = ``;
 		}
 		// biến để vẽ 1 cục sản phẩm, trả về mã HTML
 		productHTML += `<div class="col-lg-4 col-md-6">

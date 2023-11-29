@@ -13,6 +13,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,5 +96,29 @@ public class UserRestController {
 		String userName = principal.getName();
 		String id = userService.findIdUserByPrincipal(userName);
 	}
+	
+	   @PostMapping("/update/{userName}")
+	    public ResponseEntity<String> updateUser(@PathVariable String userName, @RequestBody AppUserEntity updatedUser) {
+	        // Kiểm tra xem người dùng có tồn tại hay không
+	        AppUserEntity existingUser = userRepository.findByUsername(userName);
+	        if (existingUser == null) {
+	            return new ResponseEntity<>("Người dùng không tồn tại", HttpStatus.NOT_FOUND);
+	        }
+	        System.out.println(updatedUser.getFirstName());
+	        // Cập nhật thông tin người dùng
+	        existingUser.setFirstName(updatedUser.getFirstName());
+	        existingUser.setLastName(updatedUser.getLastName());
+	        existingUser.setGender(updatedUser.getGender());
+	        existingUser.setEmail(updatedUser.getEmail());
+	        existingUser.setBirthday(updatedUser.getBirthday());
+	        existingUser.setAddress(updatedUser.getAddress());
+	        existingUser.setCountry(updatedUser.getCountry());
+	        existingUser.setCity(updatedUser.getCity());
+
+	        // Lưu người dùng đã cập nhật vào cơ sở dữ liệu
+	        userRepository.save(existingUser);
+
+	        return new ResponseEntity<>("Thông tin người dùng đã được cập nhật", HttpStatus.OK);
+	    }
 	
 }

@@ -4,6 +4,9 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -40,6 +43,7 @@ public class AppUserEntity {
     @Column(name = "email", nullable = true, length = 200)
     private String email;
     @Basic
+    @JsonFormat(pattern="yyyy/MM/dd")
     @Column(name = "birthday", nullable = true)
     private Date birthday;
     @Basic
