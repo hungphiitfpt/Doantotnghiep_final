@@ -1,5 +1,6 @@
 $(function () {
 	// showcart();
+	reloadedHearchFavourite();
 })
 var cart = [];
 cart = JSON.parse(localStorage.getItem("cart"));
@@ -229,5 +230,14 @@ async function deleteHearth(e) {
 	sweatAlert(`Bạn đã xoá sản phẩm trong danh sách yêu thích`, "success")
 	var trProduct = e.parentNode.closest('.product');
 	trProduct.remove();
+	reloadedHearchFavourite();
 }
 
+async function reloadedHearchFavourite() {
+	let method = 'get',
+	 url = `${api_graduation}countQuantity`,
+	 params = {}
+	 data = {}
+	 let res = await axiosTemplate(method, url, params, data);
+	 $('.tip_quantity_favourite').text(res.data);
+ }

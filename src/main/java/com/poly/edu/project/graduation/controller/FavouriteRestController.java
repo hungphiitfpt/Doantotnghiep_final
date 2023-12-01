@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.edu.project.graduation.dao.FavouriteRepository;
 import com.poly.edu.project.graduation.dao.UserRepository;
+import com.poly.edu.project.graduation.model.CountFavorite;
 import com.poly.edu.project.graduation.model.ShopFavoutiteEntity;
 import com.poly.edu.project.graduation.services.UserService;
 
@@ -50,7 +51,7 @@ public class FavouriteRestController {
 	
 	@RequestMapping(value = "/createHearthForUser", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public  void createHearth(Principal principal,
+	public void createHearth(Principal principal,
 			@RequestParam(name = "IdProduct", required = false, defaultValue = "") String product) {	
 		String userName = principal.getName();
 		String idUser  = userService.findIdUserByPrincipal(userName);
@@ -68,11 +69,10 @@ public class FavouriteRestController {
 	
 	@RequestMapping(value = "/countQuantity", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public int countQuantityHearthProduct(Principal principal) {
+	public long countQuantityHearthProduct(Principal principal) {
 		String userName = principal.getName();
 		String idUser  = userService.findIdUserByPrincipal(userName);
-		int result = favouriteRepository.countQuantity(idUser);
-		return result;
+		return favouriteRepository.countQuantity(idUser);
 	}
 	
 	@RequestMapping(value = "/changePass", method = RequestMethod.POST, produces = {

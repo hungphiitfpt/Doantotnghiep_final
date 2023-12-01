@@ -70,6 +70,7 @@ function readURL(input) {
       data = {};
     let res =  axiosTemplate(method, url, params, data);
 }
+
 let a = [];
 const getListImages = () => {
 

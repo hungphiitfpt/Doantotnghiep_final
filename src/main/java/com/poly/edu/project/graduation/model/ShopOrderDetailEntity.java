@@ -51,7 +51,7 @@ public class ShopOrderDetailEntity {
     @Basic
     @Column(name = "category", nullable = true, length = 500)
     private String category;
-    @ManyToOne
+	@ManyToOne
     @JsonIgnore
     @JoinColumn(name = "order_id", referencedColumnName = "id", insertable = false, updatable = false)
     private ShopOrdersEntity shopOrdersByOrderId;

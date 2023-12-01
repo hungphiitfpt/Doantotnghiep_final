@@ -225,6 +225,16 @@ async function drop_heart(e) {
 	params = {IdProduct: e.getAttribute("data-idproduct")}
 	data = {}
 	let res = await axiosTemplate(method, url, params, data);
-	sweatAlert(`Bạn đã thêm sản phẩm vào danh sách yêu thích`, "success")
+	sweatAlert(`Bạn đã thêm sản phẩm vào danh sách yêu thích`, "success");
+	reloadedHearchFavourite();
 	
+}
+
+async function reloadedHearchFavourite() {
+   let method = 'get',
+	url = `${api_graduation}countQuantity`,
+	params = {}
+	data = {}
+	let res = await axiosTemplate(method, url, params, data);
+	$('.tip_quantity_favourite').text(res.data);
 }

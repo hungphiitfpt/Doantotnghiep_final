@@ -114,6 +114,7 @@ public class UserRestController {
 	        existingUser.setAddress(updatedUser.getAddress());
 	        existingUser.setCountry(updatedUser.getCountry());
 	        existingUser.setCity(updatedUser.getCity());
+	        existingUser.setAvatar(updatedUser.getAvatar());
 
 	        // Lưu người dùng đã cập nhật vào cơ sở dữ liệu
 	        userRepository.save(existingUser);

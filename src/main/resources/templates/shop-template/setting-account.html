@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head>
+<sty>
 <meta charset="UTF-8">
 <meta name="description" content="Ashion Template">
 <meta name="keywords" content="Ashion, unica, creative, html">
@@ -40,10 +40,16 @@
 	type="text/css">
 	
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../variable_template/variable_index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase.js"></script>
+<script
+	src="https://www.gstatic.com/firebasejs/8.2.8/firebase-storage.js"></script>
 
 </head>
 <style>
@@ -174,7 +180,7 @@ h1 {
 										<div class="avatar-upload">
 											<div class="avatar-edit">
 												<input type='file' id="imageUpload"
-													accept=".png, .jpg, .jpeg" /> <label for="imageUpload"></label>
+													accept=".png, .jpg, .jpeg" onchange="uploadImage()"/> <label for="imageUpload"></label>
 											</div>
 											<div class="avatar-preview">
 												<div id="imagePreview" th:image="${infoUser.avatar}"
@@ -318,11 +324,13 @@ h1 {
 	<script src="../shop-static/js/owl.carousel.min.js"></script>
 	<script src="../shop-static/js/jquery.nicescroll.min.js"></script>
 	<script src="../shop-static/js/main.js"></script>
-	<script src="../template-js/upload_file_template/index.js"></script>
-	<script src="../template-js/product_shop/product-single.js"></script>
-	<script src="../template-js/check_out_order/index.js"></script>
-	<script src="../template-js/check_out_order/changepass.js"></script>
 
+	<script src="../template-js/product_shop/product-single.js"></script>
+	<script src="../admin-static/js/file-upload.js"></script>
+	<script src="../template-js/check_out_order/changepass.js"></script>
+	<script src="../template-js/upload_file_template/index.js"></script>
+		<script src="../template-js/check_out_order/index.js"></script>
+	<script src="../template-js/config_firebase/index.js"></script>
 </body>
 
 </html>

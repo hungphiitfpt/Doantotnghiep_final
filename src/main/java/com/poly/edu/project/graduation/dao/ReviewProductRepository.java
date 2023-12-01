@@ -59,29 +59,29 @@ public interface ReviewProductRepository extends JpaRepository<ShopProductReview
 //	
 
 @Query(value = " "
-		+ "SELECT (sum(total_price))  FROM shop_orders where created_at LIKE CONCAT('%2022-01%') "
+		+ "SELECT (sum(total_price))  FROM shop_orders where created_at LIKE CONCAT('%2023-01%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-02%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-02%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-03%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-03%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-04%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-04%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-05%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-05%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-06%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-06%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-07%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-07%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-08%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-08%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-09%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-09%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-10%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-10%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-11%') "
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-11%') "
 		+ "UNION ALL "
-		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2022-12%')", nativeQuery = true)
+		+ "SELECT (sum(total_price)) FROM shop_orders where created_at LIKE CONCAT('%2023-12%')", nativeQuery = true)
 List<String> getTotalPrice();
 
 

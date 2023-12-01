@@ -38,6 +38,10 @@ public class ShopOrdersEntity {
     @Column(name = "ship_state", nullable = true, length = 255)
     private String shipState;
     @Basic
+    @Column(name = "note", nullable = true, length = 255)
+    private String note;
+
+	@Basic
     @Column(name = "shipping_fee", nullable = true, precision = 4)
     private Integer shippingFee;
     @Basic
@@ -194,54 +198,46 @@ public class ShopOrdersEntity {
         this.shippedDate = shippedDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public String getNote() {
+		return note;
+	}
 
-        ShopOrdersEntity that = (ShopOrdersEntity) o;
+	public void setNote(String note) {
+		this.note = note;
+	}
 
-        if (id != that.id) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (orderDate != null ? !orderDate.equals(that.orderDate) : that.orderDate != null) return false;
-        if (shipName != null ? !shipName.equals(that.shipName) : that.shipName != null) return false;
-        if (shipAddress != null ? !shipAddress.equals(that.shipAddress) : that.shipAddress != null) return false;
-        if (shipCity != null ? !shipCity.equals(that.shipCity) : that.shipCity != null) return false;
-        if (shipState != null ? !shipState.equals(that.shipState) : that.shipState != null) return false;
-        if (shippingFee != null ? !shippingFee.equals(that.shippingFee) : that.shippingFee != null) return false;
-        if (paymentTypeId != null ? !paymentTypeId.equals(that.paymentTypeId) : that.paymentTypeId != null)
-            return false;
-        if (paidDate != null ? !paidDate.equals(that.paidDate) : that.paidDate != null) return false;
-        if (orderStatus != null ? !orderStatus.equals(that.orderStatus) : that.orderStatus != null) return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-        if (totalPrice != null ? !totalPrice.equals(that.totalPrice) : that.totalPrice != null) return false;
-        if (shippedDate != null ? !shippedDate.equals(that.shippedDate) : that.shippedDate != null) return false;
+	public ShopOrdersEntity(long id, Long userId, Timestamp orderDate, String shipName, String shipAddress,
+			String shipCity, String shipState, String note, Integer shippingFee, Long paymentTypeId, Timestamp paidDate,
+			Integer orderStatus, Timestamp createdAt, Timestamp updatedAt, Integer totalPrice, Timestamp shippedDate,
+			List<ShopOrderDetailEntity> shopOrderDetailsById, AppUserEntity appUserByUserId,
+			ShopPaymentTypesEntity shopPaymentTypesByPaymentTypeId) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.orderDate = orderDate;
+		this.shipName = shipName;
+		this.shipAddress = shipAddress;
+		this.shipCity = shipCity;
+		this.shipState = shipState;
+		this.note = note;
+		this.shippingFee = shippingFee;
+		this.paymentTypeId = paymentTypeId;
+		this.paidDate = paidDate;
+		this.orderStatus = orderStatus;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.totalPrice = totalPrice;
+		this.shippedDate = shippedDate;
+		this.shopOrderDetailsById = shopOrderDetailsById;
+		this.appUserByUserId = appUserByUserId;
+		this.shopPaymentTypesByPaymentTypeId = shopPaymentTypesByPaymentTypeId;
+	}
 
-        return true;
-    }
+    public ShopOrdersEntity() {
+		super();
+	}
 
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (orderDate != null ? orderDate.hashCode() : 0);
-        result = 31 * result + (shipName != null ? shipName.hashCode() : 0);
-        result = 31 * result + (shipAddress != null ? shipAddress.hashCode() : 0);
-        result = 31 * result + (shipCity != null ? shipCity.hashCode() : 0);
-        result = 31 * result + (shipState != null ? shipState.hashCode() : 0);
-        result = 31 * result + (shippingFee != null ? shippingFee.hashCode() : 0);
-        result = 31 * result + (paymentTypeId != null ? paymentTypeId.hashCode() : 0);
-        result = 31 * result + (paidDate != null ? paidDate.hashCode() : 0);
-        result = 31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
-        result = 31 * result + (totalPrice != null ? totalPrice.hashCode() : 0);
-        result = 31 * result + (shippedDate != null ? shippedDate.hashCode() : 0);
-        return result;
-    }
-
-    public List<ShopOrderDetailEntity> getShopOrderDetailsById() {
+	public List<ShopOrderDetailEntity> getShopOrderDetailsById() {
         return shopOrderDetailsById;
     }
 

@@ -22,6 +22,7 @@ async function updateUser() {
 	 let date_form = $('#date_form').val();
 	 let city_form = $('#city_form').val();
 	 let address_form = $('#address_form').text();	 
+	 let imageSession = sessionStorage.getItem("image");
 	 console.log(selectedGender);
 	let method = 'post',
 	url = `${api_admin}update/${username_form}`,
@@ -34,9 +35,10 @@ async function updateUser() {
 	email : email_form,
 	birthday : date_form,
 	address : address_form,
-	city :city_form
+	city :city_form,
+	avatar:imageSession
 	}
 	let res = await axiosTemplate(method, url, params, data);
-	sweatAlert(`Bạn đổi pass thành công`, "success")
+	sweatAlert(`Bạn đã cập nhật người dùng thành công`, "success")
 	
 }

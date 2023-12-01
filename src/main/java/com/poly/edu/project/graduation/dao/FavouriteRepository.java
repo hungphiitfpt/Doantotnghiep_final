@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.poly.edu.project.graduation.model.CountFavorite;
 import com.poly.edu.project.graduation.model.ShopFavoutiteEntity;
 
 @Repository
@@ -34,8 +35,8 @@ public interface FavouriteRepository extends JpaRepository<ShopFavoutiteEntity, 
 	@Query(value = "DELETE FROM shop_favoutite WHERE product_id = ?1", nativeQuery =  true)	
 	void deletehearth(String id);
 
-	@Query(value = "SELECT count(*) FROM shop_favoutite Where shop_favoutite.user_id = ?1 "
-			+ "GROUP BY shop_favoutite.product_id;", nativeQuery =  true)	
-	int countQuantity(String idUser);
+	@Query(value = "SELECT count(DISTINCT product_id)\n"
+			+ "FROM shop_favoutite  Where shop_favoutite.user_id = ?1", nativeQuery =  true)	
+	long countQuantity(String idUser);
 
 }
