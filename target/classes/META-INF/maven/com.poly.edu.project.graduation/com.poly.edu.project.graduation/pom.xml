@@ -89,9 +89,9 @@
 			<version>2.3.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-java8time</artifactId>
-			<version>3.0.4.RELEASE</version>
+		    <groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		    <version>3.0.4.RELEASE</version> <!-- Chọn phiên bản phù hợp với dự án của bạn -->
 		</dependency>
 
 	</dependencies>

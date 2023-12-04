@@ -12,7 +12,7 @@ async function registerUser() {
 			encrytedPassword: $('#password_register_user').val(),
 			firstName: $('#firstname_register_user').val(),
 			lastName: $('#lastname_register_user').val(),
-			birthday: $('#birthday_register_user').val(),
+			birthday: Date.parse($('#birthday_register_user').val()),
 			address: $('#address_register_user').val(),
 			country: $('#country_register_user').val(),
 			gender: $("input[class='is_gender']:checked").val(),

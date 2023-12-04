@@ -19,7 +19,7 @@ public interface OrderRepository extends JpaRepository<ShopOrdersEntity, Long> {
     @Query(value = "SELECT * FROM shop_orders  "     
             + "WHERE (( :keyword <> '' AND (shop_orders.user_id LIKE CONCAT('%',:keyword,'%') "
             + "OR shop_orders.ship_name LIKE CONCAT('%',:keyword,'%') "
-            + "OR shop_orders.ship_address LIKE CONCAT('%',:keyword,'%') "
+            + "OR shop_orders.id LIKE CONCAT('%',:keyword,'%') "
             + "OR shop_orders.ship_city LIKE CONCAT('%',:keyword,'%') "
             + "OR shop_orders.ship_state LIKE CONCAT('%',:keyword,'%'))) "
             + "OR :keyword = '')", nativeQuery = true)
