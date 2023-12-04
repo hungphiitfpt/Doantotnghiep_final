@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Anh Hoàng</title>
+  <title>PolluxUI Admin</title>
   <!-- base:css -->
   <link rel="stylesheet" href="../admin-static/vendors/typicons/typicons.css">
   <link rel="stylesheet" href="../admin-static/vendors/css/vendor.bundle.base.css">
@@ -13,7 +13,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="../admin-static/css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" src="../admin-static/images/Picture1.png" />
+  <link rel="shortcut icon" href="../admin-static/images/favicon.png" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -25,7 +25,7 @@
 					<div class="col-lg-4 mx-auto">
 						<div class="auth-form-light text-left py-5 px-4 px-sm-5">
 							<div class="brand-logo">
-								<img src="../admin-static/images/Picture1.png" alt="logo">
+								<img ssrc="../admin-static/images/Picture1.png" alt="logo">
 							</div>
 							<div th:if="${#request.getParameter('error') == 'true'}">
 								<div class="alert alert-danger">Bạn nhập sai email và mật
@@ -60,7 +60,7 @@
 									<a th:href="@{/forgot_password}" class="auth-link text-black">Quên Mật Khẩu?</a>
 								</div>
 							</form>
-							<div class="mb-2">
+							<!-- <div class="mb-2">
 								<a th:href="@{/oauth2/authorization/facebook}">
 									<button type="button" id="btnFacebook"
 										class="btn btn-block btn-facebook auth-form-btn">
@@ -75,7 +75,7 @@
 										<i class="typcn typcn-social-google-plus mr-2"></i>Đăng nhập bằng Google
 									</button>
 								</a>
-							</div>
+							</div> -->
 <!-- 
 							<div class="text-center mt-4 font-weight-light">
 								Tài Khoản DEMO :
