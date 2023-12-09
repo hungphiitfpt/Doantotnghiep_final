@@ -1,5 +1,5 @@
 :root { 
-	--background-color-template: #ffffff;
+	--background-color-template: rgb(255, 255, 255);
 }
 
 html * {
@@ -99,7 +99,7 @@ p {
 }
 
 .modal-content {
-	color: var(--background-color-template);
+	color: black;
 }
 .form-group label {
 	font-weight: 600;

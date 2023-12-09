@@ -43,7 +43,7 @@ public interface OrderRepository extends JpaRepository<ShopOrdersEntity, Long> {
 
     // Truy vấn native SQL để hủy đơn hàng theo ID
     @Modifying  
-    @Query(value = "UPDATE ShopOrdersEntity SET orderStatus = 6 WHERE id = ?1")
+    @Query(value = "UPDATE ShopOrdersEntity SET orderStatus = 4 WHERE id = ?1")
     @Transactional
     void cancelOrderById(long id);
 
@@ -68,10 +68,6 @@ public interface OrderRepository extends JpaRepository<ShopOrdersEntity, Long> {
             + "UNION ALL "
             + "SELECT count(id) FROM shop_orders where order_status = 3 "
             + "UNION ALL "
-            + "SELECT count(id) FROM shop_orders where order_status = 4 "
-            + "UNION ALL "
-            + "SELECT count(id) FROM shop_orders where order_status = 5 "
-            + "UNION ALL "
-            + "SELECT count(id) FROM shop_orders where order_status = 6", nativeQuery = true)
+            + "SELECT count(id) FROM shop_orders where order_status = 4 ", nativeQuery = true)
     List<String> countOrderMarquee();
 }

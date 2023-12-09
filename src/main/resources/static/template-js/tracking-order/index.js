@@ -147,12 +147,6 @@ async function loadOrderTracking() {
 
                 <div class="_1ERzqw">
                     <div class="cLwmWY">
-                        <span class="ZQEJyY">Đánh giá sản phẩm trước
-                            <div class="shopee-drawer" id="pc-drawer-id-10"
-                                tabindex="0">
-                                <u class="qMirbL">17-11-2022</u>
-                            </div>
-                        </span><span class="eGtmE+">Đánh giá ngay và nhận 200 Xu</span>
                     </div>
                     <div class="NIZAp8">
                         <div class="_8vTqu9">
@@ -162,13 +156,8 @@ async function loadOrderTracking() {
                         </div>
                         <div class="VN6h8+">
                             <button
-                                class="stardust-button stardust-button--secondary Kz9HeM">Liên
+                                class="stardust-button stardust-button--secondary Kz9HeM" disable>Liên
                                 hệ Người bán</button>
-                        </div>
-                        <div class="VN6h8+">
-                            <button
-                                class="stardust-button stardust-button--secondary Kz9HeM">Mua
-                                lại</button>
                         </div>
                     </div>
                 </div>
@@ -255,12 +244,6 @@ async function loadOrderTracking() {
 
                 <div class="_1ERzqw">
                     <div class="cLwmWY">
-                        <span class="ZQEJyY">Đánh giá sản phẩm trước
-                            <div class="shopee-drawer" id="pc-drawer-id-10"
-                                tabindex="0">
-                                <u class="qMirbL">17-11-2022</u>
-                            </div>
-                        </span><span class="eGtmE+">Đánh giá ngay và nhận 200 Xu</span>
                     </div>
                     <div class="NIZAp8">
                         <div class="_8vTqu9">

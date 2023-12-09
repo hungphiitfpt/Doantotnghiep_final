@@ -209,18 +209,12 @@ async function openModalDetailOrder(r) {
 		$('#status-delivery').text("Chờ Shiper Lấy Hàng");
 	}
 	else if (res.data.data.orderStatus == 2) {
-		$('#status-delivery').text("Đã Lấy Hàng");
-	}
-	else if (res.data.data.orderStatus == 3) {
-		$('#status-delivery').text("Đang Vận Chuyển");
-	}
-	else if (res.data.data.orderStatus == 4) {
 		$('#status-delivery').text("Đang Giao Hàng");
 	}
-	else if (res.data.data.orderStatus == 5) {
+	else if (res.data.data.orderStatus == 3) {
 		$('#status-delivery').text("Đã Giao Hàng");
 	}
-	else if (res.data.data.orderStatus == 6) {
+	else if (res.data.data.orderStatus == 4) {
 		$('#status-delivery').text("Đã huỷ");
 	}
 	for (let i = 0; i < res.data.data.shopOrderDetailsById.length; i++) {
@@ -264,8 +258,6 @@ async function alertCountOrderMarquee() {
 	Thông báo !: Bạn đang có 
 	${res.data[0]} đơn hàng chờ xác nhận , 
 	${res.data[1]} đơn chờ lấy hàng, 
-	${res.data[2]} đơn đã lấy hàng,
-	${res.data[3]} đang vận chuyển , 
 	${res.data[4]} đơn đang giao hàng, 
 	${res.data[5]} đơn đã giao hàng,
 	${res.data[6]} đơn bị huỷ`)
