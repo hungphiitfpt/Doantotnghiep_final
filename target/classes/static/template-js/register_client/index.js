@@ -19,16 +19,20 @@ async function registerUser() {
 			email: $("#email_register_user").val(),
 			city : $('#address_register_user').val(),
 		};
-	if ($('input[type="checkbox"]').prop("checked") == true) {
-		let res = await axiosTemplate(method, url, params, data);
-		if (res.status == 200) {
-			sweatAlert(`Thêm mới người dùng thành công`, "success")
+		if($('#address_register_user').val().toUpperCase() == $('#country_register_user').val().toUpperCase()) {
+			sweatAlert(`Bạn không được nhập địa chỉ trùng thành phố`, "error")
 		} else {
-			sweatAlert(`Lỗi Thêm mới tài khoản`, "warning");
+			if ($('input[type="checkbox"]').prop("checked") == true) {
+				let res = await axiosTemplate(method, url, params, data);
+				if (res.status == 202) {
+					sweatAlert(`${res.data}`, "warning");
+				} else if(res.status == 200) {
+					sweatAlert(`${res.data}`, "success");
+				}
+			} else {
+				alert("bạn chưa đồng ý xác nhận tạo tài khoản")
+			}
 		}
-	} else {
-		alert("bạn chưa đồng ý xác nhận tạo tài khoản")
-	}
 }
 
 function changeInforUser () {

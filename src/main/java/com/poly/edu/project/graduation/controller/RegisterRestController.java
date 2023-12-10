@@ -33,10 +33,10 @@ public class RegisterRestController {
 
 //		   add check for username exists in a DB
 	        if(userRepository.existsByUsername(dto.getUserName()) != null){
-	            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+	           	return new ResponseEntity<>("Bạn đã nhập trùng tên tài khoản tồn tại trên hệ thống", HttpStatus.ACCEPTED);
 	        }
 	        else if(userRepository.existsByEmail(dto.getEmail()) != null) {
-	        	return new ResponseEntity<>("email is already taken!", HttpStatus.BAD_REQUEST);
+	        	return new ResponseEntity<>("Bạn đã nhập trùng email tồn tại trên hệ thống", HttpStatus.ACCEPTED);
             }
 	        else {
 	        	AppUserEntity user = new AppUserEntity();
@@ -46,7 +46,8 @@ public class RegisterRestController {
 	        	System.out.println(dto.getBirthday());
 	        	user.setAddress(dto.getAddress());  
 	        	user.setLastName(dto.getLastName());  
-	        	user.setFirstName(dto.getFirstName());  
+	        	user.setFirstName(dto.getFirstName()); 
+				System.out.println("dto.getGender() ==> " + dto.getGender()); 
 	        	user.setGender(dto.getGender());  
 	        	user.setEmail(dto.getEmail());  
 	        	user.setAvatar(dto.getAvatar());  
