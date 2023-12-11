@@ -4,7 +4,6 @@ com/poly/edu/project/graduation/controller/ReportController.class
 com/poly/edu/project/graduation/dao/ProductsRepository.class
 com/poly/edu/project/graduation/controller/UserRestController.class
 com/poly/edu/project/graduation/model/Utility.class
-com/poly/edu/project/graduation/model/ShopCommentsBlogEntity.class
 com/poly/edu/project/graduation/controller/TrackingController.class
 com/poly/edu/project/graduation/services/Thyservices.class
 com/poly/edu/project/graduation/model/ShopWarehouseEntity.class
@@ -46,7 +45,6 @@ com/poly/edu/project/graduation/model/ShopPaymentTypesEntity.class
 com/poly/edu/project/graduation/controller/ReviewProductRestController.class
 com/poly/edu/project/graduation/model/ShopOrderDetailEntity.class
 com/poly/edu/project/graduation/dao/AppUserDAO.class
-com/poly/edu/project/graduation/model/ShopProductDiscountEntity.class
 com/poly/edu/project/graduation/controller/RegisterController.class
 com/poly/edu/project/graduation/services/HomeService.class
 com/poly/edu/project/graduation/dao/OrderRepository.class
@@ -66,19 +64,16 @@ com/poly/edu/project/graduation/controller/CheckOutController.class
 com/poly/edu/project/graduation/model/UserDto.class
 com/poly/edu/project/graduation/model/ShopProductReviewsEntity.class
 com/poly/edu/project/graduation/services/impl/UserDetailsServiceImpl.class
-com/poly/edu/project/graduation/dao/KhanhRepository.class
 com/poly/edu/project/graduation/services/ReviewProductService.class
 com/poly/edu/project/graduation/controller/AdminHomeController.class
 com/poly/edu/project/graduation/model/UserRoleEntity.class
 com/poly/edu/project/graduation/controller/CategoryRestController.class
-com/poly/edu/project/graduation/dao/HomeRepository.class
 com/poly/edu/project/graduation/dao/OrderDetailRepository.class
 com/poly/edu/project/graduation/model/AppRoleEntity.class
 com/poly/edu/project/graduation/controller/FileUploadController.class
 com/poly/edu/project/graduation/services/impl/KhanhServiceimpl.class
 com/poly/edu/project/graduation/services/CategoryServices.class
 com/poly/edu/project/graduation/controller/ProductsRestController.class
-com/poly/edu/project/graduation/services/CartServices.class
 com/poly/edu/project/graduation/controller/ProductController.class
 com/poly/edu/project/graduation/dao/WarehouseRepository.class
 com/poly/edu/project/graduation/controller/CartController.class

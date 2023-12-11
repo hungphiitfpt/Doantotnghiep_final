@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +39,7 @@ public class CategoryRestController {
 
 	// Tiêm lớp CategoryRepository 
 	@Autowired
-	CategoryRepository categoryRepository;
+	CategoryRepository categoryRepository;	
 
 	//	Viết api lấy danh sách các danh mục , tìm kiếm sản phẩm theo key word theo chữ cái (điều kiện “” thì lấy tất cả)
 	//	Truyền param keyword, size, page, sort
@@ -63,7 +64,7 @@ public class CategoryRestController {
 			// => TẠO RA BIẾN dataCategory để hứng data từ phương thức findByKeyWord , 
 			Page<ShopCategoriesEntity> dataCategory = categoryServices.findByKeyWord(keyword,
 					PageRequest.of(page, size));
-//			trả về data dưới dạng list object
+            //trả về data dưới dạng list object
 			return dataCategory;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -94,9 +95,9 @@ public class CategoryRestController {
 			return foundCategory.isPresent()
 					? ResponseEntity.status(HttpStatus.OK)
 							.body(new ResponseObject("ok", "Tìm sản phẩm thành công", foundCategory))
-			// nếu không tồn tại trả về lỗi note found
+			// nếu không tồn tại trả về lỗi not found
 					: ResponseEntity.status(HttpStatus.NOT_FOUND)
-							.body(new ResponseObject("failed", "Cannot find Category with id = " + id, ""));
+							.body(new ResponseObject("failed", "Không tìm thấy danh mục với id = " + id, ""));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,20 +105,20 @@ public class CategoryRestController {
 
 	}
 
-	// api thêm sản phẩm, kiểm tra nếu đã có sản phẩm trùng trên không được thêm
+	// api thêm danh mục, kiểm tra nếu đã có sản phẩm trùng trên không được thêm
 	@RequestMapping(value = "/insert_category", method = RequestMethod.POST, consumes = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@Transactional
-	ResponseEntity<ResponseObject> insertProduct(@RequestBody ShopCategoriesEntity shopCategoriesEntity) {
-		// Kiểm tra xem tên sản phẩm đó đã có trong database chưa
+	ResponseEntity<ResponseObject> insertCategory(@RequestBody ShopCategoriesEntity shopCategoriesEntity) {
+		// Kiểm tra xem tên danh mục đó đã có trong database chưa
 		List<ShopCategoriesEntity> foundCategory = categoryServices
 				.findByProductName(shopCategoriesEntity.getCategoryName().trim());
-		// nếu tìm thấy tên sản phẩm đã có trong database thì trả về lỗi đã có sản phẩm trùng
+		// nếu tìm thấy tên danh mục  đã có trong database thì trả về lỗi đã có danh mục  trùng
 		if (foundCategory.size() > 0) {
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ResponseObject("failed", "Đã có sản phẩm trùng tên ", ""));
+					.body(new ResponseObject("failed", "Đã có danh mục trùng tên ", ""));
 		}
-        //ngược lại sẽ thực hiện thêm mới sản phẩm vào database, bằng cách truyền 1 đối tượng vào
+        //ngược lại sẽ thực hiện thêm mới danh mục  vào database, bằng cách truyền 1 đối tượng vào
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ResponseObject("200", "Thêm Thành Công ", categoryRepository.save(shopCategoriesEntity)));
 	}
@@ -127,7 +128,7 @@ public class CategoryRestController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@Transactional
 	// Trả về dữ liệu dưới dạng ResponseEntity, cập nhật danh mục theo id danh mục
-	ResponseEntity<ResponseObject> updateProdcut(@RequestBody ShopCategoriesEntity categorys, @Param("id") Long id)
+	ResponseEntity<ResponseObject> updateCategory(@RequestBody ShopCategoriesEntity categorys, @Param("id") Long id)
 			throws Exception {
 		// tìm kiếm danh mục theo id nếu tìm thấy sẽ set lại các giá trị theo người dùng truyền vào
 		ShopCategoriesEntity updatedCategory = categoryRepository.findById(id).map(category -> {

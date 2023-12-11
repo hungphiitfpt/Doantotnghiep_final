@@ -75,8 +75,9 @@ public class CheckOutController {
 			HttpSession session) {
 		boolean validation = employee.getShipName().isEmpty() 
 							|| employee.getShipAddress().isEmpty()
-							|| employee.getShipCity().isEmpty() || employee.getShipState().isEmpty()
-							|| employee.getShippingFee() == null || employee.getNote().isEmpty() 
+							|| employee.getShipCity().isEmpty() 
+							|| employee.getShipState().isEmpty()
+							|| employee.getShippingFee() == null
 							|| employee.getPaymentTypeId() == null;
 		if(validation == false) {
 			session.setAttribute("userInf", employee);
