@@ -43,11 +43,9 @@ public class RegisterRestController {
 	        	user.setUserId(dto.getUserId());
 	        	user.setUserName(dto.getUserName());
 	        	user.setBirthday(dto.getBirthday());
-	        	System.out.println(dto.getBirthday());
 	        	user.setAddress(dto.getAddress());  
 	        	user.setLastName(dto.getLastName());  
 	        	user.setFirstName(dto.getFirstName()); 
-				System.out.println("dto.getGender() ==> " + dto.getGender()); 
 	        	user.setGender(dto.getGender());  
 	        	user.setEmail(dto.getEmail());  
 	        	user.setAvatar(dto.getAvatar());  

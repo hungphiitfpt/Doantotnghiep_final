@@ -26,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource;
 
 	@Bean
+	// thư viện giúp mã hoá mật khẩu
 	public BCryptPasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
@@ -44,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
 		
 		// Cấu hình các URL yêu cầu vai trò ROLE_USER hoặc ROLE_ADMIN để truy cập
-		http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/account").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 		
 		// Cấu hình các URL chỉ dành cho ROLE_ADMIN
 		http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");

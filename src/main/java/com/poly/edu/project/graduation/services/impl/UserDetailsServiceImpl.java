@@ -33,14 +33,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private AppRoleDAO appRoleDAO;
 
     @Override
+    // class naỳ hỗ trợ lấy về chi tiết 1 user trong hệ thiings
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        // lấy về user theo user name
         AppUserEntity appUser = this.appUserDAO.findUserAccount(userName);
 
+        // kiểm tra null user
         if (appUser == null) {
             System.out.println("User not found! " + userName);
             throw new UsernameNotFoundException("User " + userName + " was not found in the database");
         }
         // [ROLE_USER, ROLE_ADMIN,..]
+        // sau khi đã lấy về username ở trên thì vào đó để lấy về role của user dựa vào method bên dưới
         List<String> roleNames = this.appRoleDAO.getRoleNames(appUser.getUserId());
 
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
