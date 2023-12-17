@@ -99,6 +99,7 @@ public class CartRestController<T> {
 			if (cartItems == null) {
 				cartItems = new HashMap<>();
 			}
+			System.out.println(params);
 			
 			// Lấy ID của sản phẩm
 			Long productId = params.getProductId();

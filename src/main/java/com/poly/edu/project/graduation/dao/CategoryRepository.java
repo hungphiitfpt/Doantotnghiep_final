@@ -16,8 +16,7 @@ import com.poly.edu.project.graduation.model.ShopProductsEntity;
 
 public interface CategoryRepository extends JpaRepository<ShopCategoriesEntity, Long> {
     // Truy vấn native SQL để lấy danh sách tất cả các danh mục không bị xóa
-    @Query(value = "SELECT c.id, c.category_code, c.image, c.category_name "
-                 + "FROM shop_categories as c WHERE is_deleted = false", nativeQuery = true)
+    @Query(value = "SELECT * FROM shop_categories  where shop_categories.is_deleted = false", nativeQuery = true)
     List<ShopCategoriesEntity> findAllCategory();
 
     // Truy vấn JPA để tìm danh sách danh mục theo tên danh mục

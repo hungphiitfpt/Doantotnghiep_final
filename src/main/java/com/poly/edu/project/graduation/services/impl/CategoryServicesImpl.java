@@ -23,7 +23,7 @@ public class CategoryServicesImpl implements CategoryServices {
 	@Override
 	public List<ShopCategoriesEntity> findAll() {
 		// TODO Auto-generated method stub
-		return categoryRepository.findAll();
+		return categoryRepository.findAllCategory();
 	}
 
 	@Override

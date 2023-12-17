@@ -36,6 +36,17 @@ $('.total-quantity-cart').text(formatVND(res.data.counter));
 }
 
 
+function reloadPrice() {
+	// Sử dụng jQuery để lấy giá trị từ các thẻ td có class là cart__price
+var cartPrices = [];
+$('.cart__price').each(function() {
+    var priceText = $(this).text().trim(); // Lấy văn bản từ thẻ td và loại bỏ khoảng trắng
+    var priceValue = parseFloat(priceText.replace(/[^0-9.-]+/g, '')); // Chuyển đổi văn bản thành giá trị số
+    cartPrices.push(priceValue); // Thêm giá trị vào mảng
+});
+console.log('cartPrices => '+ cartPrices);
+}
+
 async function deleteItemCart(productId, r){
 	let x = r;
 	event.preventDefault();
@@ -107,10 +118,11 @@ $('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
 $('.total-quantity-cart').text(formatVND(res.data.counter));
 let money = (parseInt(quantity) * parseInt(price));
 $(this).parents('.product').find('.cart__total').text(formatVND(money));
+reloadPrice();
 })
 
 $(document).on('input change','.input-quantity-buy-cart',async function () {
-	
+
 	let quantity = $(this).parents('.product').find('.input-quantity-buy-cart').val();
 	let productId = $(this).parents('.product').find('.infoAddCart').data('id');
 	let productName = $(this).parents('.product').find('.infoAddCart').data('name');
@@ -137,6 +149,7 @@ $('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
 $('.total-quantity-cart').text(formatVND(res.data.counter));
 let money = (parseInt(quantity) * parseInt(price));
 $(this).parents('.product').find('.cart__total').text(formatVND(money));
+reloadPrice();
 })
 
 

@@ -29,14 +29,14 @@ async function updateUser() {
 	params = {	
 	}
 	data = {
-	firstName : firstname_form,	
-	lastName : lastname_form,
-	gender : selectedGender,
-	email : email_form,
-	birthday : date_form,
-	address : address_form,
-	city :city_form,
-	avatar:imageSession
+		firstName : firstname_form,	
+		lastName : lastname_form,
+		gender : selectedGender,
+		email : email_form,
+		birthday : date_form,
+		address : address_form,
+		city :city_form,
+		avatar:imageSession
 	}
 	let res = await axiosTemplate(method, url, params, data);
 	sweatAlert(`Bạn đã cập nhật người dùng thành công`, "success")

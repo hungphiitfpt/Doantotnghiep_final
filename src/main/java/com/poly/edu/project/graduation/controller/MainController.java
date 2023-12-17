@@ -5,6 +5,7 @@ import java.security.Principal;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poly.edu.project.graduation.model.WebUtils;
 import com.poly.edu.project.graduation.services.UserService;
+import com.poly.edu.project.graduation.model.CartEntity;
+import java.util.Map;
 
 @Controller
 public class MainController {
@@ -24,9 +27,16 @@ public class MainController {
 	UserService service;
 
     @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
-    public String welcomePage(Model model) {
+    public String welcomePage(Model model, HttpSession session) {
         model.addAttribute("title", "Welcome");
         model.addAttribute("message", "This is welcome page!");
+        // Lưu giỏ hàng vào session
+        			// Lấy danh sách sản phẩm từ giỏ hàng được lưu trữ trong session
+		Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
+        // Thêm thông tin về giá trị bắt đầu của giỏ hàng (cartStarts) vào model
+		model.addAttribute("cartStarts", Utils.cartStarts(cartItems, session));
+        
+		// Biến này là tổng số sản phẩm đang được chọn trong giỏ hàng
         return "shop-template/shop";
     }
 

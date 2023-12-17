@@ -27,16 +27,16 @@ async function loadAlllProductShop() {
 async function loadAlllCategoryShop() {
 	let categoryHTML = ``;
 	let method = 'get',
-		url = `${api_graduation}getCategory`,
-		params = { size: 1000 },
+		url = `${api_graduation}category/getAllCategory`,
+		params = { },
 		data = {
 		};
 	let res = await axiosTemplate(method, url, params, data);
-	console.log(res)
-	for (let i = 0; i < res.data.content.length; i++) {
+	console.log(res);
+	for (let i = 0; i < res.data.length; i++) {
 		categoryHTML += `<li class="filter-category-item row mb-3">
-		<img class="image-sidebar-category" src="${res.data.content[i].image}" alt="" />
-		<label class="title-filter-category filter-product-by-categoryId" data-id="${res.data.content[i].id}" value="${res.data.content[i].id}">${res.data.content[i].categoryName}</label>
+		<img class="image-sidebar-category" src="${res.data[i].image}" alt="" />
+		<label class="title-filter-category filter-product-by-categoryId" data-id="${res.data[i].id}" value="${res.data[i].id}">${res.data[i].categoryName}</label>
 	</li>`;
 	}
 	$('#list-category-shop').html(categoryHTML);
