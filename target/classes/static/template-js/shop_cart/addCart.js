@@ -1,6 +1,8 @@
 $(function () {
 	// showcart();
 	reloadedHearchFavourite();
+		  // Call the calculateTotal function initially
+		  calculateTotal();
 })
 var cart = [];
 cart = JSON.parse(localStorage.getItem("cart"));
@@ -88,6 +90,7 @@ $('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
 $('.total-quantity-cart').text(formatVND(res.data.counter));
 let money = (parseInt(quantity) * parseInt(price));
 $(this).parents('.product').find('.cart__total').text(formatVND(money));
+calculateTotal() ;
 })
 
 $(document).on('click','.dec.qtybtn',async function () {
@@ -118,7 +121,7 @@ $('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
 $('.total-quantity-cart').text(formatVND(res.data.counter));
 let money = (parseInt(quantity) * parseInt(price));
 $(this).parents('.product').find('.cart__total').text(formatVND(money));
-reloadPrice();
+calculateTotal() ;
 })
 
 $(document).on('input change','.input-quantity-buy-cart',async function () {
@@ -149,7 +152,7 @@ $('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
 $('.total-quantity-cart').text(formatVND(res.data.counter));
 let money = (parseInt(quantity) * parseInt(price));
 $(this).parents('.product').find('.cart__total').text(formatVND(money));
-reloadPrice();
+calculateTotal() ;
 })
 
 
@@ -207,7 +210,8 @@ function showcart() {
 	</tr>`;
 		
 	}
-	$('#table-product-orderPage').html(cartHTML)
+	$('#table-product-orderPage').html(cartHTML);
+	calculateTotal() 
 }
 
 
@@ -226,13 +230,13 @@ let res = await axiosTemplate(method, url, params, data);
 console.log(res);
 if(res.status == 200) {
 	$('#table-product-orderPage tr').remove();
-	$('.count-quantity-cart span').text('0');
+	$('.count-quantity-cart').text('0');
 	$('.total-quantity-cart').text('0');
 	$('.total-ship-cart').text('0');
 	$('.total-price-cart').text('0 VND');
 	sweatAlert(`Đặt Hàng Thành Công`, "success");
-	
 }
+calculateTotal() ;
 }
 async function deleteHearth(e) {
    let method = 'post',
@@ -254,3 +258,20 @@ async function reloadedHearchFavourite() {
 	 let res = await axiosTemplate(method, url, params, data);
 	 $('.tip_quantity_favourite').text(res.data);
  }
+
+ 
+     // Function to calculate total amount
+	 function calculateTotal() {
+		var totalAmount = 0;
+  
+		// Iterate through each 'cart__total' element
+		$('.cart__total').each(function() {
+		  // Extract numeric value from the text content and add to totalAmount
+		  totalAmount += parseFloat($(this).text().replace(/\D/g, ''));
+		});
+  
+		// Display the total amount
+		console.log('Total Amount: ' + totalAmount.toLocaleString('en-US') + ' VND');
+		$('.total-price-cart').text(totalAmount.toLocaleString('en-US') + ' VND');
+	  }
+  
