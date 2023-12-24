@@ -67,7 +67,7 @@ public class ShopProductsEntity {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = true)
     private Timestamp updatedAt;
-    
+    @CreationTimestamp
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "sale_time", nullable = true)
     private LocalDateTime saletime;
