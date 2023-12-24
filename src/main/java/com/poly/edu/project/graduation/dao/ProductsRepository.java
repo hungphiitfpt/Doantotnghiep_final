@@ -33,12 +33,12 @@ public interface ProductsRepository extends JpaRepository<ShopProductsEntity, Lo
 			+ "OR shop_products.quantity_per_unit 	LIKE CONCAT('%',:keyword,'%') "
 			+ "OR shop_products.category_id 		LIKE CONCAT('%',:keyword,'%') "
 			+ "OR shop_products.created_at 			LIKE CONCAT('%',:keyword,'%') "
-			+ "OR shop_products.updated_at 			LIKE CONCAT('%',:keyword,'%') "
+			+ "OR shop_products.updated_at 			LIKE CONCAT('%',:keyword,'%')  ORDER BY is_deleted ASC, created_at DESC"
 			 ,nativeQuery = true)
 	Page<ShopProductsEntity> findByKeyWord(String keyword, Pageable pageable);
 	
 	// Câu lệnh query xuống database theo id loại sản phẩm và tên sản phẩm
-	@Query(value ="SELECT * FROM shop_products where category_id = :idCategory and product_name LIKE CONCAT('%',:keyword,'%')",nativeQuery = true)
+	@Query(value ="SELECT * FROM shop_products where category_id = :idCategory and product_name LIKE CONCAT('%',:keyword,'%') ORDER BY is_deleted ASC, created_at DESC ",nativeQuery = true)
 	Page<ShopProductsEntity> findAllProductEnable(Long idCategory,String keyword, Pageable page);
 	
 //	@Query(value= "SELECT p.id, p.product_code, p.product_name, "
@@ -60,7 +60,7 @@ public interface ProductsRepository extends JpaRepository<ShopProductsEntity, Lo
 	List<ShopProductsEntity> findProductRandomById(String idCategory);
 	
 	@Modifying  
-	@Query(value = "UPDATE ShopProductsEntity SET isDeleted = TRUE WHERE id = ?1")
+	@Query(value = "UPDATE ShopProductsEntity SET isDeleted = TRUE WHERE id = ?1 ")
 	@Transactional
 	void changeStatusIsdeleted(long id);
 

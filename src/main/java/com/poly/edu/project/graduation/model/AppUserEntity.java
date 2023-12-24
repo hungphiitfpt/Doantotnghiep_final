@@ -17,10 +17,15 @@ import java.util.List;
 uniqueConstraints = { //
         @UniqueConstraint(name = "APP_USER_UK", columnNames = "user_name") })
 public class AppUserEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "user_id", nullable = false)
     private long userId;
+	
+	@Basic
+    @Column(name = "is_Admin", nullable = true)
+    private int isAdmin;
     @Basic
     @Column(name = "user_name", nullable = false, length = 36)
     private String userName;
@@ -73,9 +78,17 @@ public class AppUserEntity {
     
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
-     
 
-    public String getResetPasswordToken() {
+    
+	public long getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public String getResetPasswordToken() {
 		return resetPasswordToken;
 	}
 
@@ -203,52 +216,6 @@ public class AppUserEntity {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AppUserEntity that = (AppUserEntity) o;
-
-        if (userId != that.userId) return false;
-        if (isDeleted != that.isDeleted) return false;
-        if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
-        if (encrytedPassword != null ? !encrytedPassword.equals(that.encrytedPassword) : that.encrytedPassword != null)
-            return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (gender != null ? !gender.equals(that.gender) : that.gender != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
-        if (country != null ? !country.equals(that.country) : that.country != null) return false;
-        if (city != null ? !city.equals(that.city) : that.city != null) return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (encrytedPassword != null ? encrytedPassword.hashCode() : 0);
-        result = 31 * result + (isDeleted ? 1 : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
-        return result;
-    }
 
     public List<UserRoleEntity> getUserRolesByUserId() {
         return userRolesByUserId;

@@ -9,7 +9,7 @@
 <meta name="keywords" content="Ashion, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Ashion | Template</title>
+<title>Anh Hoàng</title>
 
 <!-- Google Font -->
 <link
@@ -120,34 +120,36 @@
 							voluptatem quia aspernatur aut odit aut loret fugit, sed quia
 							consequuntur magni lores eos qui ratione voluptatem sequi
 							nesciunt.</p>
-						<div class="product__details__button">
-							<div class="quantity">
-								<span>Số lượng:</span>
-								<div class="pro-qty">
-									<input type="text" th:value="${product.quantityPerUnit}">
+							<div class="product__details__button">
+								<div class="quantity">
+									<span>Số lượng:</span>
+									<div class="pro-qty" th:switch="${product}">
+										<input type="text" value="1" th:if="${product.isDeleted != true && product.quantityPerUnit > 0}">
+										<input type="text" value="0" disabled th:if="${product.isDeleted == true || product.quantityPerUnit == 0 || product.quantityPerUnit < 0}">
+									</div>
 								</div>
+								<a href="#" th:if="${product.isDeleted != true && product.quantityPerUnit > 0}" th:data-id="|${product.id}|"
+									th:data-name="|${product.productName}|"
+									th:data-price="|${product.listPrice}|"
+									th:data-image="|${product.image}|"
+									th:onclick="addCartProductSingle($(this))" th:class="cart-btn"><span
+									class="icon_bag_alt"></span> Thêm vào giỏ hàng</a>
+								<ul>
+									<li><a href="#"><span class="icon_heart_alt"></span></a></li>
+								</ul>
 							</div>
-							<a href="#" th:if="${product.isDeleted} != true" th:data-id="|${product.id}|"
-								th:data-name="|${product.productName}|"
-								th:data-price="|${product.listPrice}|"
-								th:data-image="|${product.image}|"
-								th:onclick="addCartProductSingle($(this))" th:class="cart-btn"><span
-								class="icon_bag_alt"></span> Thêm vào giỏ hàng</a>
-							<ul>
-								<li><a href="#"><span class="icon_heart_alt"></span></a></li>
-							</ul>
-						</div>
 						<div class="product__details__widget">
 							<ul>
 								<li><span>Số lượng:</span>
 									<div class="stock__checkbox">
-										<div th:switch="${product.quantityPerUnit}">
-											<label for="stockin" th:case="0"> Hết Hàng <input
+										<div th:switch="${product}">
+											<label for="stockin" th:case="${product.isDeleted == true || product.quantityPerUnit == 0 || product.quantityPerUnit < 0}"> Hết Hàng <input
 												type="checkbox" id="stockin" checked> <span
-												class="checkmark"></span>
-											</label> <label for="stockin" th:case="*"> Còn Hàng <input
+												class="checkmark" th:text="@{product.quantityPerUnit}"></span>
+											</label> 
+											<label for="stockin" th:case="${product.isDeleted != true || product.quantityPerUnit > 0}"> Còn Hàng <input
 												type="checkbox" id="stockin" checked> <span
-												class="checkmark"></span>
+												class="checkmark" th:text="@{product.quantityPerUnit}"></span>
 											</label>
 										</div>
 									</div></li>

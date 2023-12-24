@@ -65,7 +65,7 @@ public class CartRestController<T> {
 		// Kiểm tra sản phẩm đã có trong giỏ hàng hay chưa
 		if (cartItems.containsKey(productId) == true) {
 			CartEntity shopsdetail = cartItems.get(productId);
-			
+			System.out.println("duscount getDiscountPercentage ==> "  + shopsdetail.getDiscountPercentage());
 			// Kiểm tra số lượng sản phẩm có thể thêm vào giỏ hàng
 			if(shopsdetail.getQuantity() + 1 > check) {
 				shopsdetail.setQuantity(shopsdetail.getQuantity());

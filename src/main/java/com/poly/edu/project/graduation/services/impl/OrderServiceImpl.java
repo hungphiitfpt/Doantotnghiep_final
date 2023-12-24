@@ -65,6 +65,8 @@ public class OrderServiceImpl implements OrderService {
 				detailEntity.setProductName(s.getProductName());
 				detailEntity.setQuantity(s.getQuantity());
 				detailEntity.setImage(s.getImage());
+				detailEntity.setDiscountAmount(s.getDiscountAmount());
+				detailEntity.setDiscountPercentage(s.getDiscountPercentage());
 
 				detailRepository.save(detailEntity);
 

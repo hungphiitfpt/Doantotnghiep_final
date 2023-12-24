@@ -13,10 +13,10 @@ async function loadAlllProductShop() {
 	let keyWord = $('#input-search-product-keyword').val();
 	// truyền method get, vì api viết metheo get
 	let method = 'get',
-	// url là tên api 
+		// url là tên api 
 		url = `${api_graduation}findListProductExist`,
 		// params là tham số truyền vào
-		params = { keyword: keyWord, size: 9 , page: 0},
+		params = { keyword: keyWord, size: 9, page: 0 },
 		data = {};
 	// biến hứng data khi gọi api, api sẽ trả về dữ liệu json nạp vào biến RES ở dưới
 	let res = await axiosTemplate(method, url, params, data);
@@ -28,7 +28,7 @@ async function loadAlllCategoryShop() {
 	let categoryHTML = ``;
 	let method = 'get',
 		url = `${api_graduation}category/getAllCategory`,
-		params = { },
+		params = {},
 		data = {
 		};
 	let res = await axiosTemplate(method, url, params, data);
@@ -51,21 +51,21 @@ $(document).on('click', '.page-link', async function() {
 	let priceEnd = $('#maxamount').val();
 	let method = 'get',
 		url = `${api_graduation}getProducts`,
-	params = { 
-		keyword : $('#input-search-list-product').val(),
-		page: page, 
-		size: 9,
-		idCategory: idCategory, 
-		priceStart: priceStart,
-		priceEnd: priceEnd
-	},
+		params = {
+			keyword: $('#input-search-list-product').val(),
+			page: page,
+			size: 9,
+			idCategory: idCategory,
+			priceStart: priceStart,
+			priceEnd: priceEnd
+		},
 		data = {
 		};
 	let res = await axiosTemplate(method, url, params, data);
 	drawDataProductShop(res);
-/*
-	let currentPage = localStorage.getItem('currentPage');
-*/
+	/*
+		let currentPage = localStorage.getItem('currentPage');
+	*/
 	$(`.page-link[value='${page}']`).addClass('pagination__number pagination__number--active')
 	sweatAlert(`Bạn đang ở trang thứ ${page}`, "success")
 })
@@ -84,29 +84,31 @@ $(document).on('click', '.filter-product-by-categoryId', async function() {
 	$(this).find('.overlapTwo').addClass('bg-active');
 	localStorage.setItem('currentPage', page);
 	let parameter = {};
-	if(idCategoryOld == idCategory){
+	if (idCategoryOld == idCategory) {
 		localStorage.removeItem('idCategoryOld');
-		  $('.filter-product-by-categoryId').removeClass('active-btn-filter-category')
-		parameter = { 
-			page: 0, 
+		$('.filter-product-by-categoryId').removeClass('active-btn-filter-category')
+		parameter = {
+			page: 0,
 			size: 9,
-			keyword : $('#input-search-list-product').val(),
+			keyword: $('#input-search-list-product').val(),
 			priceStart: priceStart,
-			priceEnd: priceEnd}
+			priceEnd: priceEnd
 		}
+	}
 	else {
-			parameter = { 
-			page: 0, 
+		parameter = {
+			page: 0,
 			size: 9,
-			keyword : $('#input-search-list-product').val(),
-			idCategory: idCategory, 
+			keyword: $('#input-search-list-product').val(),
+			idCategory: idCategory,
 			priceStart: priceStart,
-			priceEnd: priceEnd}
+			priceEnd: priceEnd
+		}
 	}
 	let method = 'get',
-	url = `${api_graduation}findListProductExist`,
-	params = parameter,
-	data = {};
+		url = `${api_graduation}findListProductExist`,
+		params = parameter,
+		data = {};
 	let res = await axiosTemplate(method, url, params, data);
 	drawDataProductShop(res);
 	let currentPage = localStorage.getItem('currentPage');
@@ -122,14 +124,15 @@ $(document).on('click', '.filter-product-by-price', async function() {
 	let priceEnd = $('#maxamount').val();
 	localStorage.setItem('currentPage', page);
 	let method = 'get',
-	url = `${api_graduation}filterDataProduct`,
-	params = { 
-	page: 0, 
-	size: 9,
-	// idCategory: idCategory, 
-	priceStart: priceStart,
-	priceEnd: priceEnd},
-	data = {};
+		url = `${api_graduation}filterDataProduct`,
+		params = {
+			page: 0,
+			size: 9,
+			// idCategory: idCategory, 
+			priceStart: priceStart,
+			priceEnd: priceEnd
+		},
+		data = {};
 	let res = await axiosTemplate(method, url, params, data);
 	drawDataProductShop(res);
 	let currentPage = localStorage.getItem('currentPage');
@@ -140,9 +143,17 @@ $(document).on('click', '.filter-product-by-price', async function() {
 
 // function vẽ dữ liệu ra bên giao diện
 async function drawDataProductShop(res) {
-	let productHTML = ``, pagination = ``,  image = ``,labelDiscount=``,buttonAddCart=``,moneyAfterDiscount=``;
+	let productHTML = ``, pagination = ``, image = ``, labelDiscount = ``, buttonAddCart = ``, moneyAfterDiscount = ``;
 	// vòng lặp for để lặp tất cả sản phẩm khi api trả về
 	for (let i = 0; i < res.data.content.length; i++) {
+		sale_time_still = returnTimeSale(res.data.content[i].saletime);
+		console.log(sale_time_still);
+		if(res.data.content[i].discountinued > 0) {
+			html_sale_time = `<div class="sale_time">${sale_time_still}</div>`;
+		}else {
+			html_sale_time = '';
+		}
+
 		// biến số tiền
 		formatmoney = (res.data.content[i].listPrice * ((100 - res.data.content[i].discountinued) / 100));
 		// biến format định dạng tiền
@@ -150,23 +161,24 @@ async function drawDataProductShop(res) {
 		// biến hình ảnh sản phẩm
 		image = res.data.content[i].image;
 		// nếu sản phẩm bị tắt hiển thị hết hàng
-		if(res.data.content[i].deleted == true) {
+		if (res.data.content[i].deleted == true) {
 			labelDiscount = `<div class="label stockout">Hết hàng</div>`;
 			buttonAddCart = ``;
-		// nếu số lượng sản phẩm <= 0 cũng hiển thị hết hàng
-		}else if(res.data.content[i].quantityPerUnit <= 0) {
+			// nếu số lượng sản phẩm <= 0 cũng hiển thị hết hàng
+		} else if (res.data.content[i].quantityPerUnit <= 0) {
 			labelDiscount = `<div class="label stockout">Hết hàng</div>`;
 			buttonAddCart = ``;
 		}
 		// số lượng sản phẩm thì mới hiển thị giá đang giảm, và nút cho mua hàng
 		else {
 			labelDiscount = `<div class="label sale">${res.data.content[i].discountinued}%</div>`;
-			buttonAddCart= `<li onclick="addItemToCart(${res.data.content[i].id},'${res.data.content[i].productName}',1,${formatmoney},'${res.data.content[i].image}')"><a href="#"><span class="icon_bag_alt"></span></a></li>`;
+			buttonAddCart = `<li onclick="addItemToCart(${res.data.content[i].id},'${res.data.content[i].productName}',1,${formatmoney},'${res.data.content[i].image}','${res.data.content[i].discountinued}')"><a href="#"><span class="icon_bag_alt"></span></a></li>`;
 		}
 		// biến để vẽ 1 cục sản phẩm, trả về mã HTML
 		productHTML += `<div class="col-lg-4 col-md-6">
         <div class="product__item">
             <div class="product__item__pic set-bg" data-setbg="${image}" style="background-image: url(&quot;${image}&quot;);"> 
+            	${html_sale_time}
 				${labelDiscount}
                 <ul class="product__hover">
                     <li><a href="${res.data.content[i].image}" class="image-popup"><span
@@ -191,7 +203,7 @@ async function drawDataProductShop(res) {
 	}
 	// VÒNG LẶP FOR ĐỂ VẼ RA CÁC NÚT PHÂN TRANG
 	for (let i = 0; i < res.data.totalPages; i++) {
-pagination += ` <li class="page-item"  >
+		pagination += ` <li class="page-item"  >
 					<a class="page-link" value="${i}" href="#" tabindex="-1">${i}</a>
 				</li> `
 	}
@@ -206,13 +218,14 @@ async function searchProductByKeyword() {
 	let keyword = $('#input-search-list-product').val();
 	let category = $('.active-btn-filter-category').data('id');
 	let method = 'get',
-	url = `${api_graduation}findListProductExist`,
-	params = { 
-	page: 0, 
-	size: 9,
-	keyword: keyword,
-	idCategory: category},
-	data = {};
+		url = `${api_graduation}findListProductExist`,
+		params = {
+			page: 0,
+			size: 9,
+			keyword: keyword,
+			idCategory: category
+		},
+		data = {};
 	let res = await axiosTemplate(method, url, params, data);
 	drawDataProductShop(res);
 	let currentPage = localStorage.getItem('currentPage');
@@ -220,21 +233,54 @@ async function searchProductByKeyword() {
 }
 
 async function drop_heart(e) {
-   let method = 'post',
-	url = `${api_graduation}createHearthForUser`,
-	params = {IdProduct: e.getAttribute("data-idproduct")}
+	let method = 'post',
+		url = `${api_graduation}createHearthForUser`,
+		params = { IdProduct: e.getAttribute("data-idproduct") }
 	data = {}
 	let res = await axiosTemplate(method, url, params, data);
 	sweatAlert(`Bạn đã thêm sản phẩm vào danh sách yêu thích`, "success");
 	reloadedHearchFavourite();
-	
+
 }
 
 async function reloadedHearchFavourite() {
-   let method = 'get',
-	url = `${api_graduation}countQuantity`,
-	params = {}
+	let method = 'get',
+		url = `${api_graduation}countQuantity`,
+		params = {}
 	data = {}
 	let res = await axiosTemplate(method, url, params, data);
 	$('.tip_quantity_favourite').text(res.data);
+}
+
+function returnTimeSale(time) {
+	let sales_time_still = '';
+	console.log(time);
+	// Assume sale_timeValue is the value from your database for sale_time
+	var sale_timeValue = time; // Example sale_time value
+	// Parse sale_timeValue using Moment.js
+	var saleTime = moment(sale_timeValue);
+
+	// Get the current time
+	var currentTime = moment();
+
+	// Calculate the difference in hours, days, and minutes
+	var timeDifferenceInHours = currentTime.diff(saleTime, 'hours');
+	var timeDifferenceInDays = currentTime.diff(saleTime, 'days');
+	var timeDifferenceInMinutes = currentTime.diff(saleTime, 'minutes');
+
+	// Perform the comparison and display the result
+	if (timeDifferenceInDays > 1) {
+		sales_time_still = "Còn giảm trong "+ Math.abs(timeDifferenceInDays)+  " ngày";
+		// If > 1 day, convert to days
+		console.log("Time difference is more than 1 day:", Math.abs(timeDifferenceInDays), "days");
+	} else if (timeDifferenceInHours > 0) {
+		sales_time_still = "Còn giảm trong "+  Math.abs(timeDifferenceInHours)+ " giờ";
+		// If > 0 hours, convert to hours
+		console.log("Time difference is more than 0 hours:", Math.abs(timeDifferenceInHours), "hours");
+	} else {
+		sales_time_still = "Còn giảm trong "+ Math.abs(timeDifferenceInMinutes)+ " phút";
+		// If <= 0 hours, convert to minutes
+		console.log("Time difference is less than or equal to 0 hours:", Math.abs(timeDifferenceInMinutes), "minutes");
+	}
+	return sales_time_still;
 }

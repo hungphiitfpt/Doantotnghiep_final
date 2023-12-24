@@ -67,6 +67,7 @@ async function getDataDetailProduct(r) {
 	$('#firtsname-create-manager-category').val(res.data.data.firstName);
 	$('#lastname-create-manager-category').val(res.data.data.lastName);
 	$('#email-create-manager-category').val(res.data.data.email);
+	$('#address-create-user').text(res.data.data.address);
 	$('#birthday-create-manager-category').val(formatDate(res.data.data.birthday));
 	$('#district-create-user option[value ="' + res.data.data.country + '"]').prop('selected', 'selected').change()
 
@@ -93,8 +94,8 @@ async function updateUser() {
 			encrytedPassword: $('#password-create-manager-category').val(),
 			firstName: $('#firtsname-create-manager-category').val(),
 			lastName: $('#lastname-create-manager-category').val(),
-			birthday: $('#birthday-create-manager-category').val(),
-			address: $('#address-create-user').val(),
+			birthday: Date.parse($('#birthday-create-manager-category').val()),
+			address: $('#address-create-user').text(),
 			country: $('#district-create-user').val(),
 			gender: $("input[class='form-check-input is_gender']:checked").val(),
 			email: $("#email-create-manager-category").val(),
@@ -107,7 +108,7 @@ async function updateUser() {
 	let res = await axiosTemplate(method, url, params, data);
 	sweatAlert(`${res.data.message}`, "success")
 	loadAllUsers();
-clearData();
+	clearData();
 }
 
 async function create_User_Manager() {
@@ -125,8 +126,8 @@ async function create_User_Manager() {
 			encrytedPassword: $('#password-create-manager-category').val(),
 			firstName: $('#firtsname-create-manager-category').val(),
 			lastName: $('#lastname-create-manager-category').val(),
-			birthday: $('#birthday-create-manager-category').val(),
-			address: $('#address-create-user').val(),
+			birthday: Date.parse($('#birthday-create-manager-category').val()),
+			address: $('#address-create-user').text(),
 			country: $('#district-create-user').val(),
 			gender: $("input[class='form-check-input is_gender']:checked").val(),
 			email: $("#email-create-manager-category").val(),
@@ -309,10 +310,12 @@ function clearData() {
 	$('#quantity-create-manager-product').val("");
 	$('#discount-create-manager-product').val("");
 	$('#price-product-manager').val("");
+	$('#address-create-user').text("");
 	$('#description-detail-product').val("");
 	$('#btn-save-product').removeClass("d-none");
 	$('#btn-update-list-image-product').removeClass("d-none");
-	$('#btn-update-product').addClass("d-none")
+	$('#btn-update-product').addClass("d-none");
+	$('#imagePreview').css("background-image", "none");
 }
 
 async function UpdateInstock(r) {

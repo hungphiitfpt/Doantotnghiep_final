@@ -17,7 +17,7 @@ if (cart == null) {
  * @param {*} quantity  số lượng sản phẩm mua
  * @param {*} price số tiền của sản phẩm
  */
-async function addItemToCart(productId, productName, quantity, price,image){
+async function addItemToCart(productId, productName, quantity, price,image,discountPercentage){
 	event.preventDefault();
 	let method = 'post',
 	url = `${host}api/addCart`,
@@ -27,7 +27,7 @@ async function addItemToCart(productId, productName, quantity, price,image){
 		productName: productName,
 		quantity : quantity, 
 		price: price,
-		discountPercentage : 0,
+		discountPercentage : discountPercentage,
 		discountAmount: 0,
 		image: image
 	};

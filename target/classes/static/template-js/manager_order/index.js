@@ -75,26 +75,18 @@ async function drawTableOrderProducts(res) {
 
 		}
 		else if (res.data.content[i].orderStatus == 2) {
-			htmlStatusOrder = `<label class="badge badge-danger">Đã Lấy Hàng</label>`;
+			htmlStatusOrder = `<label class="badge badge-danger">Đang Giao Hàng</label>`;
 
 		}
 		else if (res.data.content[i].orderStatus == 3) {
-			htmlStatusOrder = `<label class="badge badge-primary">Đang Vận Chuyển</label>`;
+			htmlStatusOrder = `<label class="badge badge-primary">Đã Giao Hàng</label>`;
 
 		}
 		else if (res.data.content[i].orderStatus == 4) {
-			htmlStatusOrder = `<label class="badge badge-success">Đang Giao Hàng</label>`;
-		}
-		else if (res.data.content[i].orderStatus == 5) {
-			htmlStatusOrder = `<label class="badge badge-success">Đã Giao Hàng</label>`;
-			button = '';
-		}
-		else if (res.data.content[i].orderStatus == 6) {
-			htmlStatusOrder = `<label class="badge badge-black">Đã Huỷ</label>`;
-			button = '';
+			htmlStatusOrder = `<label class="badge badge-success">Đã Huỷ</label>`;
 		}
 
-		if(res.data.content[i].orderStatus != 6 && res.data.content[i].orderStatus != 5) {
+		if(res.data.content[i].orderStatus != 0) {
 			button = `<button onclick="changeStatusOrder($(this))" data-id="${res.data.content[i].id}" data-status="${res.data.content[i].orderStatus}" type="button"
 			class="btn btn-warning btn-rounded btn-icon">
 			<i class="typcn typcn-edit"></i>
@@ -258,7 +250,7 @@ async function alertCountOrderMarquee() {
 	Thông báo !: Bạn đang có 
 	${res.data[0]} đơn hàng chờ xác nhận , 
 	${res.data[1]} đơn chờ lấy hàng, 
-	${res.data[4]} đơn đang giao hàng, 
-	${res.data[5]} đơn đã giao hàng,
-	${res.data[6]} đơn bị huỷ`)
+	${res.data[2]} đơn đang giao hàng, 
+	${res.data[3]} đơn đã giao hàng,
+	${res.data[4]} đơn bị huỷ`)
 }

@@ -23,22 +23,21 @@ import com.poly.edu.project.graduation.model.CountFavorite;
 import com.poly.edu.project.graduation.model.ShopFavoutiteEntity;
 import com.poly.edu.project.graduation.services.UserService;
 
-
 @RestController
 @RequestMapping("/api/graduation")
 public class FavouriteRestController {
 
 	@Autowired
 	FavouriteRepository favouriteRepository;
-	
-	@Autowired 
+
+	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
-    PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;
 
 	@GetMapping("favorite-product2/{id}")
 	public List<ShopFavoutiteEntity> index(@PathVariable String id) {
@@ -46,43 +45,46 @@ public class FavouriteRestController {
 		List<ShopFavoutiteEntity> sfv = favouriteRepository.findById(id);
 
 		return sfv;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/createHearthForUser", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public void createHearth(Principal principal,
-			@RequestParam(name = "IdProduct", required = false, defaultValue = "") String product) {	
+			@RequestParam(name = "IdProduct", required = false, defaultValue = "") String product) {
 		String userName = principal.getName();
-		String idUser  = userService.findIdUserByPrincipal(userName);
-		favouriteRepository.createHearth(Integer.parseInt(idUser),product);
+		String idUser = userService.findIdUserByPrincipal(userName);
+		favouriteRepository.createHearth(Integer.parseInt(idUser), product);
 
 	}
-	
+
 	@RequestMapping(value = "/deleteHearth", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public void deleteHearht(
-			@RequestParam(name = "IdProduct", required = false, defaultValue = "") String product,Model model,Principal principal) {	
+	public void deleteHearht(@RequestParam(name = "IdProduct", required = false, defaultValue = "") String product,
+			Model model, Principal principal) {
 		favouriteRepository.deletehearth(product);
-		
+
 	}
-	
+
 	@RequestMapping(value = "/countQuantity", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public long countQuantityHearthProduct(Principal principal) {
-		String userName = principal.getName();
-		String idUser  = userService.findIdUserByPrincipal(userName);
-		return favouriteRepository.countQuantity(idUser);
+		if (principal != null) {
+			String userName = principal.getName();
+			String idUser = userService.findIdUserByPrincipal(userName);
+			return favouriteRepository.countQuantity(idUser);
+		} else {
+			return 0;
+		}
 	}
-	
-	@RequestMapping(value = "/changePass", method = RequestMethod.POST, produces = {
-			MediaType.APPLICATION_JSON_VALUE })
+
+	@RequestMapping(value = "/changePass", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public void Update(Principal principal,
-					  @RequestParam(name = "passWord", required = false, defaultValue = "") String password) {
+			@RequestParam(name = "passWord", required = false, defaultValue = "") String password) {
 		String userName = principal.getName();
-		String idUser  = userService.findIdUserByPrincipal(userName);
+		String idUser = userService.findIdUserByPrincipal(userName);
 		String passencoder = passwordEncoder.encode(password);
 		userRepository.changePass(passencoder, idUser);
 	}
-	
+
 }

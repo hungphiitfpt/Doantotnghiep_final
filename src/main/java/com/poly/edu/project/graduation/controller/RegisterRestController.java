@@ -41,6 +41,7 @@ public class RegisterRestController {
 	        else {
 	        	AppUserEntity user = new AppUserEntity();
 	        	user.setUserId(dto.getUserId());
+	        	user.setIsAdmin(0);
 	        	user.setUserName(dto.getUserName());
 	        	user.setBirthday(dto.getBirthday());
 	        	user.setAddress(dto.getAddress());  

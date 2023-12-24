@@ -23,7 +23,7 @@ async function loadOrderTracking() {
 	let res = await axiosTemplate(method, url, params, data);
 	for (let i = 0; i < res.data.length; i++) {
         let formatPriceOld = formatMoney(`${res.data[i].shopOrderDetailsById[0].price}`);
-        let formatPriceNew = (`${res.data[i].shopOrderDetailsById[0].price}` -`${res.data[i].shopOrderDetailsById[0].discountAmount}`);
+        let formatPriceNew = (`${res.data[i].shopOrderDetailsById[0].price}` - `${res.data[i].shopOrderDetailsById[0].discountAmount}`);
         let totalPrice = formatMoney(`${res.data[i].totalPrice}`);
       if(res.data[i].orderStatus == 0) {
         waiting_confirmHTML += `<div class="box-order card" style="min-width: 1100px;">

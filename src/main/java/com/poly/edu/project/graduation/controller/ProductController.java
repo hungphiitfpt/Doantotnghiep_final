@@ -85,8 +85,10 @@ public class ProductController {
 		// Thêm thông tin sản phẩm và các thuộc tính khác vào model để truyền đến view
 		model.addAttribute("product", product);
 		model.addAttribute("images", product.getShopProductImagesById());
-		System.out.println(product.getShopProductImagesById());
+		System.out.println(product.getQuantityPerUnit());
+		System.out.println(product.isDeleted());
 		model.addAttribute("review", product.getShopProductReviewsById());
+		
 
 		// Trả về view chi tiết sản phẩm
 		return "shop-template/product-details";

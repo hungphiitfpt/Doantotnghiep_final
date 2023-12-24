@@ -9,7 +9,7 @@ import com.poly.edu.project.graduation.model.MonthDTO;
 import com.poly.edu.project.graduation.model.ShopOrdersEntity;
 import com.poly.edu.project.graduation.model.ShopProductReviewsEntity;
 
-public interface ReviewProductRepository extends JpaRepository<ShopProductReviewsEntity, Long> {
+public interface ReviewProductRepository extends JpaRepository<ShopProductReviewsEntity, Integer> {
 
 	@Query(value = "SELECT * from shop_product_reviews WHERE shop_product_reviews.product_id = ?1", nativeQuery = true)
 	List<ShopProductReviewsEntity> findAllReviewProduct(Long id);

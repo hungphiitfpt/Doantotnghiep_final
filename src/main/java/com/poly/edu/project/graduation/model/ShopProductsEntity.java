@@ -6,10 +6,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.api.client.util.DateTime;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -64,7 +68,19 @@ public class ShopProductsEntity {
     @Column(name = "updated_at", nullable = true)
     private Timestamp updatedAt;
     
-    @Column(name = "quantity_sold", nullable = false)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @Column(name = "sale_time", nullable = true)
+    private LocalDateTime saletime;
+    
+    public LocalDateTime getSaletime() {
+		return saletime;
+	}
+
+	public void setSaletime(LocalDateTime saletime) {
+		this.saletime = saletime;
+	}
+
+	@Column(name = "quantity_sold", nullable = false)
     private Integer quantity_sold;
     
     @OneToMany(mappedBy = "shopProductsByProductId")
@@ -211,53 +227,6 @@ public class ShopProductsEntity {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ShopProductsEntity that = (ShopProductsEntity) o;
-
-        if (id != that.id) return false;
-        if (quantityPerUnit != that.quantityPerUnit) return false;
-        if (isFeatured != that.isFeatured) return false;
-        if (isDeleted != that.isDeleted) return false;
-        if (categoryId != that.categoryId) return false;
-        if (productCode != null ? !productCode.equals(that.productCode) : that.productCode != null) return false;
-        if (productName != null ? !productName.equals(that.productName) : that.productName != null) return false;
-        if (image != null ? !image.equals(that.image) : that.image != null) return false;
-        if (shortDecription != null ? !shortDecription.equals(that.shortDecription) : that.shortDecription != null)
-            return false;
-        if (decription != null ? !decription.equals(that.decription) : that.decription != null) return false;
-        if (standCost != null ? !standCost.equals(that.standCost) : that.standCost != null) return false;
-        if (listPrice != null ? !listPrice.equals(that.listPrice) : that.listPrice != null) return false;
-        if (discountinued != null ? !discountinued.equals(that.discountinued) : that.discountinued != null)
-            return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (productCode != null ? productCode.hashCode() : 0);
-        result = 31 * result + (productName != null ? productName.hashCode() : 0);
-        result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (shortDecription != null ? shortDecription.hashCode() : 0);
-        result = 31 * result + (decription != null ? decription.hashCode() : 0);
-        result = 31 * result + (standCost != null ? standCost.hashCode() : 0);
-        result = 31 * result + (listPrice != null ? listPrice.hashCode() : 0);
-        result = 31 * result + quantityPerUnit;
-        result = 31 * result + (discountinued != null ? discountinued.hashCode() : 0);
-        result = 31 * result + (isFeatured ? 1 : 0);
-        result = 31 * result + (isDeleted ? 1 : 0);
-        result = 31 * result + (int) (categoryId ^ (categoryId >>> 32));
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
-        return result;
-    }
 
     public List<ShopOrderDetailEntity> getShopOrderDetailsById() {
         return shopOrderDetailsById;

@@ -17,7 +17,7 @@ if (cart == null) {
  * @param {*} quantity  số lượng sản phẩm mua
  * @param {*} price số tiền của sản phẩm
  */
-async function addItemToCart(productId, productName, quantity, price,image){
+async function addItemToCart(productId, productName, quantity, price,image,discountPercentage){
 	event.preventDefault();
 	let method = 'post',
 	url = `${host}api/addCart`,
@@ -27,7 +27,7 @@ async function addItemToCart(productId, productName, quantity, price,image){
 		productName: productName,
 		quantity : quantity, 
 		price: price,
-		discountPercentage : 0,
+		discountPercentage : discountPercentage,
 		discountAmount: 0,
 		image: image
 	};
@@ -230,7 +230,7 @@ let res = await axiosTemplate(method, url, params, data);
 console.log(res);
 if(res.status == 200) {
 	$('#table-product-orderPage tr').remove();
-	$('.count-quantity-cart').text('0');
+	$('.count-quantity-cart span').text('0');
 	$('.total-quantity-cart').text('0');
 	$('.total-ship-cart').text('0');
 	$('.total-price-cart').text('0 VND');
