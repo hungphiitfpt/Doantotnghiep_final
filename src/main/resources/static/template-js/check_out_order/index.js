@@ -1,7 +1,8 @@
 
 
 $(function () {
-	getUser()
+	getUser();
+	reloadedHearchFavourite();
 })
 async function getUser() {
 	let cityHtml = ``;
@@ -22,6 +23,16 @@ async function getUser() {
   }
 }
 
+async function reloadedHearchFavourite() {
+	let method = 'get',
+		url = `${api_graduation}countQuantity`,
+		params = {}
+	data = {}
+	let res = await axiosTemplate(method, url, params, data);
+	console.log(res);
+	$('.tip_quantity_favourite').text(res.data);
+}
+
 $(document).on('change','#shipCity',async function() {
 	var stateHtml = ``;
 	let idCity = $(this).find('option:selected').data('code');
@@ -34,3 +45,35 @@ $(document).on('change','#shipCity',async function() {
 	console.log(stateHtml);
 	$('#shipState').html(stateHtml);
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

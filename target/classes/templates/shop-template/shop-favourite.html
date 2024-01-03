@@ -89,7 +89,16 @@
 										</td>
     									<td class="cart__price" th:value="${cart.shopProductsByProductId.listPrice}" th:text="${#numbers.formatDecimal(cart.shopProductsByProductId.listPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
 							
-									<td class="cart__close"><span th:data-idProduct="${cart.shopProductsByProductId.id}" class="icon_close" th:onclick="'deleteHearth(this)'"></span></td> 
+									<td class="cart__close">
+										<span 	th:data-productId="${cart.shopProductsByProductId.id}"
+												th:data-productName="${cart.shopProductsByProductId.productName
+												}"
+												th:data-price="${cart.shopProductsByProductId.listPrice}"
+												th:data-image="${cart.shopProductsByProductId.image}"
+												th:data-discountPercentage="${cart.shopProductsByProductId.discountinued}"
+													class="icon_bag_alt"  th:onclick="'addItemToCart2(this)'"></span>
+										<span th:data-idProduct="${cart.shopProductsByProductId.id}" class="icon_close" th:onclick="'deleteHearth(this)'"></span>
+									</td> 
 								</tr>
 							</tbody>
 						</table>

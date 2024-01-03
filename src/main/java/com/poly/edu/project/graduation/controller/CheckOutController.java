@@ -1,11 +1,12 @@
 // Import các gói và lớp cần thiết
 package com.poly.edu.project.graduation.controller;
 
+import com.poly.edu.project.graduation.model.CartEntity;
+import com.poly.edu.project.graduation.model.ShopOrdersEntity;
+import com.poly.edu.project.graduation.services.UserService;
 import java.security.Principal;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.poly.edu.project.graduation.model.CartEntity;
-import com.poly.edu.project.graduation.model.ShopOrdersEntity;
-import com.poly.edu.project.graduation.services.UserService;
+
+
 
 // Đánh dấu lớp này là một Controller trong Spring MVC
 @Controller
@@ -40,7 +39,7 @@ public class CheckOutController {
 			else {
 				// Lấy danh sách sản phẩm từ giỏ hàng được lưu trữ trong session
 				Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
-				
+				System.out.println(cartItems);
 				// Lấy ID của người dùng từ Principal (đối tượng chứa thông tin đăng nhập)
 				String id = service.findIdUserByPrincipal(principal.getName());
 				session.setAttribute("idUsser", id);
@@ -73,12 +72,19 @@ public class CheckOutController {
 	@RequestMapping(value = "/addInfoUser", method = RequestMethod.POST)
 	public String doAddEmployee(@ModelAttribute("employee") ShopOrdersEntity employee, ModelMap modelMap,
 			HttpSession session) {
+		// Lấy danh sách sản phẩm từ giỏ hàng được lưu trữ trong session
+		Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
 		boolean validation = employee.getShipName().isEmpty() 
 							|| employee.getShipAddress().isEmpty()
 							|| employee.getShipCity().isEmpty() 
 							|| employee.getShipState().isEmpty()
 							|| employee.getShippingFee() == null
 							|| employee.getPaymentTypeId() == null;
+		if(cartItems == null) {
+			session.setAttribute("msg", "bạn chưa chọn bất kỳ sản phẩm nào");
+			System.out.println(session.getAttribute("msg"));;
+			return "redirect:/checkout";
+		}
 		if(validation == false) {
 			session.setAttribute("userInf", employee);
 			return "redirect:/order-page";

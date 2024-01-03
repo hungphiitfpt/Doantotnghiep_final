@@ -275,3 +275,35 @@ async function reloadedHearchFavourite() {
 		$('.total-price-cart').text(totalAmount.toLocaleString('en-US') + ' VND');
 	  }
   
+/**
+ * api thêm sản phẩm vào giỏ hàng
+ * @param {*} productId id của sản phẩm
+ * @param {*} productName tên của sản phẩm
+ * @param {*} quantity  số lượng sản phẩm mua
+ * @param {*} price số tiền của sản phẩm
+ */
+ async function addItemToCart2(element){
+	// Truy cập dữ liệu từ thu
+    var productId = element.getAttribute('data-productid');
+    var productName = element.getAttribute('data-productname');
+    var price = parseInt(element.getAttribute('data-price'));
+    var image = element.getAttribute('data-image');
+    var discountPercentage = element.getAttribute('data-discountpercentage');
+	console.log(productId, productName, price, image, discountPercentage);
+   let method = 'post',
+   url = `${host}api/addCart`,
+   params = { },
+   data = {
+	   productId : productId,
+	   productName: productName,
+	   quantity : 1, 
+	   price: price,
+	   discountPercentage : discountPercentage,
+	   discountAmount: 0,
+	   image: image
+   };
+let res = await axiosTemplate(method, url, params, data);
+$('.count-quantity-cart').text(res.data.counter);
+$('.total-price-cart').text(formatVND(res.data.amount));
+$('.total-quantity-cart').text(formatVND(res.data.counter));
+}

@@ -38,9 +38,10 @@ public class Utils {
 		long quantity = 0;
 		long price = 0;
 		Map<String, String>  kq = new HashMap<>();
-		
+		System.out.println("cart ==> " + cart);
 		if (cart != null) {
 			for (CartEntity s : cart.values()) {
+				System.out.print(s.getQuantity());
 				quantity += s.getQuantity();
 				price += ((s.getPrice()) * s.getQuantity());
 //				System.out.println("discount ==> " + s.getDiscountPercentage());
