@@ -298,7 +298,10 @@ async function getDataDetailProduct(r) {
 	$('#description-short-create-manager-product').val(res.data.data.shortDecription);
 	$('#fee-ship-create-manager-product').val(res.data.data.standCost);
 	$('#list-category-manager option[data-id ="' + res.data.data.categoryId + '"]').prop('selected', 'selected').change()
-	$('#saletime-manager-product').val(res.data.sale_time);
+	let saletime = res.data.data.saletime;
+	let timesale = saletime.substring(0,10);
+	console.log(timesale);
+	$('#saletime-manager-product').val(timesale);
 	$('#quantity-create-manager-product').val(res.data.data.quantityPerUnit);
 	$('#discount-create-manager-product').val(res.data.data.discountinued);
 	$('#price-product-manager').val(res.data.data.listPrice);

@@ -1,121 +1,111 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
 
-<meta charset="utf-8">
+	<meta charset="utf-8">
 
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Admin</title>
+	<title>Admin</title>
 
-<link rel="stylesheet"
-	href="../admin-static/vendors/typicons/typicons.css">
+	<link rel="stylesheet" href="../admin-static/vendors/typicons/typicons.css">
 
-<link rel="stylesheet"
-	href="../admin-static/vendors/css/vendor.bundle.base.css">
+	<link rel="stylesheet" href="../admin-static/vendors/css/vendor.bundle.base.css">
 
-<link rel="stylesheet"
-	href="../admin-static/vendors/select2/select2.min.css">
+	<link rel="stylesheet" href="../admin-static/vendors/select2/select2.min.css">
 
 
-<link rel="stylesheet"
-	href="../admin-static/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+	<link rel="stylesheet" href="../admin-static/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
 
-<link rel="stylesheet"
-	href="../admin-static/css/vertical-layout-light/style.css">
+	<link rel="stylesheet" href="../admin-static/css/vertical-layout-light/style.css">
 
-<link rel="stylesheet"
-	href="../admin-static/css/vertical-layout-light/newStyle.css">
+	<link rel="stylesheet" href="../admin-static/css/vertical-layout-light/newStyle.css">
 
-<link rel="shortcut icon" href="../admin-static/images/favicon.png" />
+	<link rel="shortcut icon" href="../admin-static/images/favicon.png" />
 
-<script src="../variable_template/variable_index.js"></script>
+	<script src="../variable_template/variable_index.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<link rel="stylesheet" type="text/css"
-	href="../template-js/validation-template/css/opensans-font.css">
+	<link rel="stylesheet" type="text/css" href="../template-js/validation-template/css/opensans-font.css">
 
-<link rel="stylesheet" type="text/css"
-	href="../template-js/validation-template/fonts/line-awesome/css/line-awesome.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="../template-js/validation-template/fonts/line-awesome/css/line-awesome.min.css">
 
-<link rel="stylesheet"
-	href="https://jqueryvalidation.org/files/demo/site-demos.css">
+	<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
 
-<link rel="stylesheet"
-	href="../template-js/validation-template/css/style.css" />
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<link rel="stylesheet" href="../template-js/validation-template/css/style.css" />
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<link rel="stylesheet"
-	href="../admin-static/vendors/mdi/css/materialdesignicons.min.css" />
+	<link rel="stylesheet" href="../admin-static/vendors/mdi/css/materialdesignicons.min.css" />
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-auth.js"></script>
-<script
-	src="https://www.gstatic.com/firebasejs/8.2.8/firebase-storage.js"></script>
-<style>
- .profile-picture-upload {
-	 display: inline;
-}
- .imagePreview {
-	 vertical-align: middle;
-	 width: 64px;
-	 height: 64px;
-	 border-radius: 50%;
-	 margin-right: 8px;
-	 -webkit-box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.35);
-	 -moz-box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.35);
-	 box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.35);
-}
- .hidden {
-	 position: absolute;
-	 width: 0px;
-	 height: 0px;
-	 left: -999999px;
-}
- .action-button {
-	 border: 1px solid black;
-	 background: none;
-	 padding: 8px;
-	 cursor: pointer;
-	 outline: 0;
-	 border-radius: 6px;
-}
- .action-button.mode-upload {
-	 color: #004085;
-	 border-color: #b8daff;
-	 background-color: #cce5ff;
-}
- .action-button.mode-remove {
-	 color: #721c24;
-	 border: 1px solid #f5c6cb;
-	 background-color: #f8d7da;
-}
- 
- </style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-storage.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<style>
+		.profile-picture-upload {
+			display: inline;
+		}
+
+		.imagePreview {
+			vertical-align: middle;
+			width: 64px;
+			height: 64px;
+			border-radius: 50%;
+			margin-right: 8px;
+			-webkit-box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.35);
+			-moz-box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.35);
+			box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.35);
+		}
+
+		.hidden {
+			position: absolute;
+			width: 0px;
+			height: 0px;
+			left: -999999px;
+		}
+
+		.action-button {
+			border: 1px solid black;
+			background: none;
+			padding: 8px;
+			cursor: pointer;
+			outline: 0;
+			border-radius: 6px;
+		}
+
+		.action-button.mode-upload {
+			color: #004085;
+			border-color: #b8daff;
+			background-color: #cce5ff;
+		}
+
+		.action-button.mode-remove {
+			color: #721c24;
+			border: 1px solid #f5c6cb;
+			background-color: #f8d7da;
+		}
+	</style>
 </head>
+
 <body>
 	<div class="container-scroller">
 		<!-- partial:../../partials/_navbar.html -->
-		<div
-			th:replace="admin-template/partials/_navbar:: navbar_template_admin"></div>
+		<div th:replace="admin-template/partials/_navbar:: navbar_template_admin"></div>
 		<!-- partial -->
 		<div class="container-fluid page-body-wrapper">
 			<!-- partial:../../partials/_settings-panel.html -->
-			<div
-				th:replace="admin-template/partials/_settings-panel:: settings-panel-template-user"></div>
+			<div th:replace="admin-template/partials/_settings-panel:: settings-panel-template-user"></div>
 			<!-- partial -->
 			<!-- partial:../../partials/_sidebar.html -->
-			<div
-				th:replace="admin-template/partials/_sidebar:: sidebar-template-user"></div>
+			<div th:replace="admin-template/partials/_sidebar:: sidebar-template-user"></div>
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper">
@@ -129,54 +119,47 @@
 									<div class="row">
 
 										<div class="form-group col-lg-6 col-sm-12">
-											<label for="exampleInputName1">ID Sản Phẩm</label> <input
-												type="text" class="form-control input-not-edit"
-												id="id-create-manager-product" readonly="readonly"
-												name="id-create-manager-product" placeholder="ID">
+											<label for="exampleInputName1">ID Sản Phẩm</label> <input type="text"
+												class="form-control input-not-edit" id="id-create-manager-product"
+												readonly="readonly" name="id-create-manager-product" placeholder="ID">
 										</div>
 
 										<div class="form-group col-lg-6 col-sm-12">
 											<label for="exampleInputName1">Tên Sản Phẩm</label> <input
-												data-validate-required
-												type="text" class="form-control"
-												id="name-create-manager-product"
-												name="name_create_manager_product">
-											
+												data-validate-required type="text" class="form-control"
+												id="name-create-manager-product" name="name_create_manager_product">
+
 											<div class="error"></div>
 										</div>
 
 										<div class="form-group col-lg-6 col-sm-12">
-											<label for="exampleInputName1">Mã Code</label> <input
-												type="text" class="form-control"
-												id="code-create-manager-product"
+											<label for="exampleInputName1">Mã Code</label> <input type="text"
+												class="form-control" id="code-create-manager-product"
 												name="code_create_manager_product">
-								
+
 											<div class="error"></div>
 
 										</div>
-										
+
 										<div class="form-group col-lg-6 col-sm-12">
-											<label for="exampleInputName1">Thời Gian Giảm Giá</label> 
-											<input data-validate-required="" type="date" class="form-control" id="saletime-manager-product">
+											<label for="exampleInputName1">Thời Gian Giảm Giá</label>
+											<input data-validate-required="" type="date" class="form-control"
+												id="saletime-manager-product">
 											<div class="error"></div>
 										</div>
 
 										<div class="form-group col-lg-6 col-sm-12">
-											<label for="exampleInputName1">Mô tả ngắn</label> <input
-												type="text" class="form-control"
-												id="description-short-create-manager-product"
-												name="description_short_create_manager_product"
-												> 
+											<label for="exampleInputName1">Mô tả ngắn</label> <input type="text"
+												class="form-control" id="description-short-create-manager-product"
+												name="description_short_create_manager_product">
 											<div class="error"></div>
 
 										</div>
 
 
 										<div class="form-group col-lg-6 col-sm-12" style="display: none;">
-											<label for="exampleInputName1">Phí ship cơ bản </label> <input
-												value="23000"
-												type="number" class="form-control"
-												id="fee-ship-create-manager-product"
+											<label for="exampleInputName1">Phí ship cơ bản </label> <input value="23000"
+												type="number" class="form-control" id="fee-ship-create-manager-product"
 												name="fee_ship_create_manager_product">
 											<i
 												class="fas fa-exclamation-circle failure-icon failure-icon mdi mdi-close-octagon"></i>
@@ -185,11 +168,10 @@
 											<div class="error"></div>
 
 										</div>
-								
+
 
 										<div class="form-group col-lg-6 col-sm-12">
-											<label>Loại Sản Phẩm</label> <select
-												id="list-category-manager"
+											<label>Loại Sản Phẩm</label> <select id="list-category-manager"
 												class="select-manager-product js-example-basic-single w-100 select2-hidden-accessible"
 												tabindex="-1" aria-hidden="true">
 												<option value="AL">Alabama</option>
@@ -198,10 +180,8 @@
 
 										<div class="form-group col-lg-6 col-sm-12">
 											<label for="exampleInputEmail3">Số lượng</label> <input
-												data-validate-required
-												data-validate-number
-												type="number" class="form-control"
-												id="quantity-create-manager-product"
+												data-validate-required data-validate-number type="number"
+												class="form-control" id="quantity-create-manager-product"
 												name="quantity_create_manager_product" min="-1"> <i
 												class="fas fa-exclamation-circle failure-icon failure-icon mdi mdi-close-octagon"></i>
 											<i
@@ -211,10 +191,8 @@
 										</div>
 										<div class="form-group col-lg-6 col-sm-12">
 											<label for="exampleInputEmail3">Giảm giá (%)</label> <input
-												data-validate-required
-												data-validate-number
-												type="number" class="form-control"
-												id="discount-create-manager-product"
+												data-validate-required data-validate-number type="number"
+												class="form-control" id="discount-create-manager-product"
 												name="discount_create_manager_product"> <i
 												class="fas fa-exclamation-circle failure-icon failure-icon mdi mdi-close-octagon"></i>
 											<i
@@ -225,9 +203,8 @@
 										<div class="form-group col-lg-6 col-sm-12">
 
 											<label for="exampleInputEmail3">Giá tiền</label> <input
-												data-validate-required
-												data-validate-number
-												type="number" class="form-control" id="price-product-manager"
+												data-validate-required data-validate-number type="number"
+												class="form-control" id="price-product-manager"
 												name="price_product_manager"> <i
 												class="fas fa-exclamation-circle failure-icon failure-icon mdi mdi-close-octagon"></i>
 											<i
@@ -241,10 +218,9 @@
 
 											<div class="avatar-upload">
 												<div class="avatar-edit">
-													<input type='file' id="imageUpload"
-														onchange="uploadImage()" accept=".png, .jpg, .jpeg" /> <label
-														for="imageUpload"> <i
-														class="icon-upload typcn typcn-upload"></i>
+													<input type='file' id="imageUpload" onchange="uploadImage()"
+														accept=".png, .jpg, .jpeg" /> <label for="imageUpload"> <i
+															class="icon-upload typcn typcn-upload"></i>
 													</label>
 												</div>
 												<div class="avatar-preview">
@@ -257,8 +233,7 @@
 
 										<div class="form-group col-lg-6 col-sm-12">
 											<label for="exampleTextarea1">Mô tả chi tiết</label>
-											<textarea class="form-control"
-											    data-validate-required
+											<textarea class="form-control" data-validate-required
 												id="description-detail-product" name="description_detail"
 												rows="15"></textarea>
 											<i
@@ -268,16 +243,15 @@
 											<div class="error"></div>
 										</div>
 									</div>
-									<button type="submit" onclick="insertProduct()"
-										id="btn-save-product" class="btn  btn-primary mr-2">Lưu</button>
+									<button type="submit" onclick="insertProduct()" id="btn-save-product"
+										class="btn  btn-primary mr-2">Lưu</button>
 									<button onclick="updateProduct()" id="btn-update-product"
 										class="btn btn-primary mr-2 d-none">Cập Nhật</button>
 
 
 									<button type="button" class="btn btn-primary mr-2 d-none"
-										id="btn-update-list-image-product"
-										onclick="updateImageListProduct()" data-toggle="modal"
-										data-target="#open_modal_upload_list_product">Cập
+										id="btn-update-list-image-product" onclick="updateImageListProduct()"
+										data-toggle="modal" data-target="#open_modal_upload_list_product">Cập
 										nhật danh sách hình ảnh</button>
 									<button onclick="clearData()" class="btn btn-light">Clear</button>
 
@@ -291,8 +265,7 @@
 									<div class="row">
 										<h4 class="card-title">Danh sách sản phẩm</h4>
 										<div class="input-group">
-											<input type="text" class="form-control"
-												id="input-search-product-keyword">
+											<input type="text" class="form-control" id="input-search-product-keyword">
 											<div class="input-group-append">
 												<button class="btn btn-sm btn-primary" type="button"
 													onclick="SearchProductByKey()">Search</button>
@@ -321,9 +294,8 @@
 
 									</div>
 									<div class="panigation-sort text-center">
-										<div id="panigation-manager-product"
-											class="btn-group  pt-3 text-center" role="group"
-											aria-label="Basic example"></div>
+										<div id="panigation-manager-product" class="btn-group  pt-3 text-center"
+											role="group" aria-label="Basic example"></div>
 									</div>
 								</div>
 
@@ -353,8 +325,7 @@
 							<div class="modal-body">
 								<div class="row">
 									<div class="col-lg-4 col-sm-12 text-center">
-										<img id="img-product-modal-info" class="img-detail" src=""
-											alt="" />
+										<img id="img-product-modal-info" class="img-detail" src="" alt="" />
 									</div>
 									<div class="col-lg-8 col-sm-12">
 										<div class="row">
@@ -426,17 +397,17 @@
 													<div class="col-sm-9 row">
 														<div class="col-lg-6">
 															<div class="form-check form-check-success">
-																<label class="form-check-label"> <input
-																	type="radio" class="form-check-input"
-																	name="ExampleRadio2" id="pending-product"> Hết
+																<label class="form-check-label"> <input type="radio"
+																		class="form-check-input" name="ExampleRadio2"
+																		id="pending-product"> Hết
 																	Hàng <i class="input-helper"></i></label>
 															</div>
 														</div>
 														<div class="col-lg-6">
 															<div class="form-check form-check-success">
-																<label class="form-check-label"> <input
-																	type="radio" class="form-check-input"
-																	name="ExampleRadio2" id="open-product"> Còn
+																<label class="form-check-label"> <input type="radio"
+																		class="form-check-input" name="ExampleRadio2"
+																		id="open-product"> Còn
 																	Hàng <i class="input-helper"></i></label>
 															</div>
 														</div>
@@ -463,8 +434,8 @@
 												<div class="form-group row is-align-item-center">
 													<label class="col-sm-3 col-form-label">Ngày Tạo</label>
 													<div class="col-sm-9">
-														<input id="input-createDate-modal-info"
-															class="form-control" placeholder="dd/mm/yyyy">
+														<input id="input-createDate-modal-info" class="form-control"
+															placeholder="dd/mm/yyyy">
 													</div>
 												</div>
 											</div>
@@ -476,8 +447,8 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal" onclick="closeModalDetailProduct()">Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal"
+									onclick="closeModalDetailProduct()">Close</button>
 							</div>
 						</div>
 
@@ -486,8 +457,7 @@
 
 
 				<!-- Modal upload mutilpart image-->
-				<div class="modal fade" id="open_modal_upload_list_product"
-					role="dialog">
+				<div class="modal fade" id="open_modal_upload_list_product" role="dialog">
 					<div class="modal-dialog modal-lg">
 
 						<!-- Modal content-->
@@ -499,18 +469,20 @@
 							<div class="modal-body">
 								<div class="row">
 									<div class="profile-picture-upload">
-										<img src="https://www.drupal.org/files/profile_default.png" alt="Profile picture preview" class="imagePreview">
+										<img src="https://www.drupal.org/files/profile_default.png"
+											alt="Profile picture preview" class="imagePreview">
 										<button class="action-button mode-upload">Upload
 											image</button>
-										<input type="file" accept=".png, .jpg, .jpeg" class="hidden" name="fileInput" id="imageUpload2" onchange="uploadImage2()" />
+										<input type="file" accept=".png, .jpg, .jpeg" class="hidden" name="fileInput"
+											id="imageUpload2" onchange="uploadImage2()" />
 									</div>
-									
+
 
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal" onclick="closeModalDetailProduct()">Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal"
+									onclick="closeModalDetailProduct()">Close</button>
 							</div>
 						</div>
 
@@ -524,8 +496,7 @@
 
 				<!-- content-wrapper ends -->
 				<!-- partial:../../partials/_footer.html -->
-				<div
-					th:replace="admin-template/partials/_footer:: footer_template_admin"></div>
+				<div th:replace="admin-template/partials/_footer:: footer_template_admin"></div>
 				<!-- partial -->
 			</div>
 			<!-- main-panel ends -->
@@ -533,62 +504,62 @@
 		<!-- page-body-wrapper ends -->
 	</div>
 	<script>
-	let picturePreview = document.querySelector(".imagePreview");
-	let actionButton = document.querySelector(".action-button");
-	let fileInput = document.querySelector("input[name='fileInput']");
-	let fileReader = new FileReader();
+		let picturePreview = document.querySelector(".imagePreview");
+		let actionButton = document.querySelector(".action-button");
+		let fileInput = document.querySelector("input[name='fileInput']");
+		let fileReader = new FileReader();
 
-	const DEFAULT_IMAGE_SRC = "https://www.drupal.org/files/profile_default.png";
+		const DEFAULT_IMAGE_SRC = "https://www.drupal.org/files/profile_default.png";
 
-	actionButton.addEventListener("click", () => {
-	  if ( picturePreview.src !== DEFAULT_IMAGE_SRC ) {
-	    resetImage();
-	  } else {
-	    fileInput.click();
-	  }
-	});
+		actionButton.addEventListener("click", () => {
+			if (picturePreview.src !== DEFAULT_IMAGE_SRC) {
+				resetImage();
+			} else {
+				fileInput.click();
+			}
+		});
 
-	fileInput.addEventListener("change", () => {
-	  refreshImagePreview();
-	});
+		fileInput.addEventListener("change", () => {
+			refreshImagePreview();
+		});
 
-	function resetImage() {
-	  setActionButtonMode("upload");
-	  picturePreview.src = DEFAULT_IMAGE_SRC;
-	  fileInput.value = "";
-	}
+		function resetImage() {
+			setActionButtonMode("upload");
+			picturePreview.src = DEFAULT_IMAGE_SRC;
+			fileInput.value = "";
+		}
 
-	function setActionButtonMode(mode) {
-	  let modes = {
-	    "upload": function() {
-	      actionButton.innerText = "Upload avatar";
-	      actionButton.classList.remove("mode-remove");
-	      actionButton.classList.add("mode-upload");
-	    },
-	    "remove": function() {
-	      actionButton.innerText = "Remove avatar";
-	      actionButton.classList.remove("mode-upload");
-	      actionButton.classList.add("mode-remove");
-	    }
-	  }
-	  return (modes[mode]) ? modes[mode]() : console.error("unknown mode");
-	}
+		function setActionButtonMode(mode) {
+			let modes = {
+				"upload": function () {
+					actionButton.innerText = "Upload avatar";
+					actionButton.classList.remove("mode-remove");
+					actionButton.classList.add("mode-upload");
+				},
+				"remove": function () {
+					actionButton.innerText = "Remove avatar";
+					actionButton.classList.remove("mode-upload");
+					actionButton.classList.add("mode-remove");
+				}
+			}
+			return (modes[mode]) ? modes[mode]() : console.error("unknown mode");
+		}
 
-	function refreshImagePreview() {
-	  if ( picturePreview.src !== DEFAULT_IMAGE_SRC ) {
-	    picturePreview.src = DEFAULT_IMAGE_SRC;
-	  } else {
-	    if ( fileInput.files && fileInput.files.length > 0 ){
-	      fileReader.readAsDataURL(fileInput.files[0]);
-	      fileReader.onload = (e) => {
-	        picturePreview.src = e.target.result;
-	        setActionButtonMode("remove");
-	      }
-	    }
-	  }
-	}
+		function refreshImagePreview() {
+			if (picturePreview.src !== DEFAULT_IMAGE_SRC) {
+				picturePreview.src = DEFAULT_IMAGE_SRC;
+			} else {
+				if (fileInput.files && fileInput.files.length > 0) {
+					fileReader.readAsDataURL(fileInput.files[0]);
+					fileReader.onload = (e) => {
+						picturePreview.src = e.target.result;
+						setActionButtonMode("remove");
+					}
+				}
+			}
+		}
 
-	refreshImagePreview();
+		refreshImagePreview();
 	</script>
 	<script src="../admin-static/vendors/js/vendor.bundle.base.js"></script>
 
@@ -598,8 +569,7 @@
 	<script src="../admin-static/js/settings.js"></script>
 	<script src="../admin-static/js/todolist.js"></script>
 
-	<script
-		src="../admin-static/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+	<script src="../admin-static/vendors/typeahead.js/typeahead.bundle.min.js"></script>
 	<script src="../admin-static/vendors/select2/select2.min.js"></script>
 
 	<script src="../admin-static/js/file-upload.js"></script>
@@ -609,10 +579,8 @@
 	<script src="../template-js/Manager_Product/index.js"></script>
 	<script src="../template-js/upload_file_template/index.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	<script src="../template-js/config_firebase/index.js"></script>
 </body>
 
