@@ -3707,13 +3707,16 @@ ol {
 	color: var(--text-white);
 }
 .sale_time {
-	font-size: 12px;
-    color: #ffffff;
+	text-align: center;
+    font-size: 12px;
+    color: #000000;
     font-weight: 500;
     display: inline-block;
     padding: 2px 8px;
     text-transform: uppercase;
     position: absolute;
     top: 150px;
-    background: #111111;
+    background: #ff2323ba;
+    border-color: burlywood;
+    border-style: outset;
 }

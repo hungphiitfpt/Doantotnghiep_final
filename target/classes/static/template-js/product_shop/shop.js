@@ -146,7 +146,7 @@ async function drawDataProductShop(res) {
 	let productHTML = ``, pagination = ``, image = ``, labelDiscount = ``, buttonAddCart = ``, moneyAfterDiscount = ``;
 	// vòng lặp for để lặp tất cả sản phẩm khi api trả về
 	for (let i = 0; i < res.data.content.length; i++) {
-		sale_time_still = returnTimeSale(res.data.content[i].saletime);
+		sale_time_still = startCountdownAndReturn(res.data.content[i].saletime);
 		console.log(sale_time_still);
 		if(res.data.content[i].discountinued > 0) {
 			html_sale_time = `<div class="sale_time">${sale_time_still}</div>`;
@@ -252,35 +252,50 @@ async function reloadedHearchFavourite() {
 	$('.tip_quantity_favourite').text(res.data);
 }
 
-function returnTimeSale(time) {
-	let sales_time_still = '';
-	console.log(time);
-	// Assume sale_timeValue is the value from your database for sale_time
-	var sale_timeValue = time; // Example sale_time value
-	// Parse sale_timeValue using Moment.js
-	var saleTime = moment(sale_timeValue);
 
-	// Get the current time
-	var currentTime = moment();
+var timeRemainingValue = '';
 
-	// Calculate the difference in hours, days, and minutes
-	var timeDifferenceInHours = currentTime.diff(saleTime, 'hours');
-	var timeDifferenceInDays = currentTime.diff(saleTime, 'days');
-	var timeDifferenceInMinutes = currentTime.diff(saleTime, 'minutes');
+// Hàm đếm ngược và trả về giá trị time_remaining
+function startCountdownAndReturn(time) {
+       var saleTime = moment(time);
+    var currentTime = moment();
 
-	// Perform the comparison and display the result
-	if (timeDifferenceInDays > 1) {
-		sales_time_still = "Còn giảm trong "+ Math.abs(timeDifferenceInDays)+  " ngày";
-		// If > 1 day, convert to days
-		console.log("Time difference is more than 1 day:", Math.abs(timeDifferenceInDays), "days");
-	} else if (timeDifferenceInHours > 0) {
-		sales_time_still = "Còn giảm trong "+  Math.abs(timeDifferenceInHours)+ " giờ";
-		// If > 0 hours, convert to hours
-		console.log("Time difference is more than 0 hours:", Math.abs(timeDifferenceInHours), "hours");
-	} else {
-		sales_time_still = "Còn giảm trong "+ Math.abs(timeDifferenceInMinutes)+ " phút";
-		// If <= 0 hours, convert to minutes
-		console.log("Time difference is less than or equal to 0 hours:", Math.abs(timeDifferenceInMinutes), "minutes");
-	}
-	return sales_time_still;
+    // Tính toán thời gian còn lại trong giây
+    var timeDifferenceInSeconds = saleTime.diff(currentTime, 'seconds');
+
+    if (timeDifferenceInSeconds <= 0) {
+        console.log("Sale time has passed!");
+        // Nếu thời gian đã qua, trả về giá trị cuối cùng và kết thúc đệ quy
+        return timeRemainingValue;
+    } else {
+        // Tính toán số ngày
+        var days = Math.floor(timeDifferenceInSeconds / (24 * 3600));
+        var remainingSeconds = timeDifferenceInSeconds % (24 * 3600);
+
+        // Tính toán giờ, phút và giây
+        var hours = Math.floor(remainingSeconds / 3600);
+        remainingSeconds %= 3600;
+        var minutes = Math.floor(remainingSeconds / 60);
+        var seconds = remainingSeconds % 60;
+
+        // Format chuỗi hiển thị
+        if (days > 0) {
+            timeRemainingValue = "Còn giảm trong " + days + " ngày " + hours + " giờ " + minutes + " phút " + seconds + " giây";
+        } else {
+            timeRemainingValue = "Còn giảm trong " + hours + " giờ " + minutes + " phút " + seconds + " giây";
+        }
+
+        // In giá trị mỗi lần tính toán
+        console.log(timeRemainingValue);
+
+        // Gọi lại hàm sau 1 giây bằng cách sử dụng setTimeout
+        setTimeout(function() {
+            startCountdownAndReturn(time);
+        }, 1000);
+
+        // Trả về giá trị hiện tại để sử dụng nếu cần
+        return timeRemainingValue;
+    }
 }
+
+

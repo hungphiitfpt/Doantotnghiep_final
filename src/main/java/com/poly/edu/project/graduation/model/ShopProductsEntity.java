@@ -67,16 +67,17 @@ public class ShopProductsEntity {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = true)
     private Timestamp updatedAt;
-    @CreationTimestamp
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @Column(name = "sale_time", nullable = true)
-    private LocalDateTime saletime;
     
-    public LocalDateTime getSaletime() {
+    @Basic
+    @CreationTimestamp
+    @Column(name = "sale_time", nullable = true)
+    private Timestamp saletime;
+    
+    public Timestamp getSaletime() {
 		return saletime;
 	}
 
-	public void setSaletime(LocalDateTime saletime) {
+	public void setSaletime(Timestamp saletime) {
 		this.saletime = saletime;
 	}
 

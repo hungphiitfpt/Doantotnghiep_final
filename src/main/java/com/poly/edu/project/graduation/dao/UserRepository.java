@@ -52,6 +52,9 @@ public interface UserRepository extends JpaRepository<AppUserEntity, Long> {
 	String findIdUserByPricipal(String name);
     
     @Query("SELECT c FROM AppUserEntity c WHERE c.userName = ?1")
+    AppUserEntity findAddressUserByPricipal(String name);
+    
+    @Query("SELECT c FROM AppUserEntity c WHERE c.userName = ?1")
     AppUserEntity existsByUsername(String user_name);
 
     @Query("SELECT c FROM AppUserEntity c WHERE c.email = ?1")

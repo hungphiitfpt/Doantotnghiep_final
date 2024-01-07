@@ -64,6 +64,11 @@ public class AppUserEntity {
     @Column(name = "city", nullable = true, length = 45)
     private String city;
     @Basic
+    @Column(name = "district", nullable = true, length = 200)
+    private String district;
+
+
+	@Basic
     @CreationTimestamp
     @Column(name = "created_at", nullable = true)
     private Timestamp createdAt;
@@ -79,6 +84,41 @@ public class AppUserEntity {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
+    
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+    public AppUserEntity(long userId, int isAdmin, String userName, String encrytedPassword, boolean isDeleted,
+			String lastName, String firstName, Boolean gender, String email, Date birthday, String avatar,
+			String address, String country, String city, String district, Timestamp createdAt, Timestamp updatedAt,
+			List<UserRoleEntity> userRolesByUserId, List<ShopOrdersEntity> shopOrdersByUserId,
+			String resetPasswordToken) {
+		super();
+		this.userId = userId;
+		this.isAdmin = isAdmin;
+		this.userName = userName;
+		this.encrytedPassword = encrytedPassword;
+		this.isDeleted = isDeleted;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.gender = gender;
+		this.email = email;
+		this.birthday = birthday;
+		this.avatar = avatar;
+		this.address = address;
+		this.country = country;
+		this.city = city;
+		this.district = district;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.userRolesByUserId = userRolesByUserId;
+		this.shopOrdersByUserId = shopOrdersByUserId;
+		this.resetPasswordToken = resetPasswordToken;
+	}
     
 	public long getIsAdmin() {
 		return isAdmin;
@@ -167,6 +207,9 @@ public class AppUserEntity {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+	public AppUserEntity() {
+		super();
+	}
 
     public String getAvatar() {
         return avatar;

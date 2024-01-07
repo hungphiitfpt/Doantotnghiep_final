@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.edu.project.graduation.dao.FavouriteRepository;
 import com.poly.edu.project.graduation.dao.UserRepository;
+import com.poly.edu.project.graduation.model.AppUserEntity;
 import com.poly.edu.project.graduation.model.CountFavorite;
 import com.poly.edu.project.graduation.model.ShopFavoutiteEntity;
 import com.poly.edu.project.graduation.services.UserService;
@@ -75,6 +76,18 @@ public class FavouriteRestController {
 			return favouriteRepository.countQuantity(idUser);
 		} else {
 			return 0;
+		}
+	}
+	
+	@RequestMapping(value = "/populateInfo", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public AppUserEntity autoPopulateInfoCart(Principal principal) {
+		if (principal != null) {
+			String userName = principal.getName();
+			System.out.println(userName);
+			return userRepository.findAddressUserByPricipal(userName);
+		} else {
+			return null;
 		}
 	}
 

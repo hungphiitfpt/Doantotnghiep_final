@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -69,7 +70,7 @@ public class UserRestController {
 			Optional<AppUserEntity> foundProduct = userRepository.findById(id);
 			return foundProduct.isPresent()
 					? ResponseEntity.status(HttpStatus.OK)
-							.body(new ResponseObject("ok", "Tìm sản phẩm thành công", foundProduct))
+							.body(new ResponseObject("ok", "Tìm nhân viên thành công", foundProduct))
 					: ResponseEntity.status(HttpStatus.NOT_FOUND)
 							.body(new ResponseObject("failed", "Cannot find employee with id = " + id, ""));
 		} catch (Exception e) {
@@ -95,6 +96,13 @@ public class UserRestController {
 			@RequestParam(name = "idProduct", required = false, defaultValue = "0") String idProduct) {
 		String userName = principal.getName();
 		String id = userService.findIdUserByPrincipal(userName);
+	}
+	
+	@RequestMapping(value = {"/checkout", "/addInfoUser"}, method = RequestMethod.GET)
+	public ResponseEntity<AppUserEntity> findEmployee(@PathVariable String userName) throws Exception {
+	    // Kiểm tra xem người dùng có tồn tại hay không
+        AppUserEntity existingUser = userRepository.findAddressUserByPricipal(userName);
+        return new ResponseEntity<>(existingUser,HttpStatus.OK);
 	}
 	
 	   @PostMapping("/update/{userName}")

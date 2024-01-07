@@ -138,3 +138,20 @@ async function SearchProductByKey() {
 	drawTableWarehouseManager(res, $('#table-list-orders-products'))
 	sweatAlert("Tìm Kiếm Thành Công", "success")
 }
+
+$(document).ready(function() {
+    // Lắng nghe sự kiện input cho tất cả các thẻ input có class "form-control"
+    $('.form-control[type="number"]').on('input', function() {
+      // Lấy giá trị từ thẻ input
+      var inputValue = $(this).val();
+
+      // Chuyển đổi giá trị thành số
+      var numericValue = parseFloat(inputValue);
+
+      // Kiểm tra nếu là số âm
+      if (numericValue < 0) {
+        // Đặt giá trị của thẻ input thành 1
+        $(this).val(1);
+      }
+    });
+  });

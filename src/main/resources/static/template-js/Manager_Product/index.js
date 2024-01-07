@@ -158,6 +158,7 @@ async function insertProduct() {
 			shortDecription: $('#description-short-create-manager-product').val(),
 			decription: $('#description-detail-product').val(),
 			standCost: $('#fee-ship-create-manager-product').val(),
+			saletime : $('#saletime-manager-product').val(),
 			listPrice: $('#price-product-manager').val(),
 			quantityPerUnit: $('#quantity-create-manager-product').val(),
 			discountinued: $('#discount-create-manager-product').val(),
@@ -185,6 +186,7 @@ async function updateProduct() {
 			productName: $('#name-create-manager-product').val(),
 			shortDecription: $('#description-short-create-manager-product').val(),
 			decription: $('#description-detail-product').val(),
+			saletime : $('#saletime-manager-product').val(),
 			standCost: $('#fee-ship-create-manager-product').val(),
 			listPrice: $('#price-product-manager').val(),
 			quantityPerUnit: $('#quantity-create-manager-product').val(),
@@ -251,6 +253,7 @@ async function openModalDetailProduct(r) {
 	$('#input-name-modal-info').val(res.data.data.productName);
 	$('#input-cose-modal-info').val(res.data.data.standCost);
 	$('#input-code-price-info').val(res.data.data.listPrice);
+	$('#saletime-manager-product').val(res.data.sale_time);
 	$('#input-quantity-modal-info').val(res.data.data.quantityPerUnit);
 	$('#input-discount-modal-info').val(res.data.data.discountinued);
 	$("#select-supplier-modal-info").val(res.data.data.supplierId).trigger('change');
@@ -295,6 +298,7 @@ async function getDataDetailProduct(r) {
 	$('#description-short-create-manager-product').val(res.data.data.shortDecription);
 	$('#fee-ship-create-manager-product').val(res.data.data.standCost);
 	$('#list-category-manager option[data-id ="' + res.data.data.categoryId + '"]').prop('selected', 'selected').change()
+	$('#saletime-manager-product').val(res.data.sale_time);
 	$('#quantity-create-manager-product').val(res.data.data.quantityPerUnit);
 	$('#discount-create-manager-product').val(res.data.data.discountinued);
 	$('#price-product-manager').val(res.data.data.listPrice);
@@ -346,3 +350,20 @@ function clearData() {
 	$('#price-product-manager').val("");
 	$('#description-detail-product').val("");
 }
+
+$(document).ready(function() {
+    // Lắng nghe sự kiện input cho tất cả các thẻ input có class "form-control"
+    $('.form-control[type="number"]').on('input', function() {
+      // Lấy giá trị từ thẻ input
+      var inputValue = $(this).val();
+
+      // Chuyển đổi giá trị thành số
+      var numericValue = parseFloat(inputValue);
+
+      // Kiểm tra nếu là số âm
+      if (numericValue < 0) {
+        // Đặt giá trị của thẻ input thành 1
+        $(this).val(1);
+      }
+    });
+  });

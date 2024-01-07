@@ -40,7 +40,9 @@ public class ShopOrdersEntity {
     @Basic
     @Column(name = "note", nullable = true, length = 255)
     private String note;
-
+    @Basic
+    @Column(name = "phone", nullable = true, length = 100)
+    private String phone;
 	@Basic
     @Column(name = "shipping_fee", nullable = true, precision = 4)
     private Integer shippingFee;
@@ -78,6 +80,14 @@ public class ShopOrdersEntity {
     @JoinColumn(name = "payment_type_id", referencedColumnName = "id", insertable = false, updatable = false)
     private ShopPaymentTypesEntity shopPaymentTypesByPaymentTypeId;
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
     public long getId() {
         return id;
     }
@@ -206,10 +216,10 @@ public class ShopOrdersEntity {
 		this.note = note;
 	}
 
-	public ShopOrdersEntity(long id, Long userId, Timestamp orderDate, String shipName, String shipAddress,
-			String shipCity, String shipState, String note, Integer shippingFee, Long paymentTypeId, Timestamp paidDate,
-			Integer orderStatus, Timestamp createdAt, Timestamp updatedAt, Integer totalPrice, Timestamp shippedDate,
-			List<ShopOrderDetailEntity> shopOrderDetailsById, AppUserEntity appUserByUserId,
+    public ShopOrdersEntity(long id, Long userId, Timestamp orderDate, String shipName, String shipAddress,
+			String shipCity, String shipState, String note, String phone, Integer shippingFee, Long paymentTypeId,
+			Timestamp paidDate, Integer orderStatus, Timestamp createdAt, Timestamp updatedAt, Integer totalPrice,
+			Timestamp shippedDate, List<ShopOrderDetailEntity> shopOrderDetailsById, AppUserEntity appUserByUserId,
 			ShopPaymentTypesEntity shopPaymentTypesByPaymentTypeId) {
 		super();
 		this.id = id;
@@ -220,6 +230,7 @@ public class ShopOrdersEntity {
 		this.shipCity = shipCity;
 		this.shipState = shipState;
 		this.note = note;
+		this.phone = phone;
 		this.shippingFee = shippingFee;
 		this.paymentTypeId = paymentTypeId;
 		this.paidDate = paidDate;
@@ -233,7 +244,7 @@ public class ShopOrdersEntity {
 		this.shopPaymentTypesByPaymentTypeId = shopPaymentTypesByPaymentTypeId;
 	}
 
-    public ShopOrdersEntity() {
+	public ShopOrdersEntity() {
 		super();
 	}
 

@@ -308,3 +308,14 @@ $('.count-quantity-cart').text(res.data.counter);
 $('.total-price-cart').text(formatVND(res.data.amount));
 $('.total-quantity-cart').text(formatVND(res.data.counter));
 }
+
+function validateInput(inputElement) {
+    var inputValue = parseInt(inputElement.value, 10);
+
+    if (isNaN(inputValue) || inputValue < 0) {
+        // Nếu giá trị không phải là số hoặc là số âm
+        alert("Vui lòng nhập một số không âm.");
+        // Đặt giá trị về giá trị cũ
+        inputElement.value = Math.max(inputValue, 0);
+    }
+}

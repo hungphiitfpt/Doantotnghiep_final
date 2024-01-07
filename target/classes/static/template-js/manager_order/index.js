@@ -6,16 +6,16 @@ $(function() {
 async function loadAllDataTableOrders() {
 	let currentPage = localStorage.getItem('currentPage');
 	let keyWord = $('#input-search-product-keyword').val().trim();
-	if(currentPage == null || currentPage == undefined || currentPage == "" ) {
+	if (currentPage == null || currentPage == undefined || currentPage == "") {
 		currentPage = 0;
 	}
 	console.log(currentPage);
-	
+
 	let method = 'get',
 
 		url = `${api_admin}getOrderProducts`,
 
-		params = { keyword: keyWord, size: 10, page : currentPage },
+		params = { keyword: keyWord, size: 10, page: currentPage },
 
 		data = {};
 
@@ -26,8 +26,8 @@ async function loadAllDataTableOrders() {
 
 }
 
- function changeStatusOrder(x) {
-	
+function changeStatusOrder(x) {
+
 	let id = x.data('id');
 
 	let statusOrder = x.data('status');
@@ -40,60 +40,72 @@ async function loadAllDataTableOrders() {
 
 		url = `${api_admin}changeStatusOrders`,
 
-		params = { id: id, status: statusOrder  },
+		params = { id: id, status: statusOrder },
 
 		data = {};
 
-		swal({
-			title: "Bạn có chắc chắn",
-			text: "thay đổi trạng thái đơn hàng",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "Vâng, Tôi chắc chắn",
-			closeOnConfirm: false
-		  },
-		  async function(){
+	swal({
+		title: "Bạn có chắc chắn",
+		text: "thay đổi trạng thái đơn hàng",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "Vâng, Tôi chắc chắn",
+		closeOnConfirm: false
+	},
+		async function() {
 			let res = await axiosTemplate(method, url, params, data);
 			loadAllDataTableOrders();
 			swal("Ok!", "Thay đổi trạng thái thành công", "success");
-		  });
+		});
 }
 async function drawTableOrderProducts(res) {
 	let currentPage = localStorage.getItem('currentPage');
 	let htmlStatusOrder = '';
 	let button = ``;
+	let buttonCancel = ``;
 	var OrderHtml = ``;
 	var pagination = ``;
 	for (let i = 0; i < res.data.content.length; i++) {
 		if (res.data.content[i].orderStatus == 0) {
 			htmlStatusOrder = `<label class="badge badge-info">Chờ Xác Nhận</label>`;
-
+			button = `	<button onclick="changeStatusOrder($(this))" data-id="${res.data.content[i].id}" data-status="${res.data.content[i].orderStatus}" type="button"
+						class="btn btn-warning btn-rounded btn-icon">
+						<i class="typcn typcn-edit"></i>
+					</button>`;
+			buttonCancel = `<button onclick="changeStatusOrder($(this))" data-id="${res.data.content[i].id}" data-status="3" type="button"
+						class="btn btn-danger btn-rounded btn-icon">
+						<i class="typcn typcn-delete"></i>
+					</button>`;
 		}
 		else if (res.data.content[i].orderStatus == 1) {
 			htmlStatusOrder = `<label class="badge badge-warning">Chờ Shiper Lấy Hàng</label>`;
+			button = `	<button onclick="changeStatusOrder($(this))" data-id="${res.data.content[i].id}" data-status="${res.data.content[i].orderStatus}" type="button"
+						class="btn btn-warning btn-rounded btn-icon">
+						<i class="typcn typcn-edit"></i>
+					</button>`;
+			buttonCancel = `<button onclick="changeStatusOrder($(this))" data-id="${res.data.content[i].id}" data-status="3" type="button"
+						class="btn btn-danger btn-rounded btn-icon">
+						<i class="typcn typcn-delete"></i>
+					</button>`;
 
 		}
 		else if (res.data.content[i].orderStatus == 2) {
 			htmlStatusOrder = `<label class="badge badge-danger">Đang Giao Hàng</label>`;
+			button = `	<button onclick="changeStatusOrder($(this))" data-id="${res.data.content[i].id}" data-status="${res.data.content[i].orderStatus}" type="button"
+						class="btn btn-warning btn-rounded btn-icon">
+						<i class="typcn typcn-edit"></i>
+					</button>`;
+			buttonCancel = `<button onclick="changeStatusOrder($(this))" data-id="${res.data.content[i].id}" data-status="3" type="button"
+						class="btn btn-danger btn-rounded btn-icon">
+						<i class="typcn typcn-delete"></i>
+					</button>`;
 
 		}
-		else if (res.data.content[i].orderStatus == 3) {
+		else if (res.data.content[i].orderStatus == 3 || res.data.content[i].orderStatus == 4) {
 			htmlStatusOrder = `<label class="badge badge-primary">Đã Giao Hàng</label>`;
-
-		}
-		else if (res.data.content[i].orderStatus == 4) {
-			htmlStatusOrder = `<label class="badge badge-success">Đã Huỷ</label>`;
-		}
-
-		if(res.data.content[i].orderStatus != 0) {
-			button = `<button onclick="changeStatusOrder($(this))" data-id="${res.data.content[i].id}" data-status="${res.data.content[i].orderStatus}" type="button"
-			class="btn btn-warning btn-rounded btn-icon">
-			<i class="typcn typcn-edit"></i>
-		</button>`
-		}
-		else {
-			button = '';
+			button = ``;
+			buttonCancel = ``;
 		}
 		let totalPrice = formatMoney(`${res.data.content[i].totalPrice}`);
 		// if (res.data.content[i].paymentTypeId == 1) {
@@ -106,8 +118,8 @@ async function drawTableOrderProducts(res) {
 		// 	res.data.content[i].paymentTypeId = `https://firebasestorage.googleapis.com/v0/b/project-agricultural.appspot.com/o/Files%2FHungphi%2Fpngtree-pack-cash-icon-cartoon-style-png-image_1893446.jpeg?alt=media&token=e3fbbe97-9d3a-4cc5-b875-bbbf89e548bb`;
 		// }
 		OrderHtml += `<tr>
-		<td>${i + 1}</td>
 		<td>${res.data.content[i].id}</td>
+		<td>${res.data.content[i].phone}</td>
 		<td>${res.data.content[i].shipName}</td>
         <td class="text-center">${htmlStatusOrder}</td>
         <td>${totalPrice} VND</td>
@@ -118,6 +130,7 @@ async function drawTableOrderProducts(res) {
 		</button>
 		
 		${button}
+		${buttonCancel}
 	</div></td>
 	  </tr>`;
 	}
@@ -151,7 +164,7 @@ $(document).on('click', '.button-panigation-manager-product', async function() {
 })
 async function SearchOrderByKey() {
 	let currentPage = localStorage.getItem('currentPage');
-	if(currentPage == null || currentPage == undefined || currentPage == "" ) {
+	if (currentPage == null || currentPage == undefined || currentPage == "") {
 		currentPage = 0;
 	}
 	let keyWord = $('#input-search-product-keyword').val().trim();
@@ -176,10 +189,10 @@ async function openModalDetailOrder(r) {
 		params = { id: id },
 		data = {};
 	let res = await axiosTemplate(method, url, params, data);
-	
-	
-	$('.fee-dilevery').text(formatMoney(`${res.data.data.shippingFee}`)+ ' VNĐ')
-	$('.total-price').text(formatMoney(`${res.data.data.totalPrice}`)+ ' VNĐ')
+
+
+	$('.fee-dilevery').text(formatMoney(`${res.data.data.shippingFee}`) + ' VNĐ')
+	$('.total-price').text(formatMoney(`${res.data.data.totalPrice}`) + ' VNĐ')
 	$('#name-user-order').val(res.data.data.shipName);
 	$('#addres-user-ship').val(res.data.data.shipAddress);
 	$('#state-user-ship').val(res.data.data.shipState);
@@ -237,13 +250,13 @@ async function openModalDetailOrder(r) {
 }
 
 async function alertCountOrderMarquee() {
-    let method = 'get',
+	let method = 'get',
 
-    url = `${api_admin}marqueeCountOrder`,
+		url = `${api_admin}marqueeCountOrder`,
 
-    params = {},
+		params = {},
 
-    data = {};
+		data = {};
 
 	let res = await axiosTemplate(method, url, params, data);
 	$('.marquee-text-count-order').text(`

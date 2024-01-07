@@ -283,12 +283,13 @@ async function reloadedHearchFavourite() {
  * @param {*} price số tiền của sản phẩm
  */
  async function addItemToCart2(element){
-	// Truy cập dữ liệu từ thu
+	// Truy cập dữ liệu từ thuvar productId = element.getAttribute('data-productid');
     var productId = element.getAttribute('data-productid');
     var productName = element.getAttribute('data-productname');
-    var price = parseInt(element.getAttribute('data-price'));
+    var price = element.getAttribute('data-price');
     var image = element.getAttribute('data-image');
     var discountPercentage = element.getAttribute('data-discountpercentage');
+
 	console.log(productId, productName, price, image, discountPercentage);
    let method = 'post',
    url = `${host}api/addCart`,
@@ -306,4 +307,15 @@ let res = await axiosTemplate(method, url, params, data);
 $('.count-quantity-cart').text(res.data.counter);
 $('.total-price-cart').text(formatVND(res.data.amount));
 $('.total-quantity-cart').text(formatVND(res.data.counter));
+}
+
+function validateInput(inputElement) {
+    var inputValue = parseInt(inputElement.value, 10);
+
+    if (isNaN(inputValue) || inputValue < 0) {
+        // Nếu giá trị không phải là số hoặc là số âm
+        alert("Vui lòng nhập một số không âm.");
+        // Đặt giá trị về giá trị cũ
+        inputElement.value = Math.max(inputValue, 0);
+    }
 }

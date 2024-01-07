@@ -170,4 +170,10 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userRepository.findIdUserByPricipal(name);
 	}
+
+	@Override
+	public AppUserEntity findAddressUserByPrincipal(String name) {
+		// TODO Auto-generated method stub
+		return userRepository.findAddressUserByPricipal(name);
+	}
 }

@@ -1,9 +1,13 @@
 // Import các gói và lớp cần thiết
 package com.poly.edu.project.graduation.controller;
 
+import com.poly.edu.project.graduation.dao.UserRepository;
+import com.poly.edu.project.graduation.model.AppUserEntity;
 import com.poly.edu.project.graduation.model.CartEntity;
 import com.poly.edu.project.graduation.model.ShopOrdersEntity;
 import com.poly.edu.project.graduation.services.UserService;
+import com.poly.edu.project.graduation.services.impl.UserServiceImpl;
+
 import java.security.Principal;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -26,6 +30,9 @@ public class CheckOutController {
 	@Autowired
 	UserService service;
 
+	@Autowired
+	UserRepository repository;
+
     /*
      * Xử lý yêu cầu GET đến trang thanh toán (checkout)
      */
@@ -42,6 +49,9 @@ public class CheckOutController {
 				System.out.println(cartItems);
 				// Lấy ID của người dùng từ Principal (đối tượng chứa thông tin đăng nhập)
 				String id = service.findIdUserByPrincipal(principal.getName());
+				AppUserEntity user = repository.findAddressUserByPricipal(principal.getName());
+				System.out.println(user);
+				model.addAttribute("userAttr",user);
 				session.setAttribute("idUsser", id);
 				
 				// Kiểm tra nếu giỏ hàng không rỗng, thì thêm danh sách sản phẩm vào model
@@ -76,11 +86,12 @@ public class CheckOutController {
 		Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
 		boolean validation = employee.getShipName().isEmpty() 
 							|| employee.getShipAddress().isEmpty()
+							|| employee.getPhone().isEmpty()
 							|| employee.getShipCity().isEmpty() 
 							|| employee.getShipState().isEmpty()
 							|| employee.getShippingFee() == null
 							|| employee.getPaymentTypeId() == null;
-		if(cartItems == null) {
+		if(cartItems == null || cartItems.isEmpty()) {
 			session.setAttribute("msg", "bạn chưa chọn bất kỳ sản phẩm nào");
 			System.out.println(session.getAttribute("msg"));;
 			return "redirect:/checkout";
