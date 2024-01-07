@@ -298,7 +298,7 @@ async function reloadedHearchFavourite() {
 	   productId : productId,
 	   productName: productName,
 	   quantity : 1, 
-	   price: price,
+	   price: parseInt(price),
 	   discountPercentage : discountPercentage,
 	   discountAmount: 0,
 	   image: image
