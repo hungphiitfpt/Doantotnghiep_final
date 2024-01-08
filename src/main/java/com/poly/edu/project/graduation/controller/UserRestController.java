@@ -120,8 +120,9 @@ public class UserRestController {
 	        existingUser.setEmail(updatedUser.getEmail());
 	        existingUser.setBirthday(updatedUser.getBirthday());
 	        existingUser.setAddress(updatedUser.getAddress());
-	        existingUser.setCountry(updatedUser.getCountry());
+	        existingUser.setCountry("Viet Nam");
 	        existingUser.setCity(updatedUser.getCity());
+	        existingUser.setDistrict(updatedUser.getDistrict());
 	        existingUser.setAvatar(updatedUser.getAvatar());
 
 	        // Lưu người dùng đã cập nhật vào cơ sở dữ liệu

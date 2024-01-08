@@ -1,30 +1,9 @@
 
 
 $(function () {
-	getUser();
-	reloadedAddress();
 	reloadedHearchFavourite();
-
+	reloadedAddress();
 })
-
-async function getUser() {
-	let cityHtml = ``;
-	let stateHtml = ``;
-  try {
-    const res =  await axios.get('https://provinces.open-api.vn/api/?depth=2');
-    for (let i = 0; i < res.data.length; i++) {
-	cityHtml += `<option data-code="${res.data[i].code}" value="${res.data[i].name}">${res.data[i].name}</option>`;
-	}		
-	const res2 =  await axios.get(`https://provinces.open-api.vn/api/p/1?depth=2`);
-	for (let i = 0; i < res2.data.districts.length; i++) {
-		stateHtml += `<option value = "${res2.data.districts[i].name}">${res2.data.districts[i].name}</option>`;
-	}
-    $('#shipCity').html(cityHtml);
-	$('#shipState').html(stateHtml);
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 async function reloadedHearchFavourite() {
 	let method = 'get',
@@ -43,7 +22,10 @@ async function reloadedAddress() {
 	data = {}
 	let res =  await axiosTemplate(method, url, params, data);
 	console.log(res);
-$('#address-user-checkout').text(res.data.address); 
+$('#address-user-checkout').text(res.data.address);
+$('.city-setting-account').val(res.data.city); 
+$('#shipState').val(res.data.district);
+
 }
 
 $(document).on('change','#shipCity',async function() {
@@ -57,8 +39,6 @@ $(document).on('change','#shipCity',async function() {
 	console.log(stateHtml);
 	$('#shipState').html(stateHtml);
 })
-
-
 
 
 

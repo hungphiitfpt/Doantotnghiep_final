@@ -102,8 +102,13 @@ async function drawTableOrderProducts(res) {
 					</button>`;
 
 		}
-		else if (res.data.content[i].orderStatus == 3 || res.data.content[i].orderStatus == 4) {
+		else if (res.data.content[i].orderStatus == 3 ) {
 			htmlStatusOrder = `<label class="badge badge-primary">Đã Giao Hàng</label>`;
+			button = ``;
+			buttonCancel = ``;
+		}
+		else if(res.data.content[i].orderStatus == 4) {
+			htmlStatusOrder = `<label class="badge badge-danger">Đã Huỷ Hàng</label>`;
 			button = ``;
 			buttonCancel = ``;
 		}
@@ -195,6 +200,7 @@ async function openModalDetailOrder(r) {
 	$('.total-price').text(formatMoney(`${res.data.data.totalPrice}`) + ' VNĐ')
 	$('#name-user-order').val(res.data.data.shipName);
 	$('#addres-user-ship').val(res.data.data.shipAddress);
+	$('#phone-user-ship').val(res.data.data.phone);
 	$('#state-user-ship').val(res.data.data.shipState);
 	$('#city-user-ship').val(res.data.data.shipCity);
 	if (res.data.data.paymentTypeId == 0) {

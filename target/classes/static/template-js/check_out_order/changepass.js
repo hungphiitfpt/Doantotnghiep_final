@@ -19,9 +19,11 @@ async function updateUser() {
 	 let firstname_form = $('#firstname_form').val();
 	 let lastname_form = $('#lastname_form').val();
 	 let email_form = $('#email_form').val();
-	 let date_form = $('#date_form').val();
-	 let city_form = $('#city_form').val();
-	 let address_form = $('#address_form').text();	 
+	 let date_form = Date.parse($('#date_form').val());
+	 let city_form = $('#shipCity').val();
+	 let district_form = $('#shipState').val();
+	 let address_form = $('#address_form').val();	
+	 console.log('address =>' , address_form); 
 	 let imageSession = sessionStorage.getItem("image");
 	 console.log(selectedGender);
 	let method = 'post',
@@ -36,7 +38,8 @@ async function updateUser() {
 		birthday : date_form,
 		address : address_form,
 		city :city_form,
-		avatar:imageSession
+		avatar:imageSession,
+		district: district_form
 	}
 	let res = await axiosTemplate(method, url, params, data);
 	sweatAlert(`Bạn đã cập nhật người dùng thành công`, "success")

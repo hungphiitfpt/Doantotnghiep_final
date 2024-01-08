@@ -1,4 +1,7 @@
 package com.poly.edu.project.graduation.controller;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -51,8 +54,9 @@ public class RegisterRestController {
 	        	user.setEmail(dto.getEmail());  
 	        	user.setAvatar(dto.getAvatar());  
 	        	user.setAddress(dto.getAddress());  
-	        	user.setCountry(dto.getCountry());  
+	        	user.setCountry("VIET NAM");  
 	        	user.setCity(dto.getCity()); 
+	        	user.setDistrict(dto.getDistrict());
 	        	user.setAvatar(dto.getAvatar());
 	        	String password = passwordEncoder.encode(dto.getEncrytedPassword());
 	        	user.setEncrytedPassword(password);
@@ -66,7 +70,6 @@ public class RegisterRestController {
 		@RequestMapping(value = "/updateUser", method = RequestMethod.POST, consumes = {
 				MediaType.APPLICATION_JSON_UTF8_VALUE })
 	    public ResponseEntity<?> updateUser(@RequestBody AppUserEntity dto , @Param("id") Long id){
-
 			AppUserEntity appUserEntity = userRepository.findById(id).map(user -> {
 	        	user.setUserName(dto.getUserName());
 	        	user.setBirthday(dto.getBirthday());
@@ -76,9 +79,9 @@ public class RegisterRestController {
 	        	user.setGender(dto.getGender());  
 	        	user.setEmail(dto.getEmail());  
 	        	user.setAvatar(dto.getAvatar());  
-	        	user.setAddress(dto.getAddress());  
-	        	user.setCountry(dto.getCountry());  
+	        	user.setCountry("VIET NAM");  
 	        	user.setCity(dto.getCity()); 
+	        	user.setDistrict(dto.getDistrict());
 	        	user.setAvatar(dto.getAvatar());
 	        	return userRepository.save(user);
 			}).orElseGet(() -> {
