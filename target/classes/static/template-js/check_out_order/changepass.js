@@ -25,23 +25,26 @@ async function updateUser() {
 	 let address_form = $('#address_form').val();	
 	 console.log('address =>' , address_form); 
 	 let imageSession = sessionStorage.getItem("image");
-	 console.log(selectedGender);
-	let method = 'post',
-	url = `${api_admin}update/${username_form}`,
-	params = {	
-	}
-	data = {
-		firstName : firstname_form,	
-		lastName : lastname_form,
-		gender : selectedGender,
-		email : email_form,
-		birthday : date_form,
-		address : address_form,
-		city :city_form,
-		avatar:imageSession,
-		district: district_form
-	}
-	let res = await axiosTemplate(method, url, params, data);
-	sweatAlert(`Bạn đã cập nhật người dùng thành công`, "success")
+	 if(imageSession == '' || imageSession == null) {
+		alert("Bạn chưa upload ảnh");
+	 }else {
+		let method = 'post',
+		url = `${api_admin}update/${username_form}`,
+		params = {	
+		}
+		data = {
+			firstName : firstname_form,	
+			lastName : lastname_form,
+			gender : selectedGender,
+			email : email_form,
+			birthday : date_form,
+			address : address_form,
+			city :city_form,
+			avatar:imageSession,
+			district: district_form
+		}
+		let res = await axiosTemplate(method, url, params, data);
+		sweatAlert(`Bạn đã cập nhật người dùng thành công`, "success")
+	 }
 	
 }

@@ -1,17 +1,21 @@
 package com.poly.edu.project.graduation.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.edu.project.graduation.dao.OrderRepository;
+import com.poly.edu.project.graduation.model.ShopOrderDetailEntity;
 import com.poly.edu.project.graduation.model.ShopOrdersEntity;
 import com.poly.edu.project.graduation.services.OrderService;
 
@@ -29,6 +33,8 @@ public class OrderRestController {
 	// tiêm lớp orderService
 	@Autowired
 	OrderService orderService;
+	
+	
 
 	// API lấy danh sách đơn hàng theo tên khách hàng
 	@RequestMapping(value = "/getOrderProducts", method = RequestMethod.GET, produces = {
@@ -113,5 +119,13 @@ public class OrderRestController {
 			MediaType.APPLICATION_JSON_VALUE })
 	public List<String> marqueeCountOrder() {
 		return orderService.CountMarqueeOrder();
+	}
+	
+	@RequestMapping(value = "/revertQuantityProduct", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public Set<String> RevertQuantityProduct(@RequestParam(name = "id") String id) {
+		List<ShopOrderDetailEntity> listOrder = (List<ShopOrderDetailEntity>) orderRepository.queryListOrderDetailId(id);
+		System.out.println("listOrder");
+		return null;
 	}
 }

@@ -31,18 +31,23 @@ public class FavoutiteController {
 	
 	@RequestMapping("favorite-product")
 	public String index(Principal principal,Model model,HttpSession session) {
-		String userName = principal.getName();
-		String id = userService.findIdUserByPrincipal(userName);
-		List<ShopFavoutiteEntity> sfv = favouriteRepository.getListFavourite(id);
-		model.addAttribute("cart", sfv);
-		// Thêm thông tin về giá trị bắt đầu của giỏ hàng (cartStarts) vào mode
-		// Lấy danh sách sản phẩm từ giỏ hàng được lưu trữ trong session
-		Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
-		System.out.println(cartItems);
-		model.addAttribute("cartStarts", Utils.cartStarts(cartItems, session));
-		// Biến này là tổng số sản phẩm đang được chọn trong giỏ hàng
+		if(principal != null) {
+			String userName = principal.getName();
+			String id = userService.findIdUserByPrincipal(userName);
+			List<ShopFavoutiteEntity> sfv = favouriteRepository.getListFavourite(id);
+			model.addAttribute("cart", sfv);
+			// Thêm thông tin về giá trị bắt đầu của giỏ hàng (cartStarts) vào mode
+			// Lấy danh sách sản phẩm từ giỏ hàng được lưu trữ trong session
+			Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
+			System.out.println(cartItems);
+			model.addAttribute("cartStarts", Utils.cartStarts(cartItems, session));
+			// Biến này là tổng số sản phẩm đang được chọn trong giỏ hàng
 
-		return "shop-template/shop-favourite";
+			return "shop-template/shop-favourite";
+		} else {
+			return "shop-template/shop";
+		}
+
 		
 	}
 	

@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import com.poly.edu.project.graduation.model.ShopOrderDetailEntity;
 import com.poly.edu.project.graduation.model.ShopOrdersEntity;
 
 public interface OrderRepository extends JpaRepository<ShopOrdersEntity, Long> {
@@ -54,6 +55,9 @@ public interface OrderRepository extends JpaRepository<ShopOrdersEntity, Long> {
     // Truy vấn native SQL để tính tổng giá trị đơn hàng theo ngày
     @Query(value = "SELECT SUM(total_price) FROM shop_orders where created_at LIKE CONCAT('%',:date,'%')", nativeQuery = true)
     String TotalPriceOrdersDateNow(Date date);
+    
+    @Query(value = "SELECT product_id FROM shop_order_detail where id  = ?1", nativeQuery = true)
+    List<ShopOrderDetailEntity> queryListOrderDetailId(String id);
 
     // Truy vấn native SQL để đếm số lượng đơn hàng theo ngày
     @Query(value = "SELECT COUNT(id) FROM shop_orders where created_at LIKE CONCAT('%',:date,'%')", nativeQuery = true)
