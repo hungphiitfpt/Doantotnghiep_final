@@ -78,6 +78,9 @@ public class OrderRestController {
 			@RequestParam(name = "id", required = false, defaultValue = "") Long id) {
 		try {
 			orderRepository.changeStatusOrder(status, update_at, shipped_date, id);
+			if(status == 4) {
+				RevertQuantityProduct(String.valueOf(id));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -134,7 +137,7 @@ public class OrderRestController {
 	
 	@RequestMapping(value = "/revertQuantityProduct", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<String> RevertQuantityProduct(@RequestParam(name = "id") String id) {
+	public void RevertQuantityProduct(@RequestParam(name = "id") String id) {
 		try {
 			List<Object[]> result = orderDetailRepository.queryListOrderDetailId(id); 
 			Map<BigInteger, BigInteger> resultMap = new HashMap<>();
@@ -148,9 +151,9 @@ public class OrderRestController {
 	        	orderDetailRepository.updateRevertQuantityProduct(entry.getKey(), entry.getValue());
 	            // Thực hiện stored procedure và lấy kết quả
 			}
-	        return new ResponseEntity<>("Update successful", HttpStatus.OK);
+	     
 		} catch (Exception e) {
-			return new ResponseEntity<>("Update failed", HttpStatus.INTERNAL_SERVER_ERROR);
+			System.err.println(e.getMessage());
 		}
 	}
 }
