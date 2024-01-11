@@ -2,6 +2,7 @@ package com.poly.edu.project.graduation.dao;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -56,8 +57,7 @@ public interface OrderRepository extends JpaRepository<ShopOrdersEntity, Long> {
     @Query(value = "SELECT SUM(total_price) FROM shop_orders where created_at LIKE CONCAT('%',:date,'%')", nativeQuery = true)
     String TotalPriceOrdersDateNow(Date date);
     
-    @Query(value = "SELECT product_id FROM shop_order_detail where id  = ?1", nativeQuery = true)
-    List<ShopOrderDetailEntity> queryListOrderDetailId(String id);
+
 
     // Truy vấn native SQL để đếm số lượng đơn hàng theo ngày
     @Query(value = "SELECT COUNT(id) FROM shop_orders where created_at LIKE CONCAT('%',:date,'%')", nativeQuery = true)

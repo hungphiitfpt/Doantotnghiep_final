@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -68,7 +67,6 @@ public class OrderServiceImpl implements OrderService {
 				detailEntity.setImage(s.getImage());
 				detailEntity.setDiscountAmount(s.getDiscountAmount());
 				detailEntity.setDiscountPercentage(s.getDiscountPercentage());
-
 				detailRepository.save(detailEntity);
 
 			}

@@ -1,21 +1,26 @@
 package com.poly.edu.project.graduation.controller;
 
+import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.poly.edu.project.graduation.dao.OrderDetailRepository;
 import com.poly.edu.project.graduation.dao.OrderRepository;
-import com.poly.edu.project.graduation.model.ShopOrderDetailEntity;
 import com.poly.edu.project.graduation.model.ShopOrdersEntity;
 import com.poly.edu.project.graduation.services.OrderService;
 
@@ -30,10 +35,16 @@ public class OrderRestController {
 	@Autowired
 	OrderRepository orderRepository;
 	
+	@Autowired
+	OrderDetailRepository orderDetailRepository;
+	
 	// tiêm lớp orderService
 	@Autowired
 	OrderService orderService;
 	
+
+    @PersistenceContext
+    private EntityManager entityManager;
 	
 
 	// API lấy danh sách đơn hàng theo tên khách hàng
@@ -123,9 +134,23 @@ public class OrderRestController {
 	
 	@RequestMapping(value = "/revertQuantityProduct", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public Set<String> RevertQuantityProduct(@RequestParam(name = "id") String id) {
-		List<ShopOrderDetailEntity> listOrder = (List<ShopOrderDetailEntity>) orderRepository.queryListOrderDetailId(id);
-		System.out.println("listOrder");
-		return null;
+	public ResponseEntity<String> RevertQuantityProduct(@RequestParam(name = "id") String id) {
+		try {
+			List<Object[]> result = orderDetailRepository.queryListOrderDetailId(id); 
+			Map<BigInteger, BigInteger> resultMap = new HashMap<>();
+	        for (Object[] row : result) {
+	        	BigInteger productIdBigInteger = (BigInteger) row[0];
+	        	BigInteger quantityBigInteger = (BigInteger) row[1];
+	            resultMap.put(productIdBigInteger, quantityBigInteger);
+	        }
+	  
+	        for (Map.Entry<BigInteger, BigInteger> entry : resultMap.entrySet()) {
+	        	orderDetailRepository.updateRevertQuantityProduct(entry.getKey(), entry.getValue());
+	            // Thực hiện stored procedure và lấy kết quả
+			}
+	        return new ResponseEntity<>("Update successful", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Update failed", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

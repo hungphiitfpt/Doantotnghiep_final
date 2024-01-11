@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Entity
@@ -17,13 +18,13 @@ public class ShopOrderDetailEntity {
     private long id;
     @Basic
     @Column(name = "order_id", nullable = true)
-    private Long orderId;
+    private long orderId;
     @Basic
     @Column(name = "product_id", nullable = true)
-    private Long productId;
+    private long productId;
     @Basic
     @Column(name = "quantity", nullable = true)
-    private Integer quantity;
+    private long quantity;
     @Basic
     @Column(name = "discount_percentage", nullable = true, precision = 0)
     private Double discountPercentage;
@@ -89,27 +90,27 @@ public class ShopOrderDetailEntity {
         this.id = id;
     }
 
-    public Long getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
-    public Long getProductId() {
+    public long getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
     }
 
-    public Integer getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 

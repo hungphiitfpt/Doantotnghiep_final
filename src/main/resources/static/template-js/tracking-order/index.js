@@ -21,11 +21,13 @@ async function loadOrderTracking() {
 		params = {},
 		data = {};
 	let res = await axiosTemplate(method, url, params, data);
+	console.log("res ==> " , res);
 	for (let i = 0; i < res.data.length; i++) {
-        let formatPriceOld = formatMoney(`${res.data[i].shopOrderDetailsById[0].price}`);
+		if(res.data[i].shopOrderDetailsById[0] != null) {
+			    let formatPriceOld = formatMoney(`${res.data[i].shopOrderDetailsById[0].price}`);
         let formatPriceNew = (`${res.data[i].shopOrderDetailsById[0].price}` - `${res.data[i].shopOrderDetailsById[0].discountAmount}`);
         let totalPrice = formatMoney(`${res.data[i].totalPrice}`);
-      if(res.data[i].orderStatus == 0) {
+      	if(res.data[i].orderStatus == 0) {
         waiting_confirmHTML += `<div class="box-order card" style="min-width: 1100px;">
         <div class="card-body row">
             <div class="col-lg-1 cart__product__item">
@@ -266,6 +268,7 @@ async function loadOrderTracking() {
         </div>
     </div>`;
       }
+		}
 	}
     waiting_confirm.html(waiting_confirmHTML);
     waiting_for_goods.html(waiting_for_goodsHTML);

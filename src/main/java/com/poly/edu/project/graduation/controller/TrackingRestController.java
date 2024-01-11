@@ -1,7 +1,10 @@
 package com.poly.edu.project.graduation.controller;
 
+import java.math.BigInteger;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.poly.edu.project.graduation.dao.OrderDetailRepository;
 import com.poly.edu.project.graduation.model.ShopOrdersEntity;
 import com.poly.edu.project.graduation.services.OrderService;
 import com.poly.edu.project.graduation.services.UserService;
@@ -20,6 +24,8 @@ public class TrackingRestController {
 	@Autowired
 	OrderService orderService;
 	
+	@Autowired
+	OrderDetailRepository detailRepository;
 	@Autowired
 	UserService userService;
 
@@ -36,5 +42,17 @@ public class TrackingRestController {
 	@RequestMapping(value = {"/order_cancel"}, method = RequestMethod.POST)
 	public void orderCancel(@RequestParam("id") long id) throws Exception{
 		orderService.cancelOrderById(id);
+		List<Object[]> result = detailRepository.queryListOrderDetailId(String.valueOf(id)); 
+		Map<BigInteger, BigInteger> resultMap = new HashMap<>();
+        for (Object[] row : result) {
+        	BigInteger productIdBigInteger = (BigInteger) row[0];
+        	BigInteger quantityBigInteger = (BigInteger) row[1];
+            resultMap.put(productIdBigInteger, quantityBigInteger);
+        }
+  
+        for (Map.Entry<BigInteger, BigInteger> entry : resultMap.entrySet()) {
+        	detailRepository.updateRevertQuantityProduct(entry.getKey(), entry.getValue());
+            // Thực hiện stored procedure và lấy kết quả
+		}
 	}
 }
