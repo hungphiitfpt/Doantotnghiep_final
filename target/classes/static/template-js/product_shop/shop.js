@@ -172,7 +172,7 @@ async function drawDataProductShop(res) {
 		// số lượng sản phẩm thì mới hiển thị giá đang giảm, và nút cho mua hàng
 		else {
 			labelDiscount = `<div class="label sale">${res.data.content[i].discountinued}%</div>`;
-			buttonAddCart = `<li onclick="addItemToCart(${res.data.content[i].id},'${res.data.content[i].productName}',1,${formatmoney},'${res.data.content[i].image}','${res.data.content[i].discountinued}')"><a href="#"><span class="icon_bag_alt"></span></a></li>`;
+			buttonAddCart = `<li onclick="addItemToCart(${res.data.content[i].id},'${res.data.content[i].productName}',1,${formatmoney},'${res.data.content[i].image}','${res.data.content[i].discountinued}','${res.data.content[i].quantityPerUnit}')"><a href="#"><span class="icon_bag_alt"></span></a></li>`;
 		}
 		// biến để vẽ 1 cục sản phẩm, trả về mã HTML
 		productHTML += `<div class="col-lg-4 col-md-6">

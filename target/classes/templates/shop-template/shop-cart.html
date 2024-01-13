@@ -78,6 +78,7 @@
 									<th>Tên Sản Phẩm</th>
 									<th>Giá Tiền</th>
 									<th>Số Lượng</th>
+									<th>Tồn Kho</th>
 									<th>Tổng Tiền</th>
 									<th></th>
 								</tr>
@@ -85,7 +86,7 @@
 							<tbody id="table-product-orderPage">
 
 								<tr th:each="cart : ${cart}" class="product" >
-									<td class="cart__product__item"><img
+									<td style="width: 20%;" class="cart__product__item"><img
 										th:src="${cart.image}" alt="">
 										<div class="cart__product__item__title">
 											<h6 th:text="${cart.productName}" class="infoAddCart" th:data-name="${cart.productName}" th:data-image="${cart.image}" th:data-id="${cart.productId}" th:data-price="${cart.price}"></h6>
@@ -95,17 +96,17 @@
 													class="fa fa-star"></i>
 											</div>
 										</div></td>
-									<td class="cart__price" th:value="${cart.price}" th:text="${#numbers.formatDecimal(cart.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
-									<td class="cart__quantity">
+									<td style="width: 20%;" class="cart__price" th:value="${cart.price}" th:text="${#numbers.formatDecimal(cart.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+									<td style="width: 20%;" class="cart__quantity">
 										<div class="pro-qty">
 											<input type="text" class="input-quantity-buy-cart" th:value="${cart.quantity}" oninput="validateInput(this)">
 										</div>
 									</td>
-									<td class="cart__total"  th:text="${#numbers.formatDecimal((cart.price) * (cart.quantity), 0, 'COMMA', 0, 'POINT')} + ' VND'">0 vnđ</td>
+									<td style="width: 20%;" class="cart__size"  th:text="${cart.size}">0</td>
+									<td style="width: 20%;" class="cart__total"  th:text="${#numbers.formatDecimal((cart.price) * (cart.quantity), 0, 'COMMA', 0, 'POINT')} + ' VND'">0 vnđ</td>
+							
 									<td class="cart__close"><span class="icon_close" th:onclick="'deleteItemCart('+${cart.productId}+',$(this))'"></span></td>
 								</tr>
-
-
 							</tbody>
 						</table>
 					</div>

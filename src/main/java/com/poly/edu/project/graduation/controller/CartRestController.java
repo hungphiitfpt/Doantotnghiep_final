@@ -2,6 +2,7 @@
 package com.poly.edu.project.graduation.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -47,6 +48,7 @@ public class CartRestController<T> {
 	@RequestMapping(value = "/api/addCart", method = RequestMethod.POST, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Map<String, String>> viewAdd(@RequestBody CartEntity params, HttpSession session) {
+		int checkMax = 0;
 		// Lấy danh sách sản phẩm từ giỏ hàng được lưu trữ trong session
 		Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
 		
@@ -59,13 +61,13 @@ public class CartRestController<T> {
 		Long productId = params.getProductId();
 		
 		// Kiểm tra số lượng tồn kho của sản phẩm
-		Long check = productsRepository.checkTonKho(productId);
+		long check = productsRepository.checkTonKho(productId);
 		session.setAttribute("tonkho", check);
 		
 		// Kiểm tra sản phẩm đã có trong giỏ hàng hay chưa
 		if (cartItems.containsKey(productId) == true) {
 			CartEntity shopsdetail = cartItems.get(productId);
-			System.out.println("duscount getDiscountPercentage ==> "  + shopsdetail.getDiscountPercentage());
+			shopsdetail.setSize(check);
 			// Kiểm tra số lượng sản phẩm có thể thêm vào giỏ hàng
 			if(shopsdetail.getQuantity() + 1 > check) {
 				shopsdetail.setQuantity(shopsdetail.getQuantity());
@@ -78,11 +80,21 @@ public class CartRestController<T> {
 
 		// Lưu giỏ hàng vào session
 		session.setAttribute("cart", cartItems);
-		
 		// Biến này là tổng số sản phẩm đang được chọn trong giỏ hàng
 		session.getAttribute("countCartItems");
-		
-	    return new ResponseEntity<>(Utils.cartStarts(cartItems,session), HttpStatus.OK);
+		for (CartEntity c : cartItems.values()) {
+			if(c.getQuantity() == check) {
+				checkMax = 1;
+			} else {
+				checkMax = 0;
+			}
+		}
+		if(checkMax == 1) {
+			return new ResponseEntity<>(Utils.cartStarts(cartItems,session), HttpStatus.ACCEPTED);
+		} else {
+			 return new ResponseEntity<>(Utils.cartStarts(cartItems,session), HttpStatus.OK);
+		}
+	   
 	}
 
     /*
@@ -92,6 +104,7 @@ public class CartRestController<T> {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Map<String, String>> updateCartInput(@RequestBody CartEntity params, HttpSession session) {
 		try {
+			int checkMax = 0;
 			// Lấy danh sách sản phẩm từ giỏ hàng được lưu trữ trong session
 			Map<Long, CartEntity> cartItems = (Map<Long, CartEntity>) session.getAttribute("cart");
 			
@@ -130,8 +143,19 @@ public class CartRestController<T> {
 			
 			// Biến này là tổng số sản phẩm đang được chọn trong giỏ hàng
 			session.getAttribute("countCartItems");
+			for (CartEntity c : cartItems.values()) {
+				if(c.getQuantity() > stock.getQuantityPerUnit()) {
+					checkMax = 1;
+				} else {
+					checkMax = 0;
+				}
+			}
 			
-			return new ResponseEntity<>(Utils.cartStarts(cartItems, session), HttpStatus.OK);
+			if(checkMax == 1) {
+				return new ResponseEntity<>(Utils.cartStarts(cartItems,session), HttpStatus.ACCEPTED);
+			} else {
+				return new ResponseEntity<>(Utils.cartStarts(cartItems, session), HttpStatus.OK);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -164,16 +188,33 @@ public class CartRestController<T> {
 
 	@RequestMapping(value = "/api/pay", method = RequestMethod.POST, produces = {
 	        MediaType.APPLICATION_JSON_VALUE })
-	public HttpStatus PayCart(HttpSession session) {
-	    // Gọi phương thức để tạo đơn hàng từ giỏ hàng và lưu vào cơ sở dữ liệu
-	    orderService.CreateOrder((Map<Long, CartEntity>) session.getAttribute("cart"), session);
-	    
-	    // Xóa thông tin giỏ hàng, số lượng sản phẩm và thông tin người dùng khỏi session sau khi thanh toán
-	    session.removeAttribute("cart");
-	    session.removeAttribute("countCartItems");
-	    session.removeAttribute("userInf");
-	    
-	    // Trả về mã HTTP OK khi thanh toán thành công
-	    return HttpStatus.OK;
+	public ResponseEntity<T> PayCart(HttpSession session) {
+		boolean isError = true;
+		Map<Long, CartEntity> mapCart = (Map<Long, CartEntity>) session.getAttribute("cart");
+
+		for (Map.Entry<Long, CartEntity> entry : mapCart.entrySet()) {
+			CartEntity val = entry.getValue();
+			long idPr = val.getProductId();
+			int sizePr = val.getQuantity();
+			System.out.println("idPr ==> " + idPr);
+			System.out.println("sizePr ==> " + sizePr);
+			long sizeWareHouse = productsRepository.checkTonKho(idPr);
+			isError = (sizePr > sizeWareHouse) ? true : false;
+		}
+		if(isError == false) {
+		    // Gọi phương thức để tạo đơn hàng từ giỏ hàng và lưu vào cơ sở dữ liệu
+		    orderService.CreateOrder((Map<Long, CartEntity>) session.getAttribute("cart"), session);
+		    
+		    // Xóa thông tin giỏ hàng, số lượng sản phẩm và thông tin người dùng khỏi session sau khi thanh toán
+		    session.removeAttribute("cart");
+		    session.removeAttribute("countCartItems");
+		    session.removeAttribute("userInf");
+		    // Trả về mã HTTP OK khi thanh toán thành công
+		    return new ResponseEntity<T>(HttpStatus.OK);
+		} else {
+		    // Trả về mã HTTP OK khi thanh toán thành công
+		    return new ResponseEntity<T>(HttpStatus.CREATED);
+		}
+
 	}
 }

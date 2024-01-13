@@ -17,7 +17,7 @@ if (cart == null) {
  * @param {*} quantity  số lượng sản phẩm mua
  * @param {*} price số tiền của sản phẩm
  */
-async function addItemToCart(productId, productName, quantity, price,image,discountPercentage){
+async function addItemToCart(productId, productName, quantity, price,image,discountPercentage,quantityPerUnit){
 	event.preventDefault();
 	let method = 'post',
 	url = `${host}api/addCart`,
@@ -29,12 +29,16 @@ async function addItemToCart(productId, productName, quantity, price,image,disco
 		price: price,
 		discountPercentage : discountPercentage,
 		discountAmount: 0,
-		image: image
+		image: image, 
+		siez : quantityPerUnit
 	};
 let res = await axiosTemplate(method, url, params, data);
 $('.count-quantity-cart').text(res.data.counter);
 $('.total-price-cart').text(formatVND(res.data.amount));
 $('.total-quantity-cart').text(formatVND(res.data.counter));
+if(res.status == 202) {
+	sweatAlert(`Số lượng tồn kho không đủ`, "warning")
+}
 }
 
 
@@ -85,11 +89,16 @@ $(document).on('click','.inc.qtybtn',async function () {
 		image: image
 	};
 let res = await axiosTemplate(method, url, params, data);
-$('.count-quantity-cart').text(res.data.counter);
-$('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
-$('.total-quantity-cart').text(formatVND(res.data.counter));
-let money = (parseInt(quantity) * parseInt(price));
-$(this).parents('.product').find('.cart__total').text(formatVND(money));
+if(res.status == 200) {
+	$('.count-quantity-cart').text(res.data.counter);
+	$('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
+	$('.total-quantity-cart').text(formatVND(res.data.counter));
+	let money = (parseInt(quantity) * parseInt(price));
+	$(this).parents('.product').find('.cart__total').text(formatVND(money));
+} else {
+	sweatAlert(`Số lượng tồn kho không đủ`, "warning")
+}
+
 calculateTotal() ;
 })
 
@@ -116,11 +125,16 @@ $(document).on('click','.dec.qtybtn',async function () {
 		image: image
 	};
 let res = await axiosTemplate(method, url, params, data);
-$('.count-quantity-cart').text(res.data.counter);
-$('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
-$('.total-quantity-cart').text(formatVND(res.data.counter));
-let money = (parseInt(quantity) * parseInt(price));
-$(this).parents('.product').find('.cart__total').text(formatVND(money));
+if(res.status == 200) {
+	$('.count-quantity-cart').text(res.data.counter);
+	$('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
+	$('.total-quantity-cart').text(formatVND(res.data.counter));
+	let money = (parseInt(quantity) * parseInt(price));
+	$(this).parents('.product').find('.cart__total').text(formatVND(money));
+}else {
+	sweatAlert(`Số lượng tồn kho không đủ`, "warning")
+}
+
 calculateTotal() ;
 })
 
@@ -146,12 +160,16 @@ $(document).on('input change','.input-quantity-buy-cart',async function () {
 		discountAmount: 0,
 		image: image,
 	};
-let res = await axiosTemplate(method, url, params, data);
-$('.count-quantity-cart').text(res.data.counter);
-$('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
-$('.total-quantity-cart').text(formatVND(res.data.counter));
-let money = (parseInt(quantity) * parseInt(price));
-$(this).parents('.product').find('.cart__total').text(formatVND(money));
+	let res = await axiosTemplate(method, url, params, data);
+if(res.status == 200) {
+	$('.count-quantity-cart').text(res.data.counter);
+	$('.total-price-cart').text(formatMoney(res.data.amount) + " VND");
+	$('.total-quantity-cart').text(formatVND(res.data.counter));
+	let money = (parseInt(quantity) * parseInt(price));
+	$(this).parents('.product').find('.cart__total').text(formatVND(money));
+} else {
+	sweatAlert(`Số lượng tồn kho không đủ`, "warning");
+}
 calculateTotal() ;
 })
 
@@ -228,7 +246,9 @@ async function pay() {
 	data = {};
 let res = await axiosTemplate(method, url, params, data);
 console.log(res);
-if(res.status == 200) {
+if(res.status == 202) {
+sweatAlert(`Số lượng tồn kho không đủ, vui lòng kiểm tra lại trước khi thanh toán`, "warning");
+}else{
 	$('#table-product-orderPage tr').remove();
 	$('.count-quantity-cart span').text('0');
 	$('.total-quantity-cart').text('0');
@@ -289,6 +309,7 @@ async function reloadedHearchFavourite() {
     var price = element.getAttribute('data-price');
     var image = element.getAttribute('data-image');
     var discountPercentage = element.getAttribute('data-discountpercentage');
+    var size_product = element.getAttribute('cart__size__product');
 
 	console.log(productId, productName, price, image, discountPercentage);
    let method = 'post',
@@ -301,7 +322,8 @@ async function reloadedHearchFavourite() {
 	   price: parseInt(price),
 	   discountPercentage : discountPercentage,
 	   discountAmount: 0,
-	   image: image
+	   image: image,
+	   size: size_product
    };
 let res = await axiosTemplate(method, url, params, data);
 $('.count-quantity-cart').text(res.data.counter);

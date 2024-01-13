@@ -30,9 +30,39 @@ public class CartEntity {
 	 
 	private String image;
 	
+	private long size;
+	
 	
 
 	
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
+	}
+
+	public CartEntity(Long id, Long orderId, Long productId, Integer quantity, String productName,
+			Double discountPercentage, Double discountAmount, String orderDetailStatus, Timestamp dateAllocated,
+			Integer price, Long payment_type_id, Integer shippingFee, String image, int size) {
+		super();
+		this.id = id;
+		this.orderId = orderId;
+		this.productId = productId;
+		this.quantity = quantity;
+		this.productName = productName;
+		this.discountPercentage = discountPercentage;
+		this.discountAmount = discountAmount;
+		this.orderDetailStatus = orderDetailStatus;
+		this.dateAllocated = dateAllocated;
+		this.price = price;
+		this.payment_type_id = payment_type_id;
+		this.shippingFee = shippingFee;
+		this.image = image;
+		this.size = size;
+	}
+
 	public Integer getShippingFee() {
 		return shippingFee;
 	}
