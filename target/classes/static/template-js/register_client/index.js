@@ -55,7 +55,8 @@ async function registerUser() {
 			gender: $("input[class='is_gender']:checked").val(),
 			email: $("#email_register_user").val(),
 			city : $('#country_register_user').val(),
-			district : $('#country_register_user_state').val()
+			district : $('#country_register_user_state').val(),
+			phone : $('#phone_register_user').val()
 		};
 		if($('#address_register_user').val().toUpperCase() == $('#country_register_user').val().toUpperCase()) {
 			sweatAlert(`Bạn không được nhập địa chỉ trùng thành phố`, "error")

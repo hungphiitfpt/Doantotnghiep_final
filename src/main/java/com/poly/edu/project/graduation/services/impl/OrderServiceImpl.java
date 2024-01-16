@@ -44,12 +44,12 @@ public class OrderServiceImpl implements OrderService {
 			System.out.println(session.getAttribute("idUsser"));
 			ordersEntity.setUserId(Long.valueOf((String) session.getAttribute("idUsser")));
 			ordersEntity.setShipName(ordersEntity.getShipName());
-			ordersEntity.setShipAddress(ordersEntity.getShipAddress().trim());
+			ordersEntity.setShipAddress(ordersEntity.getShipAddress().trim());// dia chi
 			ordersEntity.setShipCity(ordersEntity.getShipCity());
 			ordersEntity.setShipState(ordersEntity.getShipState());
 			ordersEntity.setShippingFee(ordersEntity.getShippingFee());
 			ordersEntity.setPaymentTypeId(ordersEntity.getPaymentTypeId());
-			ordersEntity.setPhone(ordersEntity.getPhone());
+			ordersEntity.setPhone(ordersEntity.getPhone()); // dien thoai
 			ordersEntity.setOrderStatus(0);
 			Map<String, String> stats = Utils.cartStarts(cart,session);
 			ordersEntity.setTotalPrice(Integer.parseInt(stats.get("amount")));

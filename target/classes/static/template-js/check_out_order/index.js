@@ -25,6 +25,7 @@ async function reloadedAddress() {
 $('#address-user-checkout').text(res.data.address);
 $('.city-setting-account').val(res.data.city); 
 $('#shipState').val(res.data.district);
+$('#phone-user-checkout').val(res.data.phone);
 
 }
 

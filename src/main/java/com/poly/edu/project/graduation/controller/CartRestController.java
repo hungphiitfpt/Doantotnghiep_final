@@ -152,9 +152,9 @@ public class CartRestController<T> {
 			}
 			
 			if(checkMax == 1) {
-				return new ResponseEntity<>(Utils.cartStarts(cartItems,session), HttpStatus.ACCEPTED);
+				return new ResponseEntity<>(Utils.cartStarts(cartItems,session), HttpStatus.ACCEPTED); //202
 			} else {
-				return new ResponseEntity<>(Utils.cartStarts(cartItems, session), HttpStatus.OK);
+				return new ResponseEntity<>(Utils.cartStarts(cartItems, session), HttpStatus.OK); // 200
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

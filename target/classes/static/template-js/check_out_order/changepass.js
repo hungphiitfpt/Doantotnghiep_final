@@ -23,6 +23,7 @@ async function updateUser() {
 	 let city_form = $('#shipCity').val();
 	 let district_form = $('#shipState').val();
 	 let address_form = $('#address_form').val();	
+	 let phone = $('#phone_form').val();
 	 console.log('address =>' , address_form); 
 	 let imageSession = sessionStorage.getItem("image");
 	 if(imageSession == '' || imageSession == null) {
@@ -41,7 +42,8 @@ async function updateUser() {
 			address : address_form,
 			city :city_form,
 			avatar:imageSession,
-			district: district_form
+			district: district_form,
+			phone : phone
 		}
 		let res = await axiosTemplate(method, url, params, data);
 		sweatAlert(`Bạn đã cập nhật người dùng thành công`, "success")

@@ -120,6 +120,7 @@ public class UserRestController {
 	        existingUser.setEmail(updatedUser.getEmail());
 	        existingUser.setBirthday(updatedUser.getBirthday());
 	        existingUser.setAddress(updatedUser.getAddress());
+	        existingUser.setPhone(updatedUser.getPhone());
 	        existingUser.setCountry("Viet Nam");
 	        existingUser.setCity(updatedUser.getCity());
 	        existingUser.setDistrict(updatedUser.getDistrict());

@@ -51,6 +51,7 @@ public class RegisterRestController {
 	        	user.setLastName(dto.getLastName());  
 	        	user.setFirstName(dto.getFirstName()); 
 	        	user.setGender(dto.getGender());  
+	        	user.setPhone(dto.getPhone());  
 	        	user.setEmail(dto.getEmail());  
 	        	user.setAvatar(dto.getAvatar());  
 	        	user.setAddress(dto.getAddress());  

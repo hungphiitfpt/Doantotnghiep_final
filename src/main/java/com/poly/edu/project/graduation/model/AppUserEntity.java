@@ -64,6 +64,38 @@ public class AppUserEntity {
     @Column(name = "city", nullable = true, length = 45)
     private String city;
     @Basic
+    @Column(name = "phone", nullable = true, length = 45)
+    private String phone;
+    public AppUserEntity(long userId, int isAdmin, String userName, String encrytedPassword, boolean isDeleted,
+			String lastName, String firstName, Boolean gender, String email, Date birthday, String avatar,
+			String address, String country, String city, String phone, String district, Timestamp createdAt,
+			Timestamp updatedAt, List<UserRoleEntity> userRolesByUserId, List<ShopOrdersEntity> shopOrdersByUserId,
+			String resetPasswordToken) {
+		super();
+		this.userId = userId;
+		this.isAdmin = isAdmin;
+		this.userName = userName;
+		this.encrytedPassword = encrytedPassword;
+		this.isDeleted = isDeleted;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.gender = gender;
+		this.email = email;
+		this.birthday = birthday;
+		this.avatar = avatar;
+		this.address = address;
+		this.country = country;
+		this.city = city;
+		this.phone = phone;
+		this.district = district;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.userRolesByUserId = userRolesByUserId;
+		this.shopOrdersByUserId = shopOrdersByUserId;
+		this.resetPasswordToken = resetPasswordToken;
+	}
+
+	@Basic
     @Column(name = "district", nullable = true, length = 200)
     private String district;
 
@@ -92,34 +124,15 @@ public class AppUserEntity {
 	public void setDistrict(String district) {
 		this.district = district;
 	}
-    public AppUserEntity(long userId, int isAdmin, String userName, String encrytedPassword, boolean isDeleted,
-			String lastName, String firstName, Boolean gender, String email, Date birthday, String avatar,
-			String address, String country, String city, String district, Timestamp createdAt, Timestamp updatedAt,
-			List<UserRoleEntity> userRolesByUserId, List<ShopOrdersEntity> shopOrdersByUserId,
-			String resetPasswordToken) {
-		super();
-		this.userId = userId;
-		this.isAdmin = isAdmin;
-		this.userName = userName;
-		this.encrytedPassword = encrytedPassword;
-		this.isDeleted = isDeleted;
-		this.lastName = lastName;
-		this.firstName = firstName;
-		this.gender = gender;
-		this.email = email;
-		this.birthday = birthday;
-		this.avatar = avatar;
-		this.address = address;
-		this.country = country;
-		this.city = city;
-		this.district = district;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.userRolesByUserId = userRolesByUserId;
-		this.shopOrdersByUserId = shopOrdersByUserId;
-		this.resetPasswordToken = resetPasswordToken;
-	}
     
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public long getIsAdmin() {
 		return isAdmin;
 	}
